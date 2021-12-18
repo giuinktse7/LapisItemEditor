@@ -24,7 +24,7 @@ Small parts of this repository are copied from the following projects:
 -   [ottools/open-tibia](https://github.com/ottools/open-tibia)
 -   [ottools/ItemEditor](https://github.com/ottools/ItemEditor)
 
-Also, many parts draw of this repository are inspired by code in these repositories.
+Also, parts of this repository are inspired by code in the above repositories.
 
 ## Compiling
 
