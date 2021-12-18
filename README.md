@@ -49,6 +49,21 @@ Also, many parts draw of this repository are inspired by code in these repositor
 
 6. Click "Save items.otb"
 
+## Configuration
+
+Major otb version & client versions can be specified in data/config.json:
+
+```json
+{
+    "clientVersions": [
+        { "name": "12.71", "version": 1271 },
+        { "name": "12.72", "version": 1272 },
+        { "name": "12.81", "version": 1281 }
+    ],
+    "majorOtbVersions": [1, 2, 3]
+}
+```
+
 ## Dependencies
 
 -   [Avalonia](https://avaloniaui.net/)
