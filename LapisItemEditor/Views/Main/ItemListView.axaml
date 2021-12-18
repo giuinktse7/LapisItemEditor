@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:LapisItemEditor.ViewModels"
+             x:Class="LapisItemEditor.Views.ItemListView"
+             Name="ItemListView"
+             >
+
+  <Design.DataContext>
+    <vm:ItemListViewModel/>
+  </Design.DataContext>
+
+  <UserControl.DataContext>
+    <vm:ItemListViewModel/>
+  </UserControl.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button:pointerover TextBlock">
+            <Setter Property="Foreground" Value="#29B6F6" />
+        </Style>
+    </UserControl.Styles>
+
+ <UserControl.Resources>
+    <RecyclePool x:Key="RecyclePool" />
+    <DataTemplate x:Key="defaultKey">
+        <Button
+            Background="Transparent"
+            Command="{Binding #ItemListView.DataContext.ItemTypeSelected}"
+            CommandParameter="{Binding}"
+            Cursor="Hand">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                <Image Width="32" Height="32" Source="{Binding ItemImage}" />
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Padding="8 0 0 0"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="{Binding Name}"/>
+                    <TextBlock
+                        Padding="8 0 0 0"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        Text="{Binding Text}"/>
+                </StackPanel>
+                
+            </StackPanel>
+        </Button>
+      
+    </DataTemplate>
+    <RecyclingElementFactory
+        x:Key="elementFactory"
+        RecyclePool="{StaticResource RecyclePool}"
+        SelectTemplateKey="OnSelectTemplateKey">
+    <RecyclingElementFactory.Templates>
+        <StaticResource x:Key="defaultKey" ResourceKey="defaultKey" />
+    </RecyclingElementFactory.Templates>
+    </RecyclingElementFactory>
+</UserControl.Resources>
+
+ <Border
+    BorderThickness="1"
+    BorderBrush="{DynamicResource SystemControlHighlightBaseMediumLowBrush}"
+    Margin="0 0 16 0"
+    Padding="16">
+    <ScrollViewer
+        Name="scroller"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Visible">
+        <ItemsRepeater
+            Name="repeater"
+            Background="Transparent"
+            Items="{Binding ObservableItems}"
+            ItemTemplate="{StaticResource elementFactory}"/>
+    </ScrollViewer>
+</Border>
+</UserControl>

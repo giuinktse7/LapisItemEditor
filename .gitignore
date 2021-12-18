@@ -1,0 +1,12 @@
+.vscode
+.metals
+.vs
+**.cache
+
+**/bin
+**/obj
+
+tibia.dat
+tibia.spr
+items.otb
+recent.json

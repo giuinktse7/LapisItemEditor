@@ -1,0 +1,65 @@
+﻿<Styles
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style>
+		<Style.Resources>
+			<CornerRadius x:Key="ControlCornerRadius">2</CornerRadius>
+            <Color x:Key="WindowBackgroundColor">#FF212529</Color>
+            <Color x:Key="TibiaColorPickerBackgroundColor">#FF1B1B1B</Color>
+		</Style.Resources>
+	</Style>
+
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <CheckBox IsChecked="true"/>
+    </Border>
+  </Design.PreviewWith>
+
+    <!-- CheckBox -->
+    <Style Selector="CheckBox">
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid x:Name="RootGrid" ColumnDefinitions="16,*">
+                    <Border
+                        x:Name="PART_Border"
+                        Grid.ColumnSpan="2"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" />
+                    <Grid VerticalAlignment="Top" Height="26">
+                        <Border
+                            x:Name="NormalRectangle"
+                            BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            UseLayoutRounding="False"
+                            Height="16"
+                            Width="16" />
+                        <Viewbox UseLayoutRounding="False">
+                            <Panel>
+                                <Panel Height="12" Width="12" />
+                                <Path x:Name="CheckGlyph" StrokeThickness="5" Stretch="Uniform" VerticalAlignment="Center" />
+                            </Panel>
+                        </Viewbox>
+                    </Grid>
+                    <ContentPresenter
+                        x:Name="ContentPresenter"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Content="{TemplateBinding Content}"
+                        Margin="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Grid.Column="1" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <!-- NumericUpDown -->
+    <Style Selector="NumericUpDown /template/ TextBox">
+        <Setter Property="FontSize" Value="{TemplateBinding FontSize}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    
+</Styles>

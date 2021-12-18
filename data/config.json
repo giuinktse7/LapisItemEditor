@@ -1,0 +1,19 @@
+{
+    "clientVersions": [
+        { "name": "11.00", "version": 1100 },
+        { "name": "11.02", "version": 1102 },
+        { "name": "11.40", "version": 1140 },
+        { "name": "11.50", "version": 1150 },
+        { "name": "11.80", "version": 1180 },
+        { "name": "12.00", "version": 1200 },
+        { "name": "12.02", "version": 1202 },
+        { "name": "12.15", "version": 1215 },
+        { "name": "12.20", "version": 1220 },
+        { "name": "12.30", "version": 1230 },
+        { "name": "12.70", "version": 1270 },
+        { "name": "12.71", "version": 1271 },
+        { "name": "12.72", "version": 1272 },
+        { "name": "12.81", "version": 1281 }
+    ],
+    "majorOtbVersions": [1, 2, 3]
+}

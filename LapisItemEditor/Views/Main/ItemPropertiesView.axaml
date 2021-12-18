@@ -1,0 +1,284 @@
+<UserControl
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:LapisItemEditor.ViewModels.ItemProperties"
+    xmlns:local="using:LapisItemEditor.ViewModels.ItemProperties"
+    xmlns:controls="using:LapisItemEditor.Controls"
+    x:Class="LapisItemEditor.Views.ItemProperties.ItemPropertiesView"
+    mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="900"
+             >
+	<UserControl.Styles>
+        <!-- <Style Selector="CheckBox /template/ Border">
+            <Setter Property="BorderBrush" Value="black" />
+        </Style> -->
+        <Style Selector="PathIcon.question-mark">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Data" Value="{StaticResource question_circle_regular}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="controls|NumberInput">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+		<Style Selector="RadioButton.no-ellipse">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Grid ColumnDefinitions="Auto,*" Background="{TemplateBinding Background}">
+						<ContentPresenter Name="PART_ContentPresenter"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}"
+                              Padding="4"
+                              VerticalAlignment="Center"
+                              Grid.Column="1"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+		<Style Selector="RadioButton:checked.no-ellipse">
+			<!-- <Setter Property="FontSize" Value="18"/> -->
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Grid ColumnDefinitions="Auto,*" Background="{TemplateBinding Background}">
+						<ContentPresenter Name="PART_ContentPresenter"
+                              Background="#1A237E"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}"
+                              Padding="4"
+                              VerticalAlignment="Center"
+                              Grid.Column="1"/>
+					</Grid>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+	</UserControl.Styles>
+	<Design.DataContext>
+		<vm:ItemPropertiesViewModel/>
+	</Design.DataContext>
+	<UserControl.DataContext>
+		<vm:ItemPropertiesViewModel/>
+	</UserControl.DataContext>
+
+    <UserControl.Resources>
+        <local:WritableTypeConverter x:Key="WritableTypeConverter" />
+        <local:HangableHookTypeConverter x:Key="HangableHookTypeConverter" />
+        <local:ItemSlotConverter x:Key="ItemSlotConverter" />
+        <local:DefaultActionConverter x:Key="DefaultActionConverter" />
+        <local:MarketCategoryConverter x:Key="MarketCategoryConverter" />
+        <local:PlayerProfessionConverter x:Key="PlayerProfessionConverter" />
+    </UserControl.Resources>
+
+	<Grid Name="MainGrid" RowDefinitions="Auto,*" ColumnDefinitions="*,*,*" Margin="24,18,24,0">
+		<Grid Grid.Row="0" Grid.ColumnSpan="3" Margin="0">
+			<!-- <TextBox HorizontalAlignment="Stretch" Watermark="Filter flags..."/> -->
+		</Grid>
+
+		<!-- First column -->
+    <StackPanel  Grid.Row="1" Grid.Column="0" Orientation="Vertical" MinHeight="200">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <CheckBox IsChecked="{Binding Bank, Mode=TwoWay}">Bank</CheckBox>
+            <StackPanel IsVisible="{Binding Bank}" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center" FontSize="12" Margin="14,0,0,0">Waypoints</TextBlock>
+                <PathIcon Classes="question-mark" ToolTip.Tip="An integer that represents the friction of the tile. Lower values correspond to faster speeds. A value of 0 means that the object is not walkable."/>
+                <controls:NumberInput Minimum="0" Maximum="1200"  Width="30" Value="{Binding BankWaypoints, Mode=TwoWay}"></controls:NumberInput>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Clip, Mode=TwoWay}">Clip</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the appearance is ground but only partially covers it. Examples are borders."/>
+        </StackPanel>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding Bottom, Mode=TwoWay}">Bottom</CheckBox>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding Top, Mode=TwoWay}">Top</CheckBox>
+
+        <CheckBox Margin="0 26 9 0" IsChecked="{Binding Container, Mode=TwoWay}">Container</CheckBox>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding Cumulative, Mode=TwoWay}">Cumulative</CheckBox>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding Usable, Mode=TwoWay}">Usable</CheckBox>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding ForceUse, Mode=TwoWay}">Force use</CheckBox>
+        <CheckBox Margin="0 0 9 0" IsChecked="{Binding MultiUse, Mode=TwoWay}">Multi use</CheckBox>
+        <Grid RowDefinitions="*,*" Margin="0 26 9 0">
+            <TextBlock Grid.Row="0" Padding="4 2 4 2">Writable</TextBlock>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <ComboBox Items="{Binding WritableItemTypes}" SelectedItem="{Binding WritableType, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding, Converter={StaticResource WritableTypeConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <StackPanel IsVisible="{Binding IsWritable}" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" FontSize="12" Margin="14,0,4,0">Text Length</TextBlock>
+                <controls:NumberInput HorizontalAlignment="Left" Grid.Row="1"  Width="105" Value="255" Minimum="0" Maximum="65535"/>
+            </StackPanel>
+            </StackPanel>
+        </Grid>
+        <CheckBox Margin="0,14,0,0" IsChecked="{Binding LiquidPool, Mode=TwoWay}">Liquid Pool</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding LiquidContainer, Mode=TwoWay}">Liquid Container</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Unpass, Mode=TwoWay}">Unpass</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Unmove, Mode=TwoWay}">Unmove</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Unsight, Mode=TwoWay}">Unsight</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Avoid, Mode=TwoWay}">Avoid</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Take, Mode=TwoWay}">Take</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Hang, Mode=TwoWay}">Hang</CheckBox>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding CyclopediaItem, Mode=TwoWay}">Cyclopedia Type</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="The Object ID that will be used to represent this object, which is not always the same as its own ID."/>
+            <StackPanel IsVisible="{Binding CyclopediaItem}" Orientation="Horizontal">
+                <controls:NumberInput Value="{Binding CyclopediaType}" Minimum="100" Width="30" />
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+
+		<!-- Second column -->
+    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200">
+        <Grid RowDefinitions="*,*" Margin="0 0 9 0">
+            <TextBlock Grid.Row="0" Padding="4 2 4 2">Hangable Hook Type</TextBlock>
+            <ComboBox Grid.Row="1" Items="{Binding HangableHookTypes}" SelectedItem="{Binding HangableHookType, Mode=TwoWay}" SelectedIndex="0">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding, Converter={StaticResource HangableHookTypeConverter}}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        </Grid>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding Rotate, Mode=TwoWay}">Rotate</CheckBox>
+        <StackPanel Orientation="Horizontal" Margin="0 14 9 0" VerticalAlignment="Center">
+            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Light, Mode=TwoWay}">Light</CheckBox>
+            <StackPanel IsVisible="{Binding Light}" Margin="7,0,0,0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="10" Margin="0,7,0,4">Brightness</TextBlock>
+                    <controls:NumberInput  Minimum="0" Width="30" Value="{Binding LightBrightness, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="10" Margin="0,7,0,4">Color</TextBlock>
+                    <controls:NumberInput  Minimum="0" Width="30" Value="{Binding LightColor, Mode=TwoWay}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <CheckBox Margin="0 0 8 0">Don't Hide</CheckBox>
+        <CheckBox Margin="0 0 8 0">Translucent</CheckBox>
+        <Grid RowDefinitions="*,*" Margin="0 14 9 0">
+            <CheckBox Margin="0 0 8 0" IsChecked="{Binding Shift, Mode=TwoWay}">Shift</CheckBox>
+            <StackPanel Margin="7,0,0,0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" IsVisible="{Binding Shift}">
+                <TextBlock VerticalAlignment="Center" FontSize="10" Margin="0,0,4,0">X:</TextBlock>
+                <controls:NumberInput ></controls:NumberInput>
+                <TextBlock VerticalAlignment="Center" FontSize="10" Margin="0,0,4,0">Y:</TextBlock>
+                <controls:NumberInput ></controls:NumberInput>
+            </StackPanel>
+        </Grid>
+        <CheckBox Margin="0 0 8 0">Wrap</CheckBox>
+        <CheckBox Margin="0 0 8 0">Unwrap</CheckBox>
+        <CheckBox Margin="0 0 8 0">Top Effect</CheckBox>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsEnabled="False" Margin="0 0 8 0">NPC Sale data (TODO)</CheckBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ChangedToExpire, Mode=TwoWay}" VerticalAlignment="Center">Changed To Expire</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the item can be switched on Action Bars using the Smart Switch option (like with rings)." VerticalAlignment="Center"/>
+            <StackPanel IsVisible="{Binding ChangedToExpire}" Orientation="Horizontal" Margin="8,0,0,0" VerticalAlignment="Center">
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="0,0,4,0">Former Type ID</TextBlock>
+                <controls:NumberInput  Minimum="100" Width="30" Value="{Binding ChangedToExpireFormerObjectTypeId, Mode=TwoWay}" />
+            </StackPanel>
+        </StackPanel>
+        <CheckBox Margin="0 0 8 0">Corpse</CheckBox>
+        <CheckBox Margin="0 0 8 0">Player Corpse</CheckBox>
+    </StackPanel>
+
+        <!-- Third column -->
+    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" MinHeight="200">
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Height, Mode=TwoWay}">Height</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If an object offsets objects that sit on top of it (like a table or a parcel)." />
+            <StackPanel IsVisible="{Binding Height}" Orientation="Horizontal" Margin="4,0,0,0" VerticalAlignment="Center">
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="0,0,4,0">Elevation</TextBlock>
+                <controls:NumberInput Width="30" Value="{Binding Elevation, Mode=TwoWay}"></controls:NumberInput>
+            </StackPanel>
+        </StackPanel>
+        <CheckBox Margin="0 0 8 0">Lying Object</CheckBox>
+        <CheckBox Margin="0 0 8 0">Animate Always</CheckBox>
+        <CheckBox Margin="0 0 8 0">No Movement Animation</CheckBox>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Automap, Mode=TwoWay}">Automap</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the appearance should be displayed on the Automap." />
+            <StackPanel IsVisible="{Binding Automap}" Orientation="Horizontal" Margin="4,0,0,0" VerticalAlignment="Center">
+                <TextBlock FontSize="12" VerticalAlignment="Center" Margin="0,0,4,0">Color</TextBlock>
+                <controls:NumberInput Width="30" Minimum="0" Maximum="215" Value="{Binding AutomapColor, Mode=TwoWay}" Margin="0,0,4,0" />
+                <controls:TibiaColorPicker SelectedColorId="{Binding AutomapColor, Mode=TwoWay}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="0 14 9 0">
+            <CheckBox Margin="0 0 8 0">Lens help</CheckBox>
+            <controls:NumberInput HorizontalAlignment="Left" MaxWidth="80"></controls:NumberInput>
+        </StackPanel>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding FullBank, Mode=TwoWay}">Full bank</CheckBox>
+        <CheckBox Margin="0 0 8 0" IsChecked="{Binding IgnoreLook, Mode=TwoWay}">Ignore look</CheckBox>
+        <StackPanel>
+            <CheckBox Margin="0 0 8 0" IsChecked="{Binding HasClothSlot, Mode=TwoWay}">Item Slot (Clothes)</CheckBox>
+            <ComboBox IsVisible="{Binding HasClothSlot}" Items="{Binding ClothSlots}" SelectedItem="{Binding ClothSlot, Mode=TwoWay}" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding, Converter={StaticResource ItemSlotConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel>
+          <CheckBox Margin="0 0 8 0" IsChecked="{Binding DefaultAction, Mode=TwoWay}">Default Action</CheckBox>
+            <ComboBox IsVisible="{Binding DefaultAction}" Items="{Binding DefaultActions}" SelectedItem="{Binding SelectedDefaultAction, Mode=TwoWay}" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding, Converter={StaticResource DefaultActionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel>
+        <CheckBox IsChecked="{Binding HasMarket, Mode=TwoWay}" Margin="0 0 8 0">Market</CheckBox>
+        <StackPanel IsVisible="{Binding HasMarket}" Orientation="Vertical" Margin="24, 0, 0, 0">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding HasMarketCategory, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,8,0">Category</CheckBox>
+                <ComboBox IsVisible="{Binding HasMarketCategory}" Items="{Binding MarketCategories}" SelectedItem="{Binding MarketCategory, Mode=TwoWay}" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding, Converter={StaticResource MarketCategoryConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding HasMarketProfession, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,8,0">Profession</CheckBox>
+                <ListBox SelectionMode="Multiple,Toggle,AlwaysSelected" IsVisible="{Binding HasMarketProfession}" Items="{Binding PlayerProfessions}" Selection="{Binding MarketProfessionSelection}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding, Converter={StaticResource PlayerProfessionConverter}}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <CheckBox VerticalAlignment="Center" Margin="0,0,8,0">Trade as</CheckBox>
+                <controls:NumberInput HorizontalAlignment="Left" MaxWidth="80"  Minimum="100" Value="100" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox VerticalAlignment="Center" Margin="0,0,8,0">Show as</CheckBox>
+            <controls:NumberInput HorizontalAlignment="Left" MaxWidth="80"  Minimum="100" Value="100" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox VerticalAlignment="Center" Margin="0,0,8,0">Minimum level</CheckBox>
+            <controls:NumberInput HorizontalAlignment="Left" MaxWidth="80" />
+            </StackPanel>
+            
+        </StackPanel>
+    </StackPanel>
+      
+    </StackPanel>
+	</Grid>
+</UserControl>

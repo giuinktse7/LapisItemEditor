@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:itemProperties="clr-namespace:LapisItemEditor.Views.ItemProperties"
+             xmlns:views="clr-namespace:LapisItemEditor.Views"
+             xmlns:controls="using:LapisItemEditor.Controls"
+             xmlns:local="using:LapisItemEditor.ViewModels.Main"
+             x:Class="LapisItemEditor.Views.MainView"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
+
+<UserControl.Styles>
+  <Style Selector="controls|NumberInput">
+    <Setter Property="FontSize" Value="12" />
+  </Style>
+</UserControl.Styles>
+
+<UserControl.Resources>
+    <local:ClientVersionConverter x:Key="ClientVersionConverter" />
+</UserControl.Resources>
+
+<Grid ColumnDefinitions="300,*" RowDefinitions="Auto,Auto,*,Auto" Margin="8">
+  <!-- Row 0 -->
+  <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="12" Spacing="12">
+    <Button Command="{Binding CreateMissingItems}">Create missing items</Button>
+    <Button Command="{Binding WriteItemsOtb}">Save items.otb</Button>
+    <Button Command="{Binding ImportItemNames}">Import item names from file</Button>
+  </StackPanel>
+
+  <!-- Row 1 -->
+  <StackPanel Margin="12 12 0 12" Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+    <TextBlock Margin="0 0 7 0" Text="OTB major version" Padding="0" VerticalAlignment="Center"/>
+    <ComboBox Items="{Binding MajorOtbVersions}" SelectedItem="{Binding OtbMajorVersion, Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding}" />
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+    </ComboBox>
+    
+    <TextBlock Margin="14 0 7 0" Text="OTB minor version" Padding="0" VerticalAlignment="Center"/>
+    <controls:NumberInput Minimum="0" Maximum="1000" Width="40" Value="{Binding OtbMinorVersion, Mode=TwoWay}" />
+
+    <TextBlock Margin="7 0 7 0" Text="OTB client version" Padding="0" VerticalAlignment="Center"/>
+    <ComboBox Items="{Binding InputClientVersions}" SelectedItem="{Binding InputClientVersion, Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding, Converter={StaticResource ClientVersionConverter}}" />
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+    </ComboBox>
+  </StackPanel>
+
+  <!-- Row 2 -->
+  <views:ItemListView Grid.Row="2" Grid.Column="0" DataContext="{Binding Items}"/>
+  <itemProperties:ItemPropertiesView Grid.Row="2" Grid.Column="1" DataContext="{Binding ItemProperties}"/>
+</Grid>
+
+</UserControl>

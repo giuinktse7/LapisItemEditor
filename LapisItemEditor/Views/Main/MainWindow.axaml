@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:vm="using:LapisItemEditor.ViewModels"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:rxui="http://reactiveui.net"
+        xmlns:local="using:LapisItemEditor.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:ItemEditor.Views"
+        x:Class="LapisItemEditor.Views.MainWindow"
+        x:Name="MainWindow"
+        Title="LapisItemEditor"
+        Width="980"
+        Height="600"
+        MinWidth="600"
+        PointerPressed="WindowPressed"
+        Background="{StaticResource WindowBackgroundColor}"
+        MinHeight="400"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
+
+        <Design.DataContext>
+            <vm:MainWindowViewModel />
+        </Design.DataContext>
+        
+
+    <Window.Styles>
+      <!-- <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+      </Style> -->
+      <Style Selector="Button:pointerover TextBlock">
+        <Setter Property="Foreground" Value="#29B6F6" />
+      </Style>
+    </Window.Styles>
+
+<Panel>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Menu Grid.Row="0" HorizontalAlignment="Left" DockPanel.Dock="Top" Margin="8,8,0,0">
+            <MenuItem Header="_File">
+              <!-- <MenuItem Header="_Open..."/> -->
+                <!-- <Separator/> -->
+                <MenuItem Header="Close Client" Command="{Binding CloseGameData}"/>
+                <MenuItem Header="_Exit" Command="{Binding ExitProgram}"/>
+            </MenuItem>
+            <!-- <MenuItem Name="MenuItemEdit" Header="_Edit">
+            </MenuItem>
+            <MenuItem Header="_View">
+            </MenuItem>
+            <MenuItem Header="_Help">
+            </MenuItem> -->
+        </Menu>
+        
+        <rxui:RoutedViewHost Grid.Row="1" DockPanel.Dock="Bottom" Router="{Binding Router}" PageTransition="{x:Null}">
+            <rxui:RoutedViewHost.DefaultContent>
+                <TextBlock Text="Default content"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+            </rxui:RoutedViewHost.DefaultContent>
+        </rxui:RoutedViewHost>
+        
+         <Border
+            Grid.Row="3"
+            Grid.ColumnSpan="3"
+            BorderThickness="0 1 0 0"
+            BorderBrush="{DynamicResource SystemControlHighlightBaseMediumLowBrush}"
+            Margin="0"
+            Padding="16">
+              <StackPanel Orientation="Horizontal" Margin="0">
+                <PathIcon Width="10" Height="10" Margin="0, 0, 4, 0" Data="{StaticResource caret_right_regular}" Foreground="#546E7A" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding InfoMessage}" FontSize="13"/>
+              </StackPanel>
+        </Border>
+    </Grid>
+</Panel>
+</Window>

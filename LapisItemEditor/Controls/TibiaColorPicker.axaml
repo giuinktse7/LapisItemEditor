@@ -1,0 +1,38 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:LapisItemEditor.Controls"
+        xmlns:local="using:LapisItemEditor.Controls">
+  <Design.PreviewWith>
+    <Border Margin="20, 20, 20, 20">
+      <StackPanel Spacing="20">
+        <controls:TibiaColorPicker />
+      </StackPanel>
+    </Border>
+  </Design.PreviewWith>
+
+  <Styles.Resources>
+        <local:HexColorConverter x:Key="HexColorConverter" />
+  </Styles.Resources>
+  
+    <Style Selector="Button.color-picker /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="controls|TibiaColorPicker">
+        <Setter Property="Background" Value="{DynamicResource TibiaColorPickerBackgroundColor}"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Button Classes="color-picker" Width="50" Height="20" Name="PART_Button" Grid.Column="1" Margin="2,0,2,0" Padding="0" ClipToBounds="False">
+                        <Rectangle Fill="{TemplateBinding SelectedColor, Converter={StaticResource HexColorConverter}}" Width="50" Height="20" />
+                    </Button>
+                    <Popup Name="PART_Popup" PlacementTarget="{TemplateBinding}" IsLightDismissEnabled="True">
+                        <WrapPanel Background="{TemplateBinding Background}" Name="PART_WrapPanel" Orientation="Horizontal" MaxWidth="400">
+                        </WrapPanel>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+  
+</Styles>

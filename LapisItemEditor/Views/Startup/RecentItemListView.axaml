@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="using:LapisItemEditor.Views.RecentItems"
+             xmlns:vm="using:LapisItemEditor.ViewModels.RecentItems"
+             Name="RecentItemListView"
+             x:Class="LapisItemEditor.Views.RecentItems.RecentItemListView">
+    <UserControl.Styles>
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button:pointerover TextBlock">
+        <Setter Property="Foreground" Value="#29B6F6" />
+        </Style>
+    </UserControl.Styles>
+  
+    <Design.DataContext>
+        <vm:RecentItemListViewModel/>
+    </Design.DataContext>
+
+    <UserControl.DataContext>
+        <vm:RecentItemListViewModel/>
+    </UserControl.DataContext>
+
+ <UserControl.Resources>
+    <RecyclePool x:Key="RecyclePool" />
+    <DataTemplate x:Key="file">
+            <Button
+                Command="{Binding #RecentItemListView.DataContext.RecentItemSelected}"
+                CommandParameter="{Binding}"
+                Cursor="Hand"
+                Foreground="#2D9CDB"
+                Background="Transparent">
+                <WrapPanel>
+                    <PathIcon Width="16" Height="16" Margin="0, 0, 7, 0" Data="{StaticResource note_add_regular}" />
+                    <TextBlock Text="{Binding Text}" VerticalAlignment="Center"/>
+                </WrapPanel>
+            </Button>
+        </DataTemplate>
+        <DataTemplate x:Key="folder">
+            <Button
+                Command="{Binding #RecentItemListView.DataContext.RecentItemSelected}"
+                CommandParameter="{Binding}"
+                Cursor="Hand"
+                Foreground="#2D9CDB"
+                Background="Transparent">
+                <WrapPanel>
+                    <PathIcon Width="16" Height="16" Margin="0, 0, 7, 0" Data="{StaticResource folder_regular}" />
+                    <TextBlock Text="{Binding Text}" VerticalAlignment="Center"/>
+                </WrapPanel>
+            </Button>
+        </DataTemplate>
+        <DataTemplate x:Key="defaultKey">
+            <Button
+                Cursor="Hand"
+                Foreground="#2D9CDB"
+                Background="Transparent">
+                    <TextBlock Text="{Binding Text}" VerticalAlignment="Center"/>
+            </Button>
+        </DataTemplate>
+    <RecyclingElementFactory
+        x:Key="elementFactory"
+        RecyclePool="{StaticResource RecyclePool}"
+        SelectTemplateKey="OnSelectTemplateKey">
+    <RecyclingElementFactory.Templates>
+        <StaticResource x:Key="file" ResourceKey="file" />
+        <StaticResource x:Key="folder" ResourceKey="folder" />
+        <StaticResource x:Key="defaultKey" ResourceKey="defaultKey" />
+    </RecyclingElementFactory.Templates>
+    </RecyclingElementFactory>
+</UserControl.Resources>
+
+<ItemsRepeater Items="{Binding RecentItems}" ItemTemplate="{StaticResource elementFactory}"/>
+</UserControl>

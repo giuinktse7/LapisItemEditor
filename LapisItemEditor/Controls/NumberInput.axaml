@@ -1,0 +1,47 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:LapisItemEditor.Controls">
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <StackPanel Spacing="20">
+        <controls:NumberInput Minimum="0"
+                       Maximum="10"
+                       Width="150"
+                       Watermark="Enter text" />
+        <controls:NumberInput Minimum="0"
+                       Maximum="10"
+                       Width="150"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Watermark="Enter text" />
+      </StackPanel>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="controls|NumberInput">
+    <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+    <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
+    <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />    
+    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+    <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+          <TextBox Name="PART_TextBox"
+                   Background="{TemplateBinding Background}"
+                   BorderBrush="{TemplateBinding BorderBrush}"
+                   Padding="{TemplateBinding Padding}"
+                   Watermark="{TemplateBinding Watermark}"
+                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                   Text="{TemplateBinding Text}"
+                   AcceptsReturn="False"
+                   TextWrapping="NoWrap" />
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+</Styles>
