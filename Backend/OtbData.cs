@@ -49,6 +49,8 @@ namespace Backend
         WareId,
         UpgradeClassification,
 
+        Article,
+
 
         Last
     };
@@ -211,6 +213,7 @@ namespace Backend
                 ushort? wareId = null;
                 byte? upgradeClassification = null;
                 string? name = null;
+                string? article = null;
                 string? description = null;
                 ushort? maxTextLen = null;
                 ushort? maxTextLenOnce = null;
@@ -264,6 +267,10 @@ namespace Backend
 
                         case OtbItemAttribute.Name:
                             name = reader.NextString(attributeSize);
+                            break;
+
+                        case OtbItemAttribute.Article:
+                            article = reader.NextString(attributeSize);
                             break;
 
                         case OtbItemAttribute.Description:
@@ -352,6 +359,11 @@ namespace Backend
                         if (name != null)
                         {
                             appearance.Data.Name = name;
+                        }
+
+                        if (article != null)
+                        {
+                            appearance.Article = article;
                         }
 
                         if (description != null)
@@ -751,6 +763,12 @@ namespace Backend
                         writer.WriteBytesWithoutSizeHint(bytes);
                     }
 
+                    if (!string.IsNullOrEmpty(appearance.Article))
+                    {
+                        var bytes = appearance.Article.ToCharArray();
+                        writer.WriteAttributeType(OtbItemAttribute.Article, (ushort)bytes.Length);
+                        writer.WriteBytesWithoutSizeHint(bytes);
+                    }
                 }
 
                 // Close the ItemType node
