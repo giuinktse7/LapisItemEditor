@@ -110,6 +110,28 @@ namespace LapisItemEditor.ViewModels.Main
                     }
                 }
             });
+
+            ExportItemsXml = ReactiveCommand.Create(async () =>
+            {
+                StringBuilder sb = new StringBuilder("", Items.Items.Count * 50);
+                foreach (var item in Items.Items.Items)
+                {
+
+                    var row = $"<item id=\"{item.ServerId}\"";
+                    if (item.Appearance?.Article != null)
+                    {
+                        row += $" article=\"{item.Appearance?.Article}\"";
+                    }
+                    if (item.Name != null)
+                    {
+                        row += $" name=\"{item.Name}\"";
+                    }
+                    row += "/>\n";
+                    sb.Append(row);
+                }
+
+                await File.WriteAllTextAsync("items.xml", sb.ToString());
+            });
         }
 
         private void ImportItemNamesFromFile(string path)
