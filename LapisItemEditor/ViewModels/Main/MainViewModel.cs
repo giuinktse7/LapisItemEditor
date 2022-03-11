@@ -248,6 +248,7 @@ namespace LapisItemEditor.ViewModels.Main
         public ICommand CreateMissingItems { get; }
         public ICommand WriteItemsOtb { get; }
         public ICommand ImportItemNames { get; }
+        public ICommand ExportItemsXml { get; }
 
         private uint otbMinorVersion = 0;
         public uint OtbMinorVersion { get => otbMinorVersion; set => this.RaiseAndSetIfChanged(ref otbMinorVersion, value); }

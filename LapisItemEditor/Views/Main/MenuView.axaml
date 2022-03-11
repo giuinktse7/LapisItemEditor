@@ -1,0 +1,24 @@
+             
+<UserControl 
+    x:Class="LapisItemEditor.Views.MenuView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
+<Menu>
+    <MenuItem Header="_File">
+        <!-- <MenuItem Header="_Open..."/> -->
+        <!-- <Separator/> -->
+        <MenuItem Header="Close Client" Command="{Binding CloseGameData}"/>
+        <MenuItem Header="_Exit" Command="{Binding ExitProgram}"/>
+    </MenuItem>
+    <!-- <MenuItem Name="MenuItemEdit" Header="_Edit">
+    </MenuItem>
+    <MenuItem Header="_View">
+    </MenuItem>
+    <MenuItem Header="_Help">
+    </MenuItem> -->
+</Menu>
+
+</UserControl>

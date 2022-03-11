@@ -17,6 +17,8 @@ namespace LapisItemEditor.ViewModels
         MainViewModel mainViewModel;
         WelcomeViewModel welcomeViewModel;
 
+        MenuViewModel menuViewModel { get; } = new();
+
         public MainWindowViewModel()
         {
             mainViewModel = new MainViewModel(this);
@@ -26,7 +28,7 @@ namespace LapisItemEditor.ViewModels
             {
                 Router.Navigate.Execute(welcomeViewModel);
 
-                CloseGameData = ReactiveCommand.Create(() =>
+                menuViewModel.CloseGameData = ReactiveCommand.Create(() =>
                 {
                     Backend.Backend.Reset();
 
@@ -36,7 +38,7 @@ namespace LapisItemEditor.ViewModels
                     mainViewModel = new MainViewModel(this);
                 });
 
-                ExitProgram = ReactiveCommand.Create(() =>
+                menuViewModel.ExitProgram = ReactiveCommand.Create(() =>
                 {
                     if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                     {
@@ -65,8 +67,7 @@ namespace LapisItemEditor.ViewModels
                 });
         }
 
-        public ICommand CloseGameData { get; }
-        public ICommand ExitProgram { get; }
+
 
         private string infoMessage = "Ready.";
         public string InfoMessage { get => infoMessage; set => this.RaiseAndSetIfChanged(ref infoMessage, value); }

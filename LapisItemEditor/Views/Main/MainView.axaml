@@ -25,6 +25,7 @@
     <Button Command="{Binding CreateMissingItems}">Create missing items</Button>
     <Button Command="{Binding WriteItemsOtb}">Save items.otb</Button>
     <Button Command="{Binding ImportItemNames}">Import item names from file</Button>
+    <Button Command="{Binding ExportItemsXml}">Export items.xml</Button>
   </StackPanel>
 
   <!-- Row 1 -->

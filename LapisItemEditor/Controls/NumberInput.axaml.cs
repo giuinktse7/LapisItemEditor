@@ -353,8 +353,6 @@ namespace LapisItemEditor.Controls
             result = ConvertTextToValueCore(currentValueText, text);
 
             return (uint)MathUtilities.Clamp(result, Minimum, Maximum);
-
-            return result;
         }
 
         /// <summary>
