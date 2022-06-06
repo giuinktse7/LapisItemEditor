@@ -68,7 +68,7 @@ namespace Backend.Otb
                     ++cursor;
                 }
 
-                result += (ushort)(((uint)buffer[cursor]) << (8 * shift));
+                result += (uint)(((uint)buffer[cursor]) << (8 * shift));
                 ++cursor;
                 ++shift;
             }
