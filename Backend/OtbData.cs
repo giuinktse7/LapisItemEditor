@@ -192,6 +192,141 @@ namespace Backend
             return -1;
         }
 
+        public OtbItem? ReadOtbItemNode(OtbReader reader)
+        {
+            byte start = reader.NextU8();
+            Debug.Assert(start == (byte)NodeType.Start);
+
+            byte itemGroup = reader.NextU8();
+            ItemTypeFlag flags = (ItemTypeFlag)reader.NextU32();
+
+            var otbItem = new OtbItem();
+            otbItem.Flags = flags;
+
+            while (reader.PeekByte() != (byte)NodeType.End)
+            {
+                byte attributeType = reader.NextU8();
+                ushort attributeSize = reader.NextU16();
+
+                switch ((OtbItemAttribute)attributeType)
+                {
+                    case OtbItemAttribute.ServerId:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.ServerId = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.ClientId:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.ClientId = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.Speed:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.Speed = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.MinimapColor:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.MinimapColor = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.Light2:
+                        Debug.Assert(attributeSize == 4);
+                        otbItem.LightLevel = reader.NextU16();
+                        otbItem.LightColor = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.MaxTextLength:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.MaxTextLen = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.MaxTextLengthOnce:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.MaxTextLenOnce = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.Name:
+                        otbItem.Name = reader.NextString(attributeSize);
+                        break;
+
+                    case OtbItemAttribute.Article:
+                        otbItem.Article = reader.NextString(attributeSize);
+                        break;
+
+                    case OtbItemAttribute.Description:
+                        otbItem.Description = reader.NextString(attributeSize);
+                        break;
+
+                    case OtbItemAttribute.TopOrder:
+                        Debug.Assert(attributeSize == 1);
+                        otbItem.StackOrder = (StackOrder)reader.NextU8();
+                        break;
+
+                    case OtbItemAttribute.SpriteHash:
+                        otbItem.SpriteHash = reader.NextBytes(attributeSize);
+                        break;
+
+                    case OtbItemAttribute.WareId:
+                        Debug.Assert(attributeSize == 2);
+                        otbItem.WareId = reader.NextU16();
+                        break;
+
+                    case OtbItemAttribute.UpgradeClassification:
+                        Debug.Assert(attributeSize == 1);
+                        otbItem.UpgradeClassification = reader.NextU8();
+                        break;
+
+                    default:
+                        // Skip unknown attributes
+                        reader.SkipBytes(attributeSize);
+                        break;
+                }
+            }
+
+            byte endToken = reader.NextU8();
+            Debug.Assert(endToken == (byte)NodeType.End);
+
+
+            // Ignore nodes with clientId 0, these are probably items from older versions that have since been removed.
+            if (otbItem.ClientId == 0)
+            {
+                return null;
+            }
+
+            otbItem.ServerItemGroup = (ServerItemGroup)itemGroup;
+
+            switch (otbItem.ServerItemGroup)
+            {
+                case ServerItemGroup.Container:
+                    otbItem.ItemType = ItemType_t.Container;
+                    break;
+                case ServerItemGroup.Door:
+                    otbItem.ItemType = ItemType_t.Door;
+                    break;
+                case ServerItemGroup.MagicField:
+                    otbItem.ItemType = ItemType_t.MagicField;
+                    break;
+                case ServerItemGroup.Teleport:
+                    otbItem.ItemType = ItemType_t.Teleport;
+                    break;
+                case ServerItemGroup.ShowOffSocket:
+                    otbItem.ItemType = ItemType_t.ShowOffSocket;
+                    break;
+                case ServerItemGroup.None:
+                case ServerItemGroup.Ground:
+                case ServerItemGroup.Splash:
+                case ServerItemGroup.Fluid:
+                case ServerItemGroup.Charges:
+                case ServerItemGroup.Deprecated:
+                    break;
+                default:
+                    throw new InvalidDataException("Invalid ItemTypeGroup.");
+            }
+
+            return otbItem;
+        }
+
         private void ReadNodes(OtbReader reader, GameData gameData, bool ignoreAttributes)
         {
             HashSet<uint> serverIds = new HashSet<uint>();
@@ -200,338 +335,30 @@ namespace Backend
 
             while (reader.PeekByte() != (byte)NodeType.End)
             {
-                byte start = reader.NextU8();
-                Debug.Assert(start == (byte)NodeType.Start);
-
-                byte itemGroup = reader.NextU8();
-                ItemTypeFlag flags = (ItemTypeFlag)reader.NextU32();
-
-                ushort? serverId = null;
-                ushort? clientId = null;
-                ushort? lightLevel = null;
-                ushort? lightColor = null;
-                ushort? wareId = null;
-                byte? upgradeClassification = null;
-                string? name = null;
-                string? article = null;
-                string? description = null;
-                ushort? maxTextLen = null;
-                ushort? maxTextLenOnce = null;
-                ushort? speed = null;
-                byte? stackOrder = null;
-                ushort? minimapColor = null;
-                byte[]? spriteHash = null;
-
-                while (reader.PeekByte() != (byte)NodeType.End)
+                var otbItem = ReadOtbItemNode(reader);
+                if (otbItem == null)
                 {
-                    byte attributeType = reader.NextU8();
-                    ushort attributeSize = reader.NextU16();
-
-                    switch ((OtbItemAttribute)attributeType)
-                    {
-                        case OtbItemAttribute.ServerId:
-                            Debug.Assert(attributeSize == 2);
-                            serverId = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.ClientId:
-                            Debug.Assert(attributeSize == 2);
-                            clientId = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.Speed:
-                            Debug.Assert(attributeSize == 2);
-                            speed = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.MinimapColor:
-                            Debug.Assert(attributeSize == 2);
-                            minimapColor = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.Light2:
-                            Debug.Assert(attributeSize == 4);
-                            lightLevel = reader.NextU16();
-                            lightColor = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.MaxTextLength:
-                            Debug.Assert(attributeSize == 2);
-                            maxTextLen = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.MaxTextLengthOnce:
-                            Debug.Assert(attributeSize == 2);
-                            maxTextLenOnce = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.Name:
-                            name = reader.NextString(attributeSize);
-                            break;
-
-                        case OtbItemAttribute.Article:
-                            article = reader.NextString(attributeSize);
-                            break;
-
-                        case OtbItemAttribute.Description:
-                            description = reader.NextString(attributeSize);
-                            break;
-
-                        case OtbItemAttribute.TopOrder:
-                            Debug.Assert(attributeSize == 1);
-                            stackOrder = reader.NextU8();
-                            break;
-
-                        case OtbItemAttribute.SpriteHash:
-                            spriteHash = reader.NextBytes(attributeSize);
-                            break;
-
-                        case OtbItemAttribute.WareId:
-                            Debug.Assert(attributeSize == 2);
-                            wareId = reader.NextU16();
-                            break;
-
-                        case OtbItemAttribute.UpgradeClassification:
-                            Debug.Assert(attributeSize == 1);
-                            upgradeClassification = reader.NextU8();
-                            break;
-
-                        default:
-                            // Skip unknown attributes
-                            reader.SkipBytes(attributeSize);
-                            break;
-                    }
+                    continue;
                 }
+
+                var serverId = otbItem.ServerId;
+                var clientId = otbItem.ClientId;
 
                 // Ignore nodes with clientId 0, these are probably items from older versions that have since been removed.
-                if (clientId != 0 && clientId != null)
+                maxServerId = Math.Max(maxServerId, serverId);
+                maxClientId = Math.Max(maxClientId, clientId);
+
+                serverIds.Add(serverId);
+
+                ServerIdToClientId.Add(serverId, clientId);
+
+                Appearance appearance = gameData.GetOrCreateItemTypeByClientId(clientId);
+                if (appearance.Data.Flags == null)
                 {
-                    maxServerId = Math.Max(maxServerId, (uint)serverId);
-                    maxClientId = Math.Max(maxClientId, (uint)clientId);
-
-                    serverIds.Add((uint)serverId);
-
-                    ServerIdToClientId.Add((uint)serverId, (uint)clientId);
-
-                    Appearance appearance = gameData.GetOrCreateItemTypeByClientId((uint)clientId);
-                    if (appearance.Data.Flags == null)
-                    {
-                        appearance.Data.Flags = new Proto.Appearances.AppearanceFlags();
-                    }
-
-                    appearance.OtbServerItemGroup = (ServerItemGroup)itemGroup;
-
-                    switch ((ServerItemGroup)itemGroup)
-                    {
-                        case ServerItemGroup.Container:
-                            appearance.ItemType = ItemType_t.Container;
-                            break;
-                        case ServerItemGroup.Door:
-                            appearance.ItemType = ItemType_t.Door;
-                            break;
-                        case ServerItemGroup.MagicField:
-                            appearance.ItemType = ItemType_t.MagicField;
-                            break;
-                        case ServerItemGroup.Teleport:
-                            appearance.ItemType = ItemType_t.Teleport;
-                            break;
-                        case ServerItemGroup.ShowOffSocket:
-                            appearance.ItemType = ItemType_t.ShowOffSocket;
-                            break;
-                        case ServerItemGroup.None:
-                        case ServerItemGroup.Ground:
-                        case ServerItemGroup.Splash:
-                        case ServerItemGroup.Fluid:
-                        case ServerItemGroup.Charges:
-                        case ServerItemGroup.Deprecated:
-                            break;
-                        default:
-                            throw new InvalidDataException("Invalid ItemTypeGroup.");
-                    }
-
-                    if (serverId != null)
-                    {
-                        appearance.ServerId = (uint)serverId;
-                    }
-
-                    if (!ignoreAttributes)
-                    {
-                        if (name != null)
-                        {
-                            appearance.Data.Name = name;
-                        }
-
-                        if (article != null)
-                        {
-                            appearance.Article = article;
-                        }
-
-                        if (description != null)
-                        {
-                            appearance.Data.Description = description;
-                        }
-
-                        if (spriteHash != null)
-                        {
-                            appearance.SpriteHash = spriteHash;
-                        }
-
-                        appearance.OtbFlags = flags;
-                        var dataFlags = appearance.Data.Flags;
-
-                        if (maxTextLen != null)
-                        {
-                            appearance.setMaxTextLength((ushort)maxTextLen);
-                        }
-
-                        if (maxTextLenOnce != null)
-                        {
-                            appearance.setMaxTextLength((ushort)maxTextLenOnce);
-                        }
-
-                        if (minimapColor != null)
-                        {
-                            appearance.SetAutomapColor((ushort)minimapColor);
-                        }
-
-
-                        if (flags.HasFlag(ItemTypeFlag.HookEast))
-                        {
-                            appearance.SetHookDirection(Proto.Shared.HOOK_TYPE.East);
-                        }
-
-                        else if (flags.HasFlag(ItemTypeFlag.HookSouth))
-                        {
-                            appearance.SetHookDirection(Proto.Shared.HOOK_TYPE.South);
-                        }
-
-                        appearance.AllowDistRead = flags.HasFlag(ItemTypeFlag.AllowDistRead);
-
-                        if (flags.HasFlag(ItemTypeFlag.BlockSolid))
-                        {
-                            dataFlags.Unpass = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.BlockProjectile))
-                        {
-                            dataFlags.Unsight = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Hangable))
-                        {
-                            dataFlags.Hang = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Rotatable))
-                        {
-                            dataFlags.Rotate = true;
-                        }
-
-
-                        if (flags.HasFlag(ItemTypeFlag.Readable))
-                        {
-                            appearance.Readable = true;
-                        }
-
-
-                        if (flags.HasFlag(ItemTypeFlag.IgnoreLook))
-                        {
-                            dataFlags.IgnoreLook = true;
-                        }
-
-
-                        if (flags.HasFlag(ItemTypeFlag.Animation))
-                        {
-                            appearance.IsAnimation = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.ForceUse))
-                        {
-                            dataFlags.Forceuse = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.BlockPathfind))
-                        {
-                            dataFlags.Avoid = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.MultiUse))
-                        {
-                            dataFlags.Usable = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Pickupable))
-                        {
-                            dataFlags.Take = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Stackable))
-                        {
-                            dataFlags.Cumulative = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Ammo))
-                        {
-                            dataFlags.Ammo = true;
-                        }
-
-                        if (flags.HasFlag(ItemTypeFlag.Reportable))
-                        {
-                            dataFlags.Reportable = true;
-                        }
-
-                        dataFlags.Unmove = !flags.HasFlag(ItemTypeFlag.Movable);
-
-                        if (speed != null)
-                        {
-                            if (appearance.HasBank)
-                            {
-                                dataFlags.Bank.Waypoints = (uint)speed;
-                            }
-                            else
-                            {
-                                dataFlags.Bank = new Proto.Appearances.AppearanceFlagBank() { Waypoints = (uint)speed };
-                            }
-                        }
-
-                        if (lightLevel != null && lightColor != null)
-                        {
-                            appearance.setLight((ushort)lightLevel, (ushort)lightColor);
-                        }
-
-                        if (wareId != null)
-                        {
-                            var marketFlags = appearance.GetOrCreateMarketFlags();
-                            marketFlags.TradeAsObjectId = (ushort)wareId;
-                        }
-
-                        if (upgradeClassification != null)
-                        {
-                            dataFlags.Upgradeclassification.UpgradeClassification = (uint)upgradeClassification;
-                        }
-
-                        if (stackOrder != null)
-                        {
-                            Debug.Assert(stackOrder >= 0 && stackOrder <= 4);
-                            switch ((StackOrder)stackOrder)
-                            {
-                                case StackOrder.Border:
-                                    dataFlags.Clip = true;
-                                    break;
-                                case StackOrder.Bottom:
-                                    dataFlags.Bottom = true;
-                                    break;
-                                case StackOrder.Top:
-                                    dataFlags.Top = true;
-                                    break;
-                                default: break;
-                            }
-                        }
-                    }
+                    appearance.Data.Flags = new Proto.Appearances.AppearanceFlags();
                 }
 
-                byte endToken = reader.NextU8();
-                Debug.Assert(endToken == (byte)NodeType.End);
+                appearance.otbItem = otbItem;
             }
 
             this.LastClientId = maxClientId;
@@ -564,11 +391,16 @@ namespace Backend
 
                     uint serverId = serverIdCursor;
 
-                    appearance.ServerId = serverId;
+                    if (appearance.otbItem == null)
+                    {
+                        appearance.otbItem = new OtbItem();
+                    }
+
+                    appearance.otbItem.ServerId = (ushort)serverId;
+                    // appearance.SyncOtbWithTibia();
 
                     ServerIdToClientId.Add(serverId, clientId);
                     ++createdCount;
-
                 }
 
                 prevClientId = clientId;
@@ -655,22 +487,29 @@ namespace Backend
                     throw new NullReferenceException($"There is no ItemType for client ID {clientId}");
                 }
 
-                ServerItemGroup itemGroup = appearance.ServerItemGroup;
+                var otbItem = appearance.otbItem;
+
+                if (otbItem == null)
+                {
+                    Trace.WriteLine($"There is no otb item for server ID {serverId} (client ID: {clientId})");
+                    continue;
+                }
+
+                ServerItemGroup itemGroup = otbItem.ServerItemGroup;
 
                 // Write ItemType start node
                 writer.StartNode(itemGroup);
 
                 // Update OTB flags based on Appearance data
-                appearance.UpdateOtbFlags();
+                // appearance.UpdateOtbFlags();
 
-                ItemTypeFlag flags = appearance.GetOtbFlags();
+                // ItemTypeFlag flags = appearance.GetOtbFlags();
+                ItemTypeFlag flags = otbItem.Flags;
 
                 writer.WriteU32((uint)flags);
 
                 writer.WriteAttributeType(OtbItemAttribute.ServerId, 2);
                 writer.WriteU16((ushort)serverId);
-
-                var dataFlags = appearance.Data.Flags;
 
                 if (itemGroup != ServerItemGroup.Deprecated)
                 {
@@ -683,89 +522,89 @@ namespace Backend
                         gameData.ComputeSpriteHash(appearance);
                     }
 
-                    if (appearance.Data.HasDescription)
+                    if (otbItem.HasDescription)
                     {
-                        var bytes = appearance.Data.Description.ToCharArray();
+                        var bytes = otbItem.Description.ToCharArray();
                         writer.WriteAttributeType(OtbItemAttribute.Description, (ushort)bytes.Length);
                         writer.WriteBytesWithoutSizeHint(bytes);
                     }
 
-                    if (appearance.SpriteHash != null)
+                    if (otbItem.HasSpriteHash)
                     {
-                        writer.WriteAttributeType(OtbItemAttribute.SpriteHash, (ushort)appearance.SpriteHash.Length);
-                        writer.WriteBytesWithoutSizeHint(appearance.SpriteHash);
+                        writer.WriteAttributeType(OtbItemAttribute.SpriteHash, (ushort)otbItem.SpriteHash.Length);
+                        writer.WriteBytesWithoutSizeHint(otbItem.SpriteHash);
                     }
 
-                    if (appearance.HasAutomap && dataFlags.Automap.Color != 0)
+                    if (otbItem.HasMinimapColor)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.MinimapColor, 2);
-                        writer.WriteU16((ushort)dataFlags.Automap.Color);
+                        writer.WriteU16((ushort)otbItem.MinimapColor);
                     }
 
-                    if (appearance.HasWrite && dataFlags.Write.MaxTextLength != 0)
+                    if (otbItem.HasMaxTextLen)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.MaxTextLength, 2);
-                        writer.WriteU16((ushort)dataFlags.Write.MaxTextLength);
+                        writer.WriteU16((ushort)otbItem.MaxTextLen);
                     }
 
-                    if (appearance.HasWriteOnce && dataFlags.WriteOnce.MaxTextLengthOnce != 0)
+                    if (otbItem.HasMaxTextLenOnce)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.MaxTextLengthOnce, 2);
-                        writer.WriteU16((ushort)dataFlags.WriteOnce.MaxTextLengthOnce);
+                        writer.WriteU16((ushort)otbItem.MaxTextLenOnce);
                     }
 
-                    if (appearance.HasLight && dataFlags.Light.HasColor)
+                    if (otbItem.HasLightLevel)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.Light2, 4);
-                        writer.WriteU16((ushort)dataFlags.Light.Brightness);
-                        writer.WriteU16((ushort)dataFlags.Light.Color);
+                        writer.WriteU16((ushort)otbItem.LightLevel);
+                        writer.WriteU16(otbItem.LightColor ?? 0);
                     }
 
-                    if (appearance.HasBank)
+                    if (otbItem.HasSpeed)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.Speed, 2);
-                        writer.WriteU16((ushort)dataFlags.Bank.Waypoints);
+                        writer.WriteU16((ushort)otbItem.Speed);
                     }
 
-                    if (dataFlags.Clip)
+                    if (otbItem.StackOrder == StackOrder.Border)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.TopOrder, 1);
                         writer.WriteU8((byte)StackOrder.Border);
                     }
-                    else if (dataFlags.Bottom)
+                    else if (otbItem.StackOrder == StackOrder.Bottom)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.TopOrder, 1);
                         writer.WriteU8((byte)StackOrder.Bottom);
                     }
-                    else if (dataFlags.Top)
+                    else if (otbItem.StackOrder == StackOrder.Top)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.TopOrder, 1);
                         writer.WriteU8((byte)StackOrder.Top);
                     }
 
 
-                    if (appearance.HasMarket && dataFlags.Market.ShowAsObjectId != 0)
+                    if (otbItem.HasWareId)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.WareId, 2);
-                        writer.WriteU16((ushort)dataFlags.Market.ShowAsObjectId);
+                        writer.WriteU16((ushort)otbItem.WareId);
                     }
 
-                    if (appearance.HasUpgradeClassification && dataFlags.Upgradeclassification.UpgradeClassification != 0)
+                    if (otbItem.HasUpgradeClassification)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.UpgradeClassification, 1);
-                        writer.WriteU8((byte)dataFlags.Upgradeclassification.UpgradeClassification);
+                        writer.WriteU8((byte)otbItem.UpgradeClassification);
                     }
 
-                    if (!string.IsNullOrEmpty(appearance.Data.Name))
+                    if (otbItem.HasName)
                     {
-                        var bytes = appearance.Data.Name.ToCharArray();
+                        var bytes = otbItem.Name.ToCharArray();
                         writer.WriteAttributeType(OtbItemAttribute.Name, (ushort)bytes.Length);
                         writer.WriteBytesWithoutSizeHint(bytes);
                     }
 
-                    if (!string.IsNullOrEmpty(appearance.Article))
+                    if (otbItem.HasArticle)
                     {
-                        var bytes = appearance.Article.ToCharArray();
+                        var bytes = otbItem.Article.ToCharArray();
                         writer.WriteAttributeType(OtbItemAttribute.Article, (ushort)bytes.Length);
                         writer.WriteBytesWithoutSizeHint(bytes);
                     }
