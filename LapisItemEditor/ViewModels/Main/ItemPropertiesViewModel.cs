@@ -170,6 +170,8 @@ namespace LapisItemEditor.ViewModels.ItemProperties
                     return "Containers";
                 case Tibia.Protobuf.Shared.ITEM_CATEGORY.Decoration:
                     return "Decoration";
+                case Tibia.Protobuf.Shared.ITEM_CATEGORY.Quiver:
+                    return "Quiver";
                 case Tibia.Protobuf.Shared.ITEM_CATEGORY.Food:
                     return "Food";
                 case Tibia.Protobuf.Shared.ITEM_CATEGORY.HelmetsHats:
