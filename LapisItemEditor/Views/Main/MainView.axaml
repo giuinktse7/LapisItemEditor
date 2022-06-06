@@ -26,6 +26,7 @@
     <Button Command="{Binding WriteItemsOtb}">Save items.otb</Button>
     <Button Command="{Binding ImportItemNames}">Import item names from file</Button>
     <Button Command="{Binding ExportItemsXml}">Export items.xml</Button>
+    <Button Command="{Binding SyncOtbWithTibia}">Update OTB entries to match Tibia</Button>
   </StackPanel>
 
   <!-- Row 1 -->

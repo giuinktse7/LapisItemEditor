@@ -14,6 +14,8 @@ using Avalonia.Data.Converters;
 using DynamicData;
 using LapisItemEditor.ViewModels.ItemProperties;
 using ReactiveUI;
+using System.Text.Json;
+
 using static LapisItemEditor.ViewModels.ItemListViewModel;
 
 namespace LapisItemEditor.ViewModels.Main
@@ -131,6 +133,29 @@ namespace LapisItemEditor.ViewModels.Main
                 }
 
                 await File.WriteAllTextAsync("items.xml", sb.ToString());
+            });
+
+            SyncOtbWithTibia = ReactiveCommand.Create(async () =>
+            {
+                var changes = new List<Backend.Appearance.ChangeEntry>();
+                var sb = new StringBuilder("");
+                foreach (var item in Items.Items.Items)
+                {
+                    var otbChanges = item.Appearance?.SyncOtbWithTibia();
+
+                    if (otbChanges != null)
+                    {
+                        changes.Add(otbChanges);
+                    }
+                }
+
+                string jsonString = JsonSerializer.Serialize(changes);
+
+
+                string path = "./logs/sync-otb-with-tibia.log.json";
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                await File.WriteAllTextAsync(path, jsonString);
+                Trace.WriteLine(jsonString);
             });
         }
 
@@ -271,6 +296,7 @@ namespace LapisItemEditor.ViewModels.Main
         public ICommand WriteItemsOtb { get; }
         public ICommand ImportItemNames { get; }
         public ICommand ExportItemsXml { get; }
+        public ICommand SyncOtbWithTibia { get; }
 
         private uint otbMinorVersion = 0;
         public uint OtbMinorVersion { get => otbMinorVersion; set => this.RaiseAndSetIfChanged(ref otbMinorVersion, value); }
