@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -29,15 +30,34 @@ namespace LapisItemEditor
 
         public static void LoadFromFile(string path)
         {
-            string rawJson = File.ReadAllText(path);
-            var config = JsonSerializer.Deserialize<Config>(rawJson);
-            if (config != null)
+            try
             {
-                Config.instance = config;
+                string rawJson = File.ReadAllText(path);
+                var config = JsonSerializer.Deserialize<Config>(rawJson);
+                if (config != null)
+                {
+                    Config.instance = config;
+                }
+                else
+                {
+                    Trace.WriteLine("Could not load config.");
+                }
             }
-            else
+            catch (PathTooLongException)
             {
-                Trace.WriteLine("Could not load config.");
+                Console.WriteLine($"[Error] Could not load config.json: the path given for the config.json file is too long. Path: {path}");
+                System.Environment.Exit(1);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                var dir = Path.GetDirectoryName(path);
+                Console.WriteLine($"[Error] Could not load config.json: the directory for path '{dir}' could not be found.");
+                System.Environment.Exit(1);
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"[Error] Could not load config.json: the file '{path}' could not be found..");
+                System.Environment.Exit(1);
             }
         }
 
