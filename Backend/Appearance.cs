@@ -113,7 +113,6 @@ namespace Backend
         public bool Readable { get; set; }
         public bool IsAnimation { get; set; }
 
-        public ItemTypeFlag OtbFlagsDeprecated { get; set; }
         #endregion
 
 
@@ -179,117 +178,6 @@ namespace Backend
             return Data.FrameGroup[0].SpriteInfo.SpriteId[0];
         }
 
-        public void UpdateOtbFlags()
-        {
-            if (Data.Flags.Top || Data.Flags.Clip || Data.Flags.Bottom)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.AlwaysOnTop;
-            }
-
-            if (Data.Flags.Cumulative)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Stackable;
-            }
-
-            if (Data.Flags.Unsight)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.BlockSolid;
-            }
-
-            if (Data.Flags.Hang)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Hangable;
-            }
-
-            if (Data.Flags.Rotate)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Rotatable;
-            }
-
-            if (Data.Flags.Height != null && Data.Flags.Height.HasElevation)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.HasElevation;
-            }
-
-
-            bool readable = Data.Flags.Write != null || Data.Flags.WriteOnce != null;
-            if (readable)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Readable;
-            }
-
-            if (Data.Flags.Hook != null)
-            {
-                if (Data.Flags.Hook.Direction == Proto.Shared.HOOK_TYPE.East)
-                {
-                    OtbFlagsDeprecated |= ItemTypeFlag.HookEast;
-                }
-                else if (Data.Flags.Hook.Direction == Proto.Shared.HOOK_TYPE.South)
-                {
-                    OtbFlagsDeprecated |= ItemTypeFlag.HookSouth;
-                }
-            }
-
-            if (Data.Flags.IgnoreLook)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.IgnoreLook;
-            }
-
-            if (Data.FrameGroup.Count != 0 && Data.FrameGroup[0].SpriteInfo.Animation != null)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Animation;
-            }
-
-            if (Data.Flags.Forceuse)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.ForceUse;
-            }
-
-            if (Data.Flags.Multiuse)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.MultiUse;
-            }
-
-            if (Data.Flags.Avoid)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.BlockPathfind;
-            }
-
-            if (Data.Flags.Take)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Pickupable;
-            }
-
-            if (!Data.Flags.Unmove)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Movable;
-            }
-
-            if (Data.Flags.Unsight)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.BlockProjectile;
-            }
-
-            if (Data.Flags.Unpass)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.BlockSolid;
-            }
-
-            if (Data.Flags.Ammo)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Ammo;
-            }
-
-            if (Data.Flags.Reportable)
-            {
-                OtbFlagsDeprecated |= ItemTypeFlag.Reportable;
-            }
-        }
-
-        public ItemTypeFlag GetOtbFlags()
-        {
-            return OtbFlagsDeprecated;
-        }
 
         #region Data setters
         public void SetAutomapColor(ushort color)
