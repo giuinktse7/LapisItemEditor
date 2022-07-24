@@ -76,9 +76,9 @@ Major otb version & client versions can be specified in data/config.json:
 
 ## Instructions for generating proto files
 
-1. clone [Protod](https://github.com/sysdream/Protod)
+1. clone [Protod3](https://github.com/giuinktse7/Protod3)
 2. Get client.exe from <tibia_dir>/packages/Tibia/bin/client.exe
-3. Run python2 protod.py client.exe
+3. Run python3 src/protod.py client.exe
 4. Add `syntax = "proto2";` as the first line in each `.proto` file.
 5. To generate C# bindings, place `.proto` files in `./in`. Then:
 
