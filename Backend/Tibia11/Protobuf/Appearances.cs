@@ -55,7 +55,7 @@ namespace Tibia.Protobuf.Appearances {
             "cm91cBgCIAMoCzImLnRpYmlhLnByb3RvYnVmLmFwcGVhcmFuY2VzLkZyYW1l",
             "R3JvdXASOgoFZmxhZ3MYAyABKAsyKy50aWJpYS5wcm90b2J1Zi5hcHBlYXJh",
             "bmNlcy5BcHBlYXJhbmNlRmxhZ3MSDAoEbmFtZRgEIAEoCRITCgtkZXNjcmlw",
-            "dGlvbhgFIAEoCSLNDQoPQXBwZWFyYW5jZUZsYWdzEjwKBGJhbmsYASABKAsy",
+            "dGlvbhgFIAEoCSKNDwoPQXBwZWFyYW5jZUZsYWdzEjwKBGJhbmsYASABKAsy",
             "Li50aWJpYS5wcm90b2J1Zi5hcHBlYXJhbmNlcy5BcHBlYXJhbmNlRmxhZ0Jh",
             "bmsSDAoEY2xpcBgCIAEoCBIOCgZib3R0b20YAyABKAgSCwoDdG9wGAQgASgI",
             "EhEKCWNvbnRhaW5lchgFIAEoCBISCgpjdW11bGF0aXZlGAYgASgIEg4KBnVz",
@@ -93,40 +93,44 @@ namespace Tibia.Protobuf.Appearances {
             "QXBwZWFyYW5jZUZsYWdDeWNsb3BlZGlhEgwKBGFtbW8YLSABKAgSFwoPc2hv",
             "d19vZmZfc29ja2V0GC4gASgIEhIKCnJlcG9ydGFibGUYLyABKAgSXgoVdXBn",
             "cmFkZWNsYXNzaWZpY2F0aW9uGDAgASgLMj8udGliaWEucHJvdG9idWYuYXBw",
-            "ZWFyYW5jZXMuQXBwZWFyYW5jZUZsYWdVcGdyYWRlQ2xhc3NpZmljYXRpb24i",
-            "JwoSQXBwZWFyYW5jZUZsYWdCYW5rEhEKCXdheXBvaW50cxgBIAEoDSIuChNB",
-            "cHBlYXJhbmNlRmxhZ1dyaXRlEhcKD21heF90ZXh0X2xlbmd0aBgBIAEoDSI3",
-            "ChdBcHBlYXJhbmNlRmxhZ1dyaXRlT25jZRIcChRtYXhfdGV4dF9sZW5ndGhf",
-            "b25jZRgBIAEoDSI4ChNBcHBlYXJhbmNlRmxhZ0xpZ2h0EhIKCmJyaWdodG5l",
-            "c3MYASABKA0SDQoFY29sb3IYAiABKA0iKQoUQXBwZWFyYW5jZUZsYWdIZWln",
-            "aHQSEQoJZWxldmF0aW9uGAEgASgNIisKE0FwcGVhcmFuY2VGbGFnU2hpZnQS",
-            "CQoBeBgBIAEoDRIJCgF5GAIgASgNIiUKFUFwcGVhcmFuY2VGbGFnQ2xvdGhl",
-            "cxIMCgRzbG90GAEgASgNIlMKG0FwcGVhcmFuY2VGbGFnRGVmYXVsdEFjdGlv",
-            "bhI0CgZhY3Rpb24YASABKA4yJC50aWJpYS5wcm90b2J1Zi5zaGFyZWQuUExB",
-            "WUVSX0FDVElPTiLbAQoUQXBwZWFyYW5jZUZsYWdNYXJrZXQSNgoIY2F0ZWdv",
-            "cnkYASABKA4yJC50aWJpYS5wcm90b2J1Zi5zaGFyZWQuSVRFTV9DQVRFR09S",
-            "WRIaChJ0cmFkZV9hc19vYmplY3RfaWQYAiABKA0SGQoRc2hvd19hc19vYmpl",
-            "Y3RfaWQYAyABKA0SPQoUcmVzdHJpY3RfdG9fdm9jYXRpb24YBSADKA4yHy50",
-            "aWJpYS5wcm90b2J1Zi5zaGFyZWQuVk9DQVRJT04SFQoNbWluaW11bV9sZXZl",
-            "bBgGIAEoDSKlAQoRQXBwZWFyYW5jZUZsYWdOUEMSDAoEbmFtZRgBIAEoCRIQ",
-            "Cghsb2NhdGlvbhgCIAEoCRISCgpzYWxlX3ByaWNlGAMgASgNEhEKCWJ1eV9w",
-            "cmljZRgEIAEoDRIfChdjdXJyZW5jeV9vYmplY3RfdHlwZV9pZBgFIAEoDRIo",
-            "CiBjdXJyZW5jeV9xdWVzdF9mbGFnX2Rpc3BsYXlfbmFtZRgGIAEoCSImChVB",
-            "cHBlYXJhbmNlRmxhZ0F1dG9tYXASDQoFY29sb3IYASABKA0iSQoSQXBwZWFy",
-            "YW5jZUZsYWdIb29rEjMKCWRpcmVjdGlvbhgBIAEoDjIgLnRpYmlhLnByb3Rv",
-            "YnVmLnNoYXJlZC5IT09LX1RZUEUiJAoWQXBwZWFyYW5jZUZsYWdMZW5zaGVs",
-            "cBIKCgJpZBgBIAEoDSI9Ch1BcHBlYXJhbmNlRmxhZ0NoYW5nZWRUb0V4cGly",
-            "ZRIcChRmb3JtZXJfb2JqZWN0X3R5cGVpZBgBIAEoDSIzChhBcHBlYXJhbmNl",
-            "RmxhZ0N5Y2xvcGVkaWESFwoPY3ljbG9wZWRpYV90eXBlGAEgASgNIkUKI0Fw",
-            "cGVhcmFuY2VGbGFnVXBncmFkZUNsYXNzaWZpY2F0aW9uEh4KFnVwZ3JhZGVf",
-            "Y2xhc3NpZmljYXRpb24YASABKA0isQEKG1NwZWNpYWxNZWFuaW5nQXBwZWFy",
-            "YW5jZUlkcxIUCgxnb2xkX2NvaW5faWQYASABKA0SGAoQcGxhdGludW1fY29p",
-            "bl9pZBgCIAEoDRIXCg9jcnlzdGFsX2NvaW5faWQYAyABKA0SFQoNdGliaWFf",
-            "Y29pbl9pZBgEIAEoDRIZChFzdGFtcGVkX2xldHRlcl9pZBgFIAEoDRIXCg9z",
-            "dXBwbHlfc3Rhc2hfaWQYBiABKA0qgQEKEUZJWEVEX0ZSQU1FX0dST1VQEiEK",
-            "HUZJWEVEX0ZSQU1FX0dST1VQX09VVEZJVF9JRExFEAASIwofRklYRURfRlJB",
-            "TUVfR1JPVVBfT1VURklUX01PVklORxABEiQKIEZJWEVEX0ZSQU1FX0dST1VQ",
-            "X09CSkVDVF9JTklUSUFMEAI="));
+            "ZWFyYW5jZXMuQXBwZWFyYW5jZUZsYWdVcGdyYWRlQ2xhc3NpZmljYXRpb24S",
+            "GwoTcmV2ZXJzZV9hZGRvbnNfZWFzdBgxIAEoCBIbChNyZXZlcnNlX2FkZG9u",
+            "c193ZXN0GDIgASgIEhwKFHJldmVyc2VfYWRkb25zX3NvdXRoGDMgASgIEhwK",
+            "FHJldmVyc2VfYWRkb25zX25vcnRoGDQgASgIEg8KB3dlYXJvdXQYNSABKAgS",
+            "EwoLY2xvY2tleHBpcmUYNiABKAgSDgoGZXhwaXJlGDcgASgIEhIKCmV4cGly",
+            "ZXN0b3AYOCABKAgiJwoSQXBwZWFyYW5jZUZsYWdCYW5rEhEKCXdheXBvaW50",
+            "cxgBIAEoDSIuChNBcHBlYXJhbmNlRmxhZ1dyaXRlEhcKD21heF90ZXh0X2xl",
+            "bmd0aBgBIAEoDSI3ChdBcHBlYXJhbmNlRmxhZ1dyaXRlT25jZRIcChRtYXhf",
+            "dGV4dF9sZW5ndGhfb25jZRgBIAEoDSI4ChNBcHBlYXJhbmNlRmxhZ0xpZ2h0",
+            "EhIKCmJyaWdodG5lc3MYASABKA0SDQoFY29sb3IYAiABKA0iKQoUQXBwZWFy",
+            "YW5jZUZsYWdIZWlnaHQSEQoJZWxldmF0aW9uGAEgASgNIisKE0FwcGVhcmFu",
+            "Y2VGbGFnU2hpZnQSCQoBeBgBIAEoDRIJCgF5GAIgASgNIiUKFUFwcGVhcmFu",
+            "Y2VGbGFnQ2xvdGhlcxIMCgRzbG90GAEgASgNIlMKG0FwcGVhcmFuY2VGbGFn",
+            "RGVmYXVsdEFjdGlvbhI0CgZhY3Rpb24YASABKA4yJC50aWJpYS5wcm90b2J1",
+            "Zi5zaGFyZWQuUExBWUVSX0FDVElPTiLbAQoUQXBwZWFyYW5jZUZsYWdNYXJr",
+            "ZXQSNgoIY2F0ZWdvcnkYASABKA4yJC50aWJpYS5wcm90b2J1Zi5zaGFyZWQu",
+            "SVRFTV9DQVRFR09SWRIaChJ0cmFkZV9hc19vYmplY3RfaWQYAiABKA0SGQoR",
+            "c2hvd19hc19vYmplY3RfaWQYAyABKA0SPQoUcmVzdHJpY3RfdG9fdm9jYXRp",
+            "b24YBSADKA4yHy50aWJpYS5wcm90b2J1Zi5zaGFyZWQuVk9DQVRJT04SFQoN",
+            "bWluaW11bV9sZXZlbBgGIAEoDSKlAQoRQXBwZWFyYW5jZUZsYWdOUEMSDAoE",
+            "bmFtZRgBIAEoCRIQCghsb2NhdGlvbhgCIAEoCRISCgpzYWxlX3ByaWNlGAMg",
+            "ASgNEhEKCWJ1eV9wcmljZRgEIAEoDRIfChdjdXJyZW5jeV9vYmplY3RfdHlw",
+            "ZV9pZBgFIAEoDRIoCiBjdXJyZW5jeV9xdWVzdF9mbGFnX2Rpc3BsYXlfbmFt",
+            "ZRgGIAEoCSImChVBcHBlYXJhbmNlRmxhZ0F1dG9tYXASDQoFY29sb3IYASAB",
+            "KA0iSQoSQXBwZWFyYW5jZUZsYWdIb29rEjMKCWRpcmVjdGlvbhgBIAEoDjIg",
+            "LnRpYmlhLnByb3RvYnVmLnNoYXJlZC5IT09LX1RZUEUiJAoWQXBwZWFyYW5j",
+            "ZUZsYWdMZW5zaGVscBIKCgJpZBgBIAEoDSI9Ch1BcHBlYXJhbmNlRmxhZ0No",
+            "YW5nZWRUb0V4cGlyZRIcChRmb3JtZXJfb2JqZWN0X3R5cGVpZBgBIAEoDSIz",
+            "ChhBcHBlYXJhbmNlRmxhZ0N5Y2xvcGVkaWESFwoPY3ljbG9wZWRpYV90eXBl",
+            "GAEgASgNIkUKI0FwcGVhcmFuY2VGbGFnVXBncmFkZUNsYXNzaWZpY2F0aW9u",
+            "Eh4KFnVwZ3JhZGVfY2xhc3NpZmljYXRpb24YASABKA0isQEKG1NwZWNpYWxN",
+            "ZWFuaW5nQXBwZWFyYW5jZUlkcxIUCgxnb2xkX2NvaW5faWQYASABKA0SGAoQ",
+            "cGxhdGludW1fY29pbl9pZBgCIAEoDRIXCg9jcnlzdGFsX2NvaW5faWQYAyAB",
+            "KA0SFQoNdGliaWFfY29pbl9pZBgEIAEoDRIZChFzdGFtcGVkX2xldHRlcl9p",
+            "ZBgFIAEoDRIXCg9zdXBwbHlfc3Rhc2hfaWQYBiABKA0qgQEKEUZJWEVEX0ZS",
+            "QU1FX0dST1VQEiEKHUZJWEVEX0ZSQU1FX0dST1VQX09VVEZJVF9JRExFEAAS",
+            "IwofRklYRURfRlJBTUVfR1JPVVBfT1VURklUX01PVklORxABEiQKIEZJWEVE",
+            "X0ZSQU1FX0dST1VQX09CSkVDVF9JTklUSUFMEAI="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tibia.Protobuf.Shared.SharedReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Tibia.Protobuf.Appearances.FIXED_FRAME_GROUP), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -137,7 +141,7 @@ namespace Tibia.Protobuf.Appearances {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.SpriteInfo), global::Tibia.Protobuf.Appearances.SpriteInfo.Parser, new[]{ "PatternWidth", "PatternHeight", "PatternDepth", "Layers", "SpriteId", "BoundingSquare", "Animation", "IsOpaque", "BoundingBoxPerDirection" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.FrameGroup), global::Tibia.Protobuf.Appearances.FrameGroup.Parser, new[]{ "FixedFrameGroup", "Id", "SpriteInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.Appearance), global::Tibia.Protobuf.Appearances.Appearance.Parser, new[]{ "Id", "FrameGroup", "Flags", "Name", "Description" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlags), global::Tibia.Protobuf.Appearances.AppearanceFlags.Parser, new[]{ "Bank", "Clip", "Bottom", "Top", "Container", "Cumulative", "Usable", "Forceuse", "Multiuse", "Write", "WriteOnce", "Liquidpool", "Unpass", "Unmove", "Unsight", "Avoid", "NoMovementAnimation", "Take", "Liquidcontainer", "Hang", "Hook", "Rotate", "Light", "DontHide", "Translucent", "Shift", "Height", "LyingObject", "AnimateAlways", "Automap", "Lenshelp", "Fullbank", "IgnoreLook", "Clothes", "DefaultAction", "Market", "Wrap", "Unwrap", "Topeffect", "Npcsaledata", "Changedtoexpire", "Corpse", "PlayerCorpse", "Cyclopediaitem", "Ammo", "ShowOffSocket", "Reportable", "Upgradeclassification" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlags), global::Tibia.Protobuf.Appearances.AppearanceFlags.Parser, new[]{ "Bank", "Clip", "Bottom", "Top", "Container", "Cumulative", "Usable", "Forceuse", "Multiuse", "Write", "WriteOnce", "Liquidpool", "Unpass", "Unmove", "Unsight", "Avoid", "NoMovementAnimation", "Take", "Liquidcontainer", "Hang", "Hook", "Rotate", "Light", "DontHide", "Translucent", "Shift", "Height", "LyingObject", "AnimateAlways", "Automap", "Lenshelp", "Fullbank", "IgnoreLook", "Clothes", "DefaultAction", "Market", "Wrap", "Unwrap", "Topeffect", "Npcsaledata", "Changedtoexpire", "Corpse", "PlayerCorpse", "Cyclopediaitem", "Ammo", "ShowOffSocket", "Reportable", "Upgradeclassification", "ReverseAddonsEast", "ReverseAddonsWest", "ReverseAddonsSouth", "ReverseAddonsNorth", "Wearout", "Clockexpire", "Expire", "Expirestop" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagBank), global::Tibia.Protobuf.Appearances.AppearanceFlagBank.Parser, new[]{ "Waypoints" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagWrite), global::Tibia.Protobuf.Appearances.AppearanceFlagWrite.Parser, new[]{ "MaxTextLength" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagWriteOnce), global::Tibia.Protobuf.Appearances.AppearanceFlagWriteOnce.Parser, new[]{ "MaxTextLengthOnce" }, null, null, null, null),
@@ -2868,6 +2872,14 @@ namespace Tibia.Protobuf.Appearances {
       showOffSocket_ = other.showOffSocket_;
       reportable_ = other.reportable_;
       upgradeclassification_ = other.upgradeclassification_ != null ? other.upgradeclassification_.Clone() : null;
+      reverseAddonsEast_ = other.reverseAddonsEast_;
+      reverseAddonsWest_ = other.reverseAddonsWest_;
+      reverseAddonsSouth_ = other.reverseAddonsSouth_;
+      reverseAddonsNorth_ = other.reverseAddonsNorth_;
+      wearout_ = other.wearout_;
+      clockexpire_ = other.clockexpire_;
+      expire_ = other.expire_;
+      expirestop_ = other.expirestop_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3932,6 +3944,222 @@ namespace Tibia.Protobuf.Appearances {
       }
     }
 
+    /// <summary>Field number for the "reverse_addons_east" field.</summary>
+    public const int ReverseAddonsEastFieldNumber = 49;
+    private readonly static bool ReverseAddonsEastDefaultValue = false;
+
+    private bool reverseAddonsEast_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool ReverseAddonsEast {
+      get { if ((_hasBits1 & 1) != 0) { return reverseAddonsEast_; } else { return ReverseAddonsEastDefaultValue; } }
+      set {
+        _hasBits1 |= 1;
+        reverseAddonsEast_ = value;
+      }
+    }
+    /// <summary>Gets whether the "reverse_addons_east" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasReverseAddonsEast {
+      get { return (_hasBits1 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "reverse_addons_east" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearReverseAddonsEast() {
+      _hasBits1 &= ~1;
+    }
+
+    /// <summary>Field number for the "reverse_addons_west" field.</summary>
+    public const int ReverseAddonsWestFieldNumber = 50;
+    private readonly static bool ReverseAddonsWestDefaultValue = false;
+
+    private bool reverseAddonsWest_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool ReverseAddonsWest {
+      get { if ((_hasBits1 & 2) != 0) { return reverseAddonsWest_; } else { return ReverseAddonsWestDefaultValue; } }
+      set {
+        _hasBits1 |= 2;
+        reverseAddonsWest_ = value;
+      }
+    }
+    /// <summary>Gets whether the "reverse_addons_west" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasReverseAddonsWest {
+      get { return (_hasBits1 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "reverse_addons_west" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearReverseAddonsWest() {
+      _hasBits1 &= ~2;
+    }
+
+    /// <summary>Field number for the "reverse_addons_south" field.</summary>
+    public const int ReverseAddonsSouthFieldNumber = 51;
+    private readonly static bool ReverseAddonsSouthDefaultValue = false;
+
+    private bool reverseAddonsSouth_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool ReverseAddonsSouth {
+      get { if ((_hasBits1 & 4) != 0) { return reverseAddonsSouth_; } else { return ReverseAddonsSouthDefaultValue; } }
+      set {
+        _hasBits1 |= 4;
+        reverseAddonsSouth_ = value;
+      }
+    }
+    /// <summary>Gets whether the "reverse_addons_south" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasReverseAddonsSouth {
+      get { return (_hasBits1 & 4) != 0; }
+    }
+    /// <summary>Clears the value of the "reverse_addons_south" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearReverseAddonsSouth() {
+      _hasBits1 &= ~4;
+    }
+
+    /// <summary>Field number for the "reverse_addons_north" field.</summary>
+    public const int ReverseAddonsNorthFieldNumber = 52;
+    private readonly static bool ReverseAddonsNorthDefaultValue = false;
+
+    private bool reverseAddonsNorth_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool ReverseAddonsNorth {
+      get { if ((_hasBits1 & 8) != 0) { return reverseAddonsNorth_; } else { return ReverseAddonsNorthDefaultValue; } }
+      set {
+        _hasBits1 |= 8;
+        reverseAddonsNorth_ = value;
+      }
+    }
+    /// <summary>Gets whether the "reverse_addons_north" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasReverseAddonsNorth {
+      get { return (_hasBits1 & 8) != 0; }
+    }
+    /// <summary>Clears the value of the "reverse_addons_north" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearReverseAddonsNorth() {
+      _hasBits1 &= ~8;
+    }
+
+    /// <summary>Field number for the "wearout" field.</summary>
+    public const int WearoutFieldNumber = 53;
+    private readonly static bool WearoutDefaultValue = false;
+
+    private bool wearout_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Wearout {
+      get { if ((_hasBits1 & 16) != 0) { return wearout_; } else { return WearoutDefaultValue; } }
+      set {
+        _hasBits1 |= 16;
+        wearout_ = value;
+      }
+    }
+    /// <summary>Gets whether the "wearout" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasWearout {
+      get { return (_hasBits1 & 16) != 0; }
+    }
+    /// <summary>Clears the value of the "wearout" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearWearout() {
+      _hasBits1 &= ~16;
+    }
+
+    /// <summary>Field number for the "clockexpire" field.</summary>
+    public const int ClockexpireFieldNumber = 54;
+    private readonly static bool ClockexpireDefaultValue = false;
+
+    private bool clockexpire_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Clockexpire {
+      get { if ((_hasBits1 & 32) != 0) { return clockexpire_; } else { return ClockexpireDefaultValue; } }
+      set {
+        _hasBits1 |= 32;
+        clockexpire_ = value;
+      }
+    }
+    /// <summary>Gets whether the "clockexpire" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasClockexpire {
+      get { return (_hasBits1 & 32) != 0; }
+    }
+    /// <summary>Clears the value of the "clockexpire" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearClockexpire() {
+      _hasBits1 &= ~32;
+    }
+
+    /// <summary>Field number for the "expire" field.</summary>
+    public const int ExpireFieldNumber = 55;
+    private readonly static bool ExpireDefaultValue = false;
+
+    private bool expire_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Expire {
+      get { if ((_hasBits1 & 64) != 0) { return expire_; } else { return ExpireDefaultValue; } }
+      set {
+        _hasBits1 |= 64;
+        expire_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expire" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpire {
+      get { return (_hasBits1 & 64) != 0; }
+    }
+    /// <summary>Clears the value of the "expire" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpire() {
+      _hasBits1 &= ~64;
+    }
+
+    /// <summary>Field number for the "expirestop" field.</summary>
+    public const int ExpirestopFieldNumber = 56;
+    private readonly static bool ExpirestopDefaultValue = false;
+
+    private bool expirestop_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Expirestop {
+      get { if ((_hasBits1 & 128) != 0) { return expirestop_; } else { return ExpirestopDefaultValue; } }
+      set {
+        _hasBits1 |= 128;
+        expirestop_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expirestop" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpirestop {
+      get { return (_hasBits1 & 128) != 0; }
+    }
+    /// <summary>Clears the value of the "expirestop" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpirestop() {
+      _hasBits1 &= ~128;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -3995,6 +4223,14 @@ namespace Tibia.Protobuf.Appearances {
       if (ShowOffSocket != other.ShowOffSocket) return false;
       if (Reportable != other.Reportable) return false;
       if (!object.Equals(Upgradeclassification, other.Upgradeclassification)) return false;
+      if (ReverseAddonsEast != other.ReverseAddonsEast) return false;
+      if (ReverseAddonsWest != other.ReverseAddonsWest) return false;
+      if (ReverseAddonsSouth != other.ReverseAddonsSouth) return false;
+      if (ReverseAddonsNorth != other.ReverseAddonsNorth) return false;
+      if (Wearout != other.Wearout) return false;
+      if (Clockexpire != other.Clockexpire) return false;
+      if (Expire != other.Expire) return false;
+      if (Expirestop != other.Expirestop) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4050,6 +4286,14 @@ namespace Tibia.Protobuf.Appearances {
       if (HasShowOffSocket) hash ^= ShowOffSocket.GetHashCode();
       if (HasReportable) hash ^= Reportable.GetHashCode();
       if (upgradeclassification_ != null) hash ^= Upgradeclassification.GetHashCode();
+      if (HasReverseAddonsEast) hash ^= ReverseAddonsEast.GetHashCode();
+      if (HasReverseAddonsWest) hash ^= ReverseAddonsWest.GetHashCode();
+      if (HasReverseAddonsSouth) hash ^= ReverseAddonsSouth.GetHashCode();
+      if (HasReverseAddonsNorth) hash ^= ReverseAddonsNorth.GetHashCode();
+      if (HasWearout) hash ^= Wearout.GetHashCode();
+      if (HasClockexpire) hash ^= Clockexpire.GetHashCode();
+      if (HasExpire) hash ^= Expire.GetHashCode();
+      if (HasExpirestop) hash ^= Expirestop.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4257,6 +4501,38 @@ namespace Tibia.Protobuf.Appearances {
         output.WriteRawTag(130, 3);
         output.WriteMessage(Upgradeclassification);
       }
+      if (HasReverseAddonsEast) {
+        output.WriteRawTag(136, 3);
+        output.WriteBool(ReverseAddonsEast);
+      }
+      if (HasReverseAddonsWest) {
+        output.WriteRawTag(144, 3);
+        output.WriteBool(ReverseAddonsWest);
+      }
+      if (HasReverseAddonsSouth) {
+        output.WriteRawTag(152, 3);
+        output.WriteBool(ReverseAddonsSouth);
+      }
+      if (HasReverseAddonsNorth) {
+        output.WriteRawTag(160, 3);
+        output.WriteBool(ReverseAddonsNorth);
+      }
+      if (HasWearout) {
+        output.WriteRawTag(168, 3);
+        output.WriteBool(Wearout);
+      }
+      if (HasClockexpire) {
+        output.WriteRawTag(176, 3);
+        output.WriteBool(Clockexpire);
+      }
+      if (HasExpire) {
+        output.WriteRawTag(184, 3);
+        output.WriteBool(Expire);
+      }
+      if (HasExpirestop) {
+        output.WriteRawTag(192, 3);
+        output.WriteBool(Expirestop);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4456,6 +4732,38 @@ namespace Tibia.Protobuf.Appearances {
         output.WriteRawTag(130, 3);
         output.WriteMessage(Upgradeclassification);
       }
+      if (HasReverseAddonsEast) {
+        output.WriteRawTag(136, 3);
+        output.WriteBool(ReverseAddonsEast);
+      }
+      if (HasReverseAddonsWest) {
+        output.WriteRawTag(144, 3);
+        output.WriteBool(ReverseAddonsWest);
+      }
+      if (HasReverseAddonsSouth) {
+        output.WriteRawTag(152, 3);
+        output.WriteBool(ReverseAddonsSouth);
+      }
+      if (HasReverseAddonsNorth) {
+        output.WriteRawTag(160, 3);
+        output.WriteBool(ReverseAddonsNorth);
+      }
+      if (HasWearout) {
+        output.WriteRawTag(168, 3);
+        output.WriteBool(Wearout);
+      }
+      if (HasClockexpire) {
+        output.WriteRawTag(176, 3);
+        output.WriteBool(Clockexpire);
+      }
+      if (HasExpire) {
+        output.WriteRawTag(184, 3);
+        output.WriteBool(Expire);
+      }
+      if (HasExpirestop) {
+        output.WriteRawTag(192, 3);
+        output.WriteBool(Expirestop);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -4607,6 +4915,30 @@ namespace Tibia.Protobuf.Appearances {
       }
       if (upgradeclassification_ != null) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(Upgradeclassification);
+      }
+      if (HasReverseAddonsEast) {
+        size += 2 + 1;
+      }
+      if (HasReverseAddonsWest) {
+        size += 2 + 1;
+      }
+      if (HasReverseAddonsSouth) {
+        size += 2 + 1;
+      }
+      if (HasReverseAddonsNorth) {
+        size += 2 + 1;
+      }
+      if (HasWearout) {
+        size += 2 + 1;
+      }
+      if (HasClockexpire) {
+        size += 2 + 1;
+      }
+      if (HasExpire) {
+        size += 2 + 1;
+      }
+      if (HasExpirestop) {
+        size += 2 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4806,6 +5138,30 @@ namespace Tibia.Protobuf.Appearances {
           Upgradeclassification = new global::Tibia.Protobuf.Appearances.AppearanceFlagUpgradeClassification();
         }
         Upgradeclassification.MergeFrom(other.Upgradeclassification);
+      }
+      if (other.HasReverseAddonsEast) {
+        ReverseAddonsEast = other.ReverseAddonsEast;
+      }
+      if (other.HasReverseAddonsWest) {
+        ReverseAddonsWest = other.ReverseAddonsWest;
+      }
+      if (other.HasReverseAddonsSouth) {
+        ReverseAddonsSouth = other.ReverseAddonsSouth;
+      }
+      if (other.HasReverseAddonsNorth) {
+        ReverseAddonsNorth = other.ReverseAddonsNorth;
+      }
+      if (other.HasWearout) {
+        Wearout = other.Wearout;
+      }
+      if (other.HasClockexpire) {
+        Clockexpire = other.Clockexpire;
+      }
+      if (other.HasExpire) {
+        Expire = other.Expire;
+      }
+      if (other.HasExpirestop) {
+        Expirestop = other.Expirestop;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5059,6 +5415,38 @@ namespace Tibia.Protobuf.Appearances {
             input.ReadMessage(Upgradeclassification);
             break;
           }
+          case 392: {
+            ReverseAddonsEast = input.ReadBool();
+            break;
+          }
+          case 400: {
+            ReverseAddonsWest = input.ReadBool();
+            break;
+          }
+          case 408: {
+            ReverseAddonsSouth = input.ReadBool();
+            break;
+          }
+          case 416: {
+            ReverseAddonsNorth = input.ReadBool();
+            break;
+          }
+          case 424: {
+            Wearout = input.ReadBool();
+            break;
+          }
+          case 432: {
+            Clockexpire = input.ReadBool();
+            break;
+          }
+          case 440: {
+            Expire = input.ReadBool();
+            break;
+          }
+          case 448: {
+            Expirestop = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -5309,6 +5697,38 @@ namespace Tibia.Protobuf.Appearances {
               Upgradeclassification = new global::Tibia.Protobuf.Appearances.AppearanceFlagUpgradeClassification();
             }
             input.ReadMessage(Upgradeclassification);
+            break;
+          }
+          case 392: {
+            ReverseAddonsEast = input.ReadBool();
+            break;
+          }
+          case 400: {
+            ReverseAddonsWest = input.ReadBool();
+            break;
+          }
+          case 408: {
+            ReverseAddonsSouth = input.ReadBool();
+            break;
+          }
+          case 416: {
+            ReverseAddonsNorth = input.ReadBool();
+            break;
+          }
+          case 424: {
+            Wearout = input.ReadBool();
+            break;
+          }
+          case 432: {
+            Clockexpire = input.ReadBool();
+            break;
+          }
+          case 440: {
+            Expire = input.ReadBool();
+            break;
+          }
+          case 448: {
+            Expirestop = input.ReadBool();
             break;
           }
         }
