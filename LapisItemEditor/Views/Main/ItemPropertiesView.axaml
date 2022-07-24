@@ -226,6 +226,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
+
         <StackPanel>
           <CheckBox Margin="0 0 8 0" IsChecked="{Binding DefaultAction, Mode=TwoWay}">Default Action</CheckBox>
             <ComboBox IsVisible="{Binding DefaultAction}" Items="{Binding DefaultActions}" SelectedItem="{Binding SelectedDefaultAction, Mode=TwoWay}" SelectedIndex="0">
@@ -237,6 +238,7 @@
             </ComboBox>
         </StackPanel>
         <StackPanel>
+
         <CheckBox IsChecked="{Binding HasMarket, Mode=TwoWay}" Margin="0 0 8 0">Market</CheckBox>
         <StackPanel IsVisible="{Binding HasMarket}" Orientation="Vertical" Margin="24, 0, 0, 0">
             <StackPanel Orientation="Horizontal">
@@ -275,8 +277,18 @@
             <CheckBox VerticalAlignment="Center" Margin="0,0,8,0">Minimum level</CheckBox>
             <controls:NumberInput HorizontalAlignment="Left" MaxWidth="80" />
             </StackPanel>
-            
+        </StackPanel> <!-- End of market -->
+
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox IsChecked="{Binding HasWearout, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Wearout</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing wears out (has charges)"/>
         </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox IsChecked="{Binding HasExpire, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Expire</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing expires (has a duration)"/>
+        </StackPanel>
+
     </StackPanel>
       
     </StackPanel>

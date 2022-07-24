@@ -183,7 +183,7 @@ namespace LapisItemEditor.ViewModels.Main
 
             Items.Items.AddRange(CreateItems());
 
-            ClientVersion defaultClientVersion;
+            ClientVersion? defaultClientVersion;
 
             Backend.OtbData? otbData = Backend.Backend.GameData?.OtbData;
             if (otbData == null)
@@ -253,7 +253,7 @@ namespace LapisItemEditor.ViewModels.Main
             return listItems;
         }
 
-        private async Task<string?> ShowSaveItemsOtbDialog()
+        private static async Task<string?> ShowSaveItemsOtbDialog()
         {
             if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
@@ -271,20 +271,29 @@ namespace LapisItemEditor.ViewModels.Main
             return null;
         }
 
-        private ItemModel? CreateItemModel(uint serverId)
+        private static ItemModel? CreateItemModel(uint serverId)
         {
             var appearance = Backend.Backend.GetItemTypeByServerId(serverId);
             if (appearance != null && appearance.HasSprites)
             {
                 uint clientId = appearance.ClientId;
-                string name = appearance.Data.Name ?? "";
+
+
+                string name = appearance.Data.Name;
+
+                // Prefer the name from .otb
+                if (!string.IsNullOrEmpty(appearance.otbItem?.Name))
+                {
+                    name = appearance.otbItem.Name;
+                }
+
 
                 return new ItemModel()
                 {
                     Appearance = appearance,
                     ServerId = serverId,
                     ClientId = clientId,
-                    Name = appearance.Data.Name ?? "",
+                    Name = name,
                     Text = $"{serverId} (cid {clientId})"
                 };
             }

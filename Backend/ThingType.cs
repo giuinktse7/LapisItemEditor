@@ -72,8 +72,8 @@ namespace Backend
         HookSouth = 1 << 18,
         CanNotDecay = 1 << 19, // unused
         AllowDistRead = 1 << 20,
-        Unused = 1 << 21,        // unused
-        ClientCharges = 1 << 22, /* deprecated */
+        ClientDuration = 1 << 21,        // Called wearout in the Tibia appearance data, added in Tibia 12.90
+        ClientCharges = 1 << 22, // Called expire in the Tibia appearance data, added in Tibia 12.90
         IgnoreLook = 1 << 23,
         Animation = 1 << 24,
         FullTile = 1 << 25, // unused
