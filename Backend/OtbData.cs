@@ -158,7 +158,7 @@ namespace Backend
             uint buildNumber = reader.NextU32();  // build number, revision
 
             byte[] otbDescriptionBuffer = RemoveTrailingZeros(reader.NextBytes(128));
-            string otbDescription = System.Text.Encoding.Default.GetString(otbDescriptionBuffer);
+            string otbDescription = Encoding.Default.GetString(otbDescriptionBuffer);
             // Use this instead if you want to skip reading OTB description string
             // reader.SkipBytes(128);
 

@@ -152,10 +152,13 @@ namespace LapisItemEditor.ViewModels.Main
                 string jsonString = JsonSerializer.Serialize(changes);
 
 
-                string path = "./logs/sync-otb-with-tibia.log.json";
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
-                await File.WriteAllTextAsync(path, jsonString);
-                Trace.WriteLine(jsonString);
+                var path = Path.GetDirectoryName("./logs/sync-otb-with-tibia.log.json");
+                if (path != null)
+                {
+                    Directory.CreateDirectory(path);
+                    await File.WriteAllTextAsync(path, jsonString);
+                    Trace.WriteLine(jsonString);
+                }
             });
         }
 
