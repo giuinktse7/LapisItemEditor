@@ -370,7 +370,6 @@ namespace Backend
 
             handleFlag(change, flags.IgnoreLook, ItemTypeFlag.IgnoreLook, "ignoreLook");
             handleFlag(change, flags.Wearout, ItemTypeFlag.ClientCharges, "wearout");
-            handleFlag(change, flags.Expire, ItemTypeFlag.ClientDuration, "expire");
             handleFlag(change, flags.Forceuse, ItemTypeFlag.ForceUse, "forceuse");
 
             var hasAnimation = Data.FrameGroup.Count != 0 && Data.FrameGroup[0].SpriteInfo.Animation != null;
@@ -401,6 +400,9 @@ namespace Backend
                 handleFlag(change, flags.Height.HasElevation, ItemTypeFlag.HasElevation, "Height.HasElevation");
             }
 
+            // Both expire and expireStop map to ClientDuration.
+            bool hasExpiryToggle = (flags.Expire || flags.Expirestop);
+            handleFlag(change, hasExpiryToggle, ItemTypeFlag.ClientDuration, "expire | expireStop");
 
             return change.changes.Count > 0 ? change : null;
         }
