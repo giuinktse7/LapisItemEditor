@@ -59,20 +59,29 @@
     </RecyclingElementFactory>
 </UserControl.Resources>
 
- <Border
-    BorderThickness="1"
-    BorderBrush="{DynamicResource SystemControlHighlightBaseMediumLowBrush}"
-    Margin="0 0 16 0"
-    Padding="16">
-    <ScrollViewer
-        Name="scroller"
-        HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Visible">
-        <ItemsRepeater
-            Name="repeater"
-            Background="Transparent"
-            Items="{Binding ObservableItems}"
-            ItemTemplate="{StaticResource elementFactory}"/>
-    </ScrollViewer>
-</Border>
+        
+<Grid RowDefinitions="Auto,*" Margin="0 0 16 0">
+    <StackPanel>
+        <TextBox Grid.Row="0" Name="search_box"  KeyUp="searchBoxKeyUp" Padding="16"/>
+        <CheckBox VerticalAlignment="Center" IsChecked="{Binding SearchForServerId}">Server ID</CheckBox>
+    </StackPanel>
+
+    <Border
+        Grid.Row="1"
+        BorderThickness="1"
+        BorderBrush="{DynamicResource SystemControlHighlightBaseMediumLowBrush}"
+        Padding="16">
+        <ScrollViewer
+            Name="scroller"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Visible">
+            <ItemsRepeater
+                Name="repeater"
+                Background="Transparent"
+                Items="{Binding ObservableItems}"
+                ItemTemplate="{StaticResource elementFactory}"/>
+        </ScrollViewer>
+    </Border>
+</Grid>
+  
 </UserControl>
