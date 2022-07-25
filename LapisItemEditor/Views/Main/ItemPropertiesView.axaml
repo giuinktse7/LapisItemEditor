@@ -134,7 +134,7 @@
     </StackPanel>
 
 		<!-- Second column -->
-    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200">
+    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200" Margin="20,0,20,0">
         <Grid RowDefinitions="*,*" Margin="0 0 9 0">
             <TextBlock Grid.Row="0" Padding="4 2 4 2">Hangable Hook Type</TextBlock>
             <ComboBox Grid.Row="1" Items="{Binding HangableHookTypes}" SelectedItem="{Binding HangableHookType, Mode=TwoWay}" SelectedIndex="0">
@@ -189,7 +189,7 @@
     </StackPanel>
 
         <!-- Third column -->
-    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" MinHeight="200">
+    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" MinHeight="200" Margin="20,0,20,0">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding Height, Mode=TwoWay}">Height</CheckBox>
             <PathIcon Classes="question-mark" ToolTip.Tip="If an object offsets objects that sit on top of it (like a table or a parcel)." />
