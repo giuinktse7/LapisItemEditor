@@ -134,7 +134,7 @@
     </StackPanel>
 
 		<!-- Second column -->
-    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200">
+    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200" Margin="20,0,20,0">
         <Grid RowDefinitions="*,*" Margin="0 0 9 0">
             <TextBlock Grid.Row="0" Padding="4 2 4 2">Hangable Hook Type</TextBlock>
             <ComboBox Grid.Row="1" Items="{Binding HangableHookTypes}" SelectedItem="{Binding HangableHookType, Mode=TwoWay}" SelectedIndex="0">
@@ -189,7 +189,7 @@
     </StackPanel>
 
         <!-- Third column -->
-    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" MinHeight="200">
+    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" MinHeight="200" Margin="20,0,20,0">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding Height, Mode=TwoWay}">Height</CheckBox>
             <PathIcon Classes="question-mark" ToolTip.Tip="If an object offsets objects that sit on top of it (like a table or a parcel)." />
@@ -291,7 +291,12 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
             <CheckBox IsChecked="{Binding HasExpireStop, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Expire stop</CheckBox>
-            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has a stop expire"/>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has flag expirestop"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox IsChecked="{Binding HasClockExpire, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Clock expire</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has flag clockexpire"/>
         </StackPanel>
 
     </StackPanel>
