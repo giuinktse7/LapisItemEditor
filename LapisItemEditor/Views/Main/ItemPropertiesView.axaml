@@ -291,7 +291,12 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
             <CheckBox IsChecked="{Binding HasExpireStop, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Expire stop</CheckBox>
-            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has a stop expire"/>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has flag expirestop"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <CheckBox IsChecked="{Binding HasClockExpire, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,4,0">Clock expire</CheckBox>
+            <PathIcon Classes="question-mark" ToolTip.Tip="If the thing has flag clockexpire"/>
         </StackPanel>
 
     </StackPanel>

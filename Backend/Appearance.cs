@@ -400,9 +400,9 @@ namespace Backend
                 handleFlag(change, flags.Height.HasElevation, ItemTypeFlag.HasElevation, "Height.HasElevation");
             }
 
-            // Both expire and expireStop map to ClientDuration.
-            bool hasExpiryToggle = (flags.Expire || flags.Expirestop);
-            handleFlag(change, hasExpiryToggle, ItemTypeFlag.ClientDuration, "expire | expireStop");
+            // All of expire, expireStop and clockExpire map to ClientDuration (as of 12.90).
+            bool hasExpiryToggle = (flags.Expire || flags.Expirestop || flags.Clockexpire);
+            handleFlag(change, hasExpiryToggle, ItemTypeFlag.ClientDuration, "expire | expireStop | clockExpire");
 
             return change.changes.Count > 0 ? change : null;
         }

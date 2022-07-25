@@ -346,6 +346,7 @@ namespace LapisItemEditor.ViewModels.ItemProperties
         private bool hasWearout;
         private bool hasExpire;
         private bool hasExpireStop;
+        private bool hasClockExpire;
         private bool hasTradeAs;
         private bool hasShowAs;
         private bool hasMinimumLevel;
@@ -429,6 +430,7 @@ namespace LapisItemEditor.ViewModels.ItemProperties
                     HasWearout = false;
                     HasExpire = false;
                     HasExpireStop = false;
+                    HasClockExpire = false;
                     HasTradeAs = false;
                     HasShowAs = false;
                     HasMinimumLevel = false;
@@ -578,6 +580,7 @@ namespace LapisItemEditor.ViewModels.ItemProperties
                     FullBank = _flags.Fullbank;
                     HasExpire = _flags.Expire;
                     HasExpireStop = _flags.Expirestop;
+                    HasClockExpire = _flags.Clockexpire;
 
                     HasWearout = _flags.Wearout;
 
@@ -922,6 +925,14 @@ namespace LapisItemEditor.ViewModels.ItemProperties
                 }
             });
 
+            this.WhenAnyValue(x => x.hasClockExpire).Subscribe(value =>
+            {
+                if (flags != null)
+                {
+                    flags.Clockexpire = value;
+                }
+            });
+
             this.WhenAnyValue(x => x.IgnoreLook).Subscribe(value =>
             {
                 if (flags != null)
@@ -1053,6 +1064,7 @@ namespace LapisItemEditor.ViewModels.ItemProperties
         public bool HasWearout { get => hasWearout; set => this.RaiseAndSetIfChanged(ref hasWearout, value); }
         public bool HasExpire { get => hasExpire; set => this.RaiseAndSetIfChanged(ref hasExpire, value); }
         public bool HasExpireStop { get => hasExpireStop; set => this.RaiseAndSetIfChanged(ref hasExpireStop, value); }
+        public bool HasClockExpire { get => hasClockExpire; set => this.RaiseAndSetIfChanged(ref hasClockExpire, value); }
         public bool HasTradeAs { get => hasTradeAs; set => this.RaiseAndSetIfChanged(ref hasTradeAs, value); }
         public bool HasShowAs { get => hasShowAs; set => this.RaiseAndSetIfChanged(ref hasShowAs, value); }
         public bool HasMinimumLevel { get => hasMinimumLevel; set => this.RaiseAndSetIfChanged(ref hasMinimumLevel, value); }
