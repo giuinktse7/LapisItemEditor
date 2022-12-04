@@ -17,7 +17,8 @@
         { "name": "12.85", "version": 1285 },
         { "name": "12.86", "version": 1286 },
         { "name": "12.87", "version": 1287 },
-        { "name": "12.90", "version": 1290 }
+        { "name": "12.90", "version": 1290 },
+        { "name": "13.10", "version": 1310 }
     ],
     "majorOtbVersions": [1, 2, 3]
 }

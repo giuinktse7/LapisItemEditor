@@ -123,14 +123,15 @@ namespace Tibia.Protobuf.Appearances {
             "YW5nZWRUb0V4cGlyZRIcChRmb3JtZXJfb2JqZWN0X3R5cGVpZBgBIAEoDSIz",
             "ChhBcHBlYXJhbmNlRmxhZ0N5Y2xvcGVkaWESFwoPY3ljbG9wZWRpYV90eXBl",
             "GAEgASgNIkUKI0FwcGVhcmFuY2VGbGFnVXBncmFkZUNsYXNzaWZpY2F0aW9u",
-            "Eh4KFnVwZ3JhZGVfY2xhc3NpZmljYXRpb24YASABKA0isQEKG1NwZWNpYWxN",
+            "Eh4KFnVwZ3JhZGVfY2xhc3NpZmljYXRpb24YASABKA0i0wEKG1NwZWNpYWxN",
             "ZWFuaW5nQXBwZWFyYW5jZUlkcxIUCgxnb2xkX2NvaW5faWQYASABKA0SGAoQ",
             "cGxhdGludW1fY29pbl9pZBgCIAEoDRIXCg9jcnlzdGFsX2NvaW5faWQYAyAB",
             "KA0SFQoNdGliaWFfY29pbl9pZBgEIAEoDRIZChFzdGFtcGVkX2xldHRlcl9p",
-            "ZBgFIAEoDRIXCg9zdXBwbHlfc3Rhc2hfaWQYBiABKA0qgQEKEUZJWEVEX0ZS",
-            "QU1FX0dST1VQEiEKHUZJWEVEX0ZSQU1FX0dST1VQX09VVEZJVF9JRExFEAAS",
-            "IwofRklYRURfRlJBTUVfR1JPVVBfT1VURklUX01PVklORxABEiQKIEZJWEVE",
-            "X0ZSQU1FX0dST1VQX09CSkVDVF9JTklUSUFMEAI="));
+            "ZBgFIAEoDRIXCg9zdXBwbHlfc3Rhc2hfaWQYBiABKA0SIAoYc3RhbmRhcmRf",
+            "cmV3YXJkX2NoZXN0X2lkGAcgASgNKoEBChFGSVhFRF9GUkFNRV9HUk9VUBIh",
+            "Ch1GSVhFRF9GUkFNRV9HUk9VUF9PVVRGSVRfSURMRRAAEiMKH0ZJWEVEX0ZS",
+            "QU1FX0dST1VQX09VVEZJVF9NT1ZJTkcQARIkCiBGSVhFRF9GUkFNRV9HUk9V",
+            "UF9PQkpFQ1RfSU5JVElBTBAC"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tibia.Protobuf.Shared.SharedReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Tibia.Protobuf.Appearances.FIXED_FRAME_GROUP), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -158,7 +159,7 @@ namespace Tibia.Protobuf.Appearances {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagChangedToExpire), global::Tibia.Protobuf.Appearances.AppearanceFlagChangedToExpire.Parser, new[]{ "FormerObjectTypeid" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagCyclopedia), global::Tibia.Protobuf.Appearances.AppearanceFlagCyclopedia.Parser, new[]{ "CyclopediaType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.AppearanceFlagUpgradeClassification), global::Tibia.Protobuf.Appearances.AppearanceFlagUpgradeClassification.Parser, new[]{ "UpgradeClassification" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.SpecialMeaningAppearanceIds), global::Tibia.Protobuf.Appearances.SpecialMeaningAppearanceIds.Parser, new[]{ "GoldCoinId", "PlatinumCoinId", "CrystalCoinId", "TibiaCoinId", "StampedLetterId", "SupplyStashId" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tibia.Protobuf.Appearances.SpecialMeaningAppearanceIds), global::Tibia.Protobuf.Appearances.SpecialMeaningAppearanceIds.Parser, new[]{ "GoldCoinId", "PlatinumCoinId", "CrystalCoinId", "TibiaCoinId", "StampedLetterId", "SupplyStashId", "StandardRewardChestId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -9621,6 +9622,7 @@ namespace Tibia.Protobuf.Appearances {
       tibiaCoinId_ = other.tibiaCoinId_;
       stampedLetterId_ = other.stampedLetterId_;
       supplyStashId_ = other.supplyStashId_;
+      standardRewardChestId_ = other.standardRewardChestId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -9792,6 +9794,33 @@ namespace Tibia.Protobuf.Appearances {
       _hasBits0 &= ~32;
     }
 
+    /// <summary>Field number for the "standard_reward_chest_id" field.</summary>
+    public const int StandardRewardChestIdFieldNumber = 7;
+    private readonly static uint StandardRewardChestIdDefaultValue = 0;
+
+    private uint standardRewardChestId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint StandardRewardChestId {
+      get { if ((_hasBits0 & 64) != 0) { return standardRewardChestId_; } else { return StandardRewardChestIdDefaultValue; } }
+      set {
+        _hasBits0 |= 64;
+        standardRewardChestId_ = value;
+      }
+    }
+    /// <summary>Gets whether the "standard_reward_chest_id" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasStandardRewardChestId {
+      get { return (_hasBits0 & 64) != 0; }
+    }
+    /// <summary>Clears the value of the "standard_reward_chest_id" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearStandardRewardChestId() {
+      _hasBits0 &= ~64;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -9813,6 +9842,7 @@ namespace Tibia.Protobuf.Appearances {
       if (TibiaCoinId != other.TibiaCoinId) return false;
       if (StampedLetterId != other.StampedLetterId) return false;
       if (SupplyStashId != other.SupplyStashId) return false;
+      if (StandardRewardChestId != other.StandardRewardChestId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -9826,6 +9856,7 @@ namespace Tibia.Protobuf.Appearances {
       if (HasTibiaCoinId) hash ^= TibiaCoinId.GetHashCode();
       if (HasStampedLetterId) hash ^= StampedLetterId.GetHashCode();
       if (HasSupplyStashId) hash ^= SupplyStashId.GetHashCode();
+      if (HasStandardRewardChestId) hash ^= StandardRewardChestId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -9868,6 +9899,10 @@ namespace Tibia.Protobuf.Appearances {
         output.WriteRawTag(48);
         output.WriteUInt32(SupplyStashId);
       }
+      if (HasStandardRewardChestId) {
+        output.WriteRawTag(56);
+        output.WriteUInt32(StandardRewardChestId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -9902,6 +9937,10 @@ namespace Tibia.Protobuf.Appearances {
         output.WriteRawTag(48);
         output.WriteUInt32(SupplyStashId);
       }
+      if (HasStandardRewardChestId) {
+        output.WriteRawTag(56);
+        output.WriteUInt32(StandardRewardChestId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -9929,6 +9968,9 @@ namespace Tibia.Protobuf.Appearances {
       }
       if (HasSupplyStashId) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SupplyStashId);
+      }
+      if (HasStandardRewardChestId) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(StandardRewardChestId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -9959,6 +10001,9 @@ namespace Tibia.Protobuf.Appearances {
       }
       if (other.HasSupplyStashId) {
         SupplyStashId = other.SupplyStashId;
+      }
+      if (other.HasStandardRewardChestId) {
+        StandardRewardChestId = other.StandardRewardChestId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -9999,6 +10044,10 @@ namespace Tibia.Protobuf.Appearances {
             SupplyStashId = input.ReadUInt32();
             break;
           }
+          case 56: {
+            StandardRewardChestId = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -10036,6 +10085,10 @@ namespace Tibia.Protobuf.Appearances {
           }
           case 48: {
             SupplyStashId = input.ReadUInt32();
+            break;
+          }
+          case 56: {
+            StandardRewardChestId = input.ReadUInt32();
             break;
           }
         }
