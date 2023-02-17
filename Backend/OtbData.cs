@@ -10,6 +10,8 @@ using System.Linq;
 namespace Backend
 {
     using Proto = Tibia.Protobuf;
+    using ItemCategory = Tibia.Protobuf.Shared.ITEM_CATEGORY;
+
 
     public enum OtbItemAttribute
     {
@@ -50,6 +52,8 @@ namespace Backend
         UpgradeClassification,
 
         Article,
+
+        ItemCategory, // Item category in the cyclopedia
 
 
         Last
@@ -275,6 +279,11 @@ namespace Backend
                     case OtbItemAttribute.UpgradeClassification:
                         Debug.Assert(attributeSize == 1);
                         otbItem.UpgradeClassification = reader.NextU8();
+                        break;
+
+                    case OtbItemAttribute.ItemCategory:
+                        Debug.Assert(attributeSize == 1);
+                        otbItem.ItemCategory = (ItemCategory)reader.NextU8();
                         break;
 
                     default:
@@ -506,6 +515,11 @@ namespace Backend
                 // ItemTypeFlag flags = appearance.GetOtbFlags();
                 ItemTypeFlag flags = otbItem.Flags;
 
+                if (appearance.IsLootable)
+                {
+                    flags |= ItemTypeFlag.Lootable;
+                }
+
                 writer.WriteU32((uint)flags);
 
                 writer.WriteAttributeType(OtbItemAttribute.ServerId, 2);
@@ -607,6 +621,12 @@ namespace Backend
                         var bytes = otbItem.Article.ToCharArray();
                         writer.WriteAttributeType(OtbItemAttribute.Article, (ushort)bytes.Length);
                         writer.WriteBytesWithoutSizeHint(bytes);
+                    }
+
+                    // Item category
+                    {
+                        writer.WriteAttributeType(OtbItemAttribute.ItemCategory, 1);
+                        writer.WriteU8((byte)otbItem.ItemCategory);
                     }
                 }
 

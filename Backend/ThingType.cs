@@ -80,7 +80,8 @@ namespace Backend
         ForceUse = 1 << 26,
 
         Ammo = 1 << 27,
-        Reportable = 1 << 28
+        Reportable = 1 << 28,
+        Lootable = 1 << 29 // Primary use is to aid scripting of auto-loot
     };
 
 

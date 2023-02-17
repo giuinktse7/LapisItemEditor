@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Backend
 {
+    using ItemCategory = Tibia.Protobuf.Shared.ITEM_CATEGORY;
+
     public class OtbItem
     {
         public OtbItem()
@@ -22,7 +24,7 @@ namespace Backend
         public string? Article { get; set; }
         public string? Description { get; set; }
 
-
+        public ItemCategory ItemCategory { get; set; } = ItemCategory.Others;
 
         public ushort? LightLevel { get; set; }
         public ushort? LightColor { get; set; }

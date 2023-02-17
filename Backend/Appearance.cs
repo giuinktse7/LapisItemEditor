@@ -448,6 +448,8 @@ namespace Backend
         public bool HasMarket { get => Data.Flags.Market != null; }
         public bool HasUpgradeClassification { get => Data.Flags.Upgradeclassification?.HasUpgradeClassification ?? false; }
 
+        public bool IsLootable { get => Data.Flags.Corpse && Data.Flags.Container; }
+
         #endregion
     }
 }
