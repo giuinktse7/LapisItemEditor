@@ -330,7 +330,11 @@ namespace Backend
                 otbItem.MaxTextLenOnce = (ushort)flags.WriteOnce.MaxTextLengthOnce;
             }
 
-
+            if (this.HasMarket && Data.Flags.Market.HasCategory)
+            {
+                change.AddChange("itemCategory", otbItem.ItemCategory.ToString() ?? "", Data.Flags.Market.Category.ToString(), "Market.Category");
+                otbItem.ItemCategory = Data.Flags.Market.Category;
+            }
 
             if (this.HasBank && otbItem.Speed != flags.Bank.Waypoints)
             {
@@ -360,6 +364,7 @@ namespace Backend
                 change.AddChange("minimapColor", otbItem.MinimapColor?.ToString() ?? "", flags.Automap.Color.ToString(), "Automap.Color");
                 otbItem.MinimapColor = (ushort)flags.Automap.Color;
             }
+
 
             // Otb flags
             if (Data.Flags.Hook != null)
@@ -445,6 +450,7 @@ namespace Backend
         public bool HasLight { get => Data.Flags.Light != null; }
 
         public bool HasBank { get => Data.Flags.Bank != null && Data.Flags.Bank.HasWaypoints; }
+
         public bool HasMarket { get => Data.Flags.Market != null; }
         public bool HasUpgradeClassification { get => Data.Flags.Upgradeclassification?.HasUpgradeClassification ?? false; }
 

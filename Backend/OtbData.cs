@@ -624,6 +624,7 @@ namespace Backend
                     }
 
                     // Item category
+                    if (otbItem.HasItemCategory)
                     {
                         writer.WriteAttributeType(OtbItemAttribute.ItemCategory, 1);
                         writer.WriteU8((byte)otbItem.ItemCategory);

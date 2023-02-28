@@ -24,7 +24,7 @@ namespace Backend
         public string? Article { get; set; }
         public string? Description { get; set; }
 
-        public ItemCategory ItemCategory { get; set; } = ItemCategory.Others;
+        public ItemCategory? ItemCategory { get; set; }
 
         public ushort? LightLevel { get; set; }
         public ushort? LightColor { get; set; }
@@ -65,6 +65,9 @@ namespace Backend
 
         [MemberNotNullWhen(returnValue: true, member: nameof(Description))]
         public bool HasDescription => Description != null;
+
+        [MemberNotNullWhen(returnValue: true, member: nameof(ItemCategory))]
+        public bool HasItemCategory => ItemCategory != null;
 
 
         [MemberNotNullWhen(returnValue: true, member: nameof(MaxTextLen))]
