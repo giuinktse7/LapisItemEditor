@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
     <PackageReference Include="SevenZip" Version="19.0.0" />
     <PackageReference Include="Google.Protobuf" Version="3.18.0" />
   </ItemGroup>
