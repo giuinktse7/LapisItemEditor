@@ -16,7 +16,7 @@
   </Design.PreviewWith>
 
     <!-- CheckBox -->
-    <Style Selector="CheckBox">
+    <!-- <Style Selector="CheckBox">
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -54,7 +54,7 @@
                 </Grid>
             </ControlTemplate>
         </Setter>
-    </Style>
+    </Style> -->
 
     <!-- NumericUpDown -->
     <Style Selector="NumericUpDown /template/ TextBox">
