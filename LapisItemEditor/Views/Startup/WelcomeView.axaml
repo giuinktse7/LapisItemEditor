@@ -31,7 +31,7 @@
 
       <WrapPanel Orientation="Vertical" Margin="32,16,32,0">
         <WrapPanel IsVisible="{Binding !HasGameDataConfig}" Orientation="Vertical">
-          <TextBlock Text="Select assets path" FontSize="16"/>
+          <TextBlock Text="Select assets path" FontSize="16" />
           <TextBlock Margin="0 4 0 14" FontSize="12" Foreground="#BDBDBD" Text="For Tibia 11+, select the folder &lt;path to your Tibia installation&gt;/packages/Tibia/assets"/>
           <Button Padding="0" Margin="0" BorderThickness="0" Command="{Binding ChooseClientFolder}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">Open folder...</Button>
           <TextBlock IsVisible="{Binding HasBadAssetPath}" Margin="0 2 0 0" Text="{Binding BadAssetPath, StringFormat='Could not locate Tibia assets in {0}.'}" FontSize="12" Foreground="#cf6679"/>

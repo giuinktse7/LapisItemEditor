@@ -1,7 +1,5 @@
-using System.Windows.Input;
 using ReactiveUI;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace LapisItemEditor.ViewModels.RecentItems
 {

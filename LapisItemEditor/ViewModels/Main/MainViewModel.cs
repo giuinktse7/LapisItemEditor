@@ -229,10 +229,10 @@ namespace LapisItemEditor.ViewModels.Main
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            IEnumerable<ItemModel> listItems = Enumerable
+            IEnumerable<ItemListViewItemModel> listItems = Enumerable
                 .Range(fromServerId, toServerId - fromServerId)
                 .Select(serverId => CreateItemModel((uint)serverId))
-                .OfType<ItemModel>();
+                .OfType<ItemListViewItemModel>();
 
             Items.Items.AddRange(listItems);
             stopwatch.Stop();
@@ -240,15 +240,15 @@ namespace LapisItemEditor.ViewModels.Main
             Trace.WriteLine($"AddItems finished in {stopwatch.ElapsedMilliseconds} ms.");
         }
 
-        private IEnumerable<ItemModel> CreateItems()
+        private IEnumerable<ItemListViewItemModel> CreateItems()
         {
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            IEnumerable<ItemModel> listItems = Enumerable
+            IEnumerable<ItemListViewItemModel> listItems = Enumerable
                 .Range(100, (int)Backend.Backend.LastItemTypeServerId)
                 .Select(serverId => CreateItemModel((uint)serverId))
-                .OfType<ItemModel>();
+                .OfType<ItemListViewItemModel>();
             stopwatch.Stop();
 
             Trace.WriteLine($"Created ItemType list entries in {stopwatch.ElapsedMilliseconds} ms.");
@@ -274,7 +274,7 @@ namespace LapisItemEditor.ViewModels.Main
             return null;
         }
 
-        private static ItemModel? CreateItemModel(uint serverId)
+        private static ItemListViewItemModel? CreateItemModel(uint serverId)
         {
             var appearance = Backend.Backend.GetItemTypeByServerId(serverId);
             if (appearance != null && appearance.HasSprites)
@@ -291,7 +291,7 @@ namespace LapisItemEditor.ViewModels.Main
                 }
 
 
-                return new ItemModel()
+                return new ItemListViewItemModel()
                 {
                     Appearance = appearance,
                     ServerId = serverId,

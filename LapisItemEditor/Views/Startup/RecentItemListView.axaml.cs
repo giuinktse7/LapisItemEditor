@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using LapisItemEditor.ViewModels.RecentItems;
 
@@ -12,9 +11,7 @@ namespace LapisItemEditor.Views.RecentItems
             InitializeComponent();
         }
 
-        
-        // public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
-        public void OnSelectTemplateKey(object sender, object e)
+        public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
         {
             var item = (RecentDirectoryItem?)e.DataContext;
             if (item == null)
@@ -34,7 +31,6 @@ namespace LapisItemEditor.Views.RecentItems
             {
                 e.TemplateKey = "defaultKey";
             }
-
         }
     }
 }
