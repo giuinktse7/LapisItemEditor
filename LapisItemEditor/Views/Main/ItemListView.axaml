@@ -1,8 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:LapisItemEditor.ViewModels"
+             xmlns:local="using:LapisItemEditor.Views.RecentItems"
              x:Class="LapisItemEditor.Views.ItemListView"
-             Name="ItemListView"
+             x:DataType="vm:ItemListViewModel"
+             Name="Root"
              >
 
   <Design.DataContext>
@@ -24,13 +26,13 @@
 
  <UserControl.Resources>
     <RecyclePool x:Key="RecyclePool" />
-    <DataTemplate x:Key="defaultKey">
+    <DataTemplate x:Key="defaultKey" x:DataType="vm:ItemListViewModel">
         <Button
             Background="Transparent"
-            Command="{Binding #ItemListView.DataContext.ItemTypeSelected}"
+            Command="{Binding #Root.DataContext.ItemTypeSelected}"
             CommandParameter="{Binding}"
             Cursor="Hand">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2" x:DataType="vm:ItemListViewItemModel">
                 <Image Width="32" Height="32" Source="{Binding ItemImage}" />
                 <StackPanel Orientation="Vertical">
                     <TextBlock
@@ -78,7 +80,7 @@
             <ItemsRepeater
                 Name="repeater"
                 Background="Transparent"
-                Items="{Binding ObservableItems}"
+                ItemsSource="{Binding ObservableItems}"
                 ItemTemplate="{StaticResource elementFactory}"/>
         </ScrollViewer>
     </Border>
