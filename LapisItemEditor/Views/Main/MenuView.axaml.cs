@@ -5,7 +5,7 @@ using LapisItemEditor.ViewModels.Main;
 
 namespace LapisItemEditor.Views
 {
-    public class MenuView : ReactiveUserControl<MenuViewModel>
+    public partial class MenuView : ReactiveUserControl<MenuViewModel>
     {
         public MenuView()
         {

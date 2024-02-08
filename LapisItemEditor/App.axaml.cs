@@ -9,6 +9,9 @@ namespace LapisItemEditor
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+
+            // Locator.CurrentMutable.Register(() => new MainView(), typeof(IViewFor<MainViewModel>));
+            // Locator.CurrentMutable.Register(() => new WelcomeView(), typeof(IViewFor<WelcomeViewModel>));
         }
 
         public override void OnFrameworkInitializationCompleted()

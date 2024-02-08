@@ -103,7 +103,7 @@
         <Grid RowDefinitions="*,*" Margin="0 26 9 0">
             <TextBlock Grid.Row="0" Padding="4 2 4 2">Writable</TextBlock>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <ComboBox Items="{Binding WritableItemTypes}" SelectedItem="{Binding WritableType, Mode=TwoWay}">
+            <ComboBox ItemsSource="{Binding WritableItemTypes}" SelectedItem="{Binding WritableType, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding, Converter={StaticResource WritableTypeConverter}}" />
@@ -137,7 +137,7 @@
     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" MinHeight="200" Margin="20,0,20,0">
         <Grid RowDefinitions="*,*" Margin="0 0 9 0">
             <TextBlock Grid.Row="0" Padding="4 2 4 2">Hangable Hook Type</TextBlock>
-            <ComboBox Grid.Row="1" Items="{Binding HangableHookTypes}" SelectedItem="{Binding HangableHookType, Mode=TwoWay}" SelectedIndex="0">
+            <ComboBox Grid.Row="1" ItemsSource="{Binding HangableHookTypes}" SelectedItem="{Binding HangableHookType, Mode=TwoWay}" SelectedIndex="0">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding, Converter={StaticResource HangableHookTypeConverter}}" />
@@ -218,7 +218,7 @@
         <CheckBox Margin="0 0 8 0" IsChecked="{Binding IgnoreLook, Mode=TwoWay}">Ignore look</CheckBox>
         <StackPanel>
             <CheckBox Margin="0 0 8 0" IsChecked="{Binding HasClothSlot, Mode=TwoWay}">Item Slot (Clothes)</CheckBox>
-            <ComboBox IsVisible="{Binding HasClothSlot}" Items="{Binding ClothSlots}" SelectedItem="{Binding ClothSlot, Mode=TwoWay}" SelectedIndex="0">
+            <ComboBox IsVisible="{Binding HasClothSlot}" ItemsSource="{Binding ClothSlots}" SelectedItem="{Binding ClothSlot, Mode=TwoWay}" SelectedIndex="0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding, Converter={StaticResource ItemSlotConverter}}" />
@@ -229,7 +229,7 @@
 
         <StackPanel>
           <CheckBox Margin="0 0 8 0" IsChecked="{Binding DefaultAction, Mode=TwoWay}">Default Action</CheckBox>
-            <ComboBox IsVisible="{Binding DefaultAction}" Items="{Binding DefaultActions}" SelectedItem="{Binding SelectedDefaultAction, Mode=TwoWay}" SelectedIndex="0">
+            <ComboBox IsVisible="{Binding DefaultAction}" ItemsSource="{Binding DefaultActions}" SelectedItem="{Binding SelectedDefaultAction, Mode=TwoWay}" SelectedIndex="0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding, Converter={StaticResource DefaultActionConverter}}" />

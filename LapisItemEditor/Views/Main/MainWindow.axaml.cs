@@ -9,11 +9,11 @@ using ReactiveUI;
 
 namespace LapisItemEditor.Views
 {
-    public class MainWindow : ReactiveWindow<MainWindowViewModel>
+    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public void WindowPressed(object sender, PointerPressedEventArgs args)
         {
-            FocusManager.Instance.Focus(null);
+            // FocusManager.Instance.Focus(null);
         }
 
         public MenuItem menuItemEdit => this.FindControl<MenuItem>("MenuItemEdit");
@@ -45,14 +45,5 @@ namespace LapisItemEditor.Views
 
             Config.LoadFromFile("./data/config.json");
         }
-
-
-        private void InitializeComponent()
-        {
-            this.WhenActivated(disposables => { });
-            AvaloniaXamlLoader.Load(this);
-        }
-
-
     }
 }

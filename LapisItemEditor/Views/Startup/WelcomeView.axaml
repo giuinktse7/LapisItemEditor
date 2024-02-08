@@ -5,7 +5,6 @@
              xmlns:vm="using:LapisItemEditor.ViewModels"
              xmlns:recentItems="using:LapisItemEditor.Views.RecentItems"
              xmlns:views="clr-namespace:LapisItemEditor.Views"
-             Name="WelcomeView"
              x:Class="LapisItemEditor.Views.WelcomeView"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
   <UserControl.Styles>

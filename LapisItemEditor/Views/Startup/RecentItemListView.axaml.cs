@@ -12,12 +12,9 @@ namespace LapisItemEditor.Views.RecentItems
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
+        
+        // public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
+        public void OnSelectTemplateKey(object sender, object e)
         {
             var item = (RecentDirectoryItem?)e.DataContext;
             if (item == null)
