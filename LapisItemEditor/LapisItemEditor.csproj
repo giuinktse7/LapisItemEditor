@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,9 +6,11 @@
     <TrimMode>copyused</TrimMode>
     <RootNamespace>LapisItemEditor</RootNamespace>
     <StartupObject>LapisItemEditor.Program</StartupObject>
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.8" />
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.8" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.8" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.8" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.8" />
