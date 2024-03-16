@@ -256,19 +256,24 @@ namespace LapisItemEditor.ViewModels.Main
             return listItems;
         }
 
-        private static async Task<string?> ShowSaveItemsOtbDialog()
+        private async Task<string?> ShowSaveItemsOtbDialog()
         {
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var dialog = new SaveFileDialog()
+                var window = desktop.MainWindow;
+                if (window != null)
                 {
-                    InitialFileName = "items",
-                    DefaultExtension = ".otb",
-                };
-                dialog.Filters.Add(new FileDialogFilter() { Name = "Otb files", Extensions = { "otb" } });
-
-                var result = await dialog.ShowAsync(desktop.MainWindow);
-                return result;
+                    var result = await window.StorageProvider.SaveFilePickerAsync(new Avalonia.Platform.Storage.FilePickerSaveOptions()
+                    {
+                        Title = "Save items.otb",
+                        DefaultExtension = "otb",
+                        SuggestedFileName = "items",
+                    });
+                    if (result != null)
+                    {
+                        return result.Path.AbsolutePath;
+                    }
+                }
             }
 
             return null;
