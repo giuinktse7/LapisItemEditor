@@ -119,9 +119,18 @@ namespace Backend.Tibia11
             appearances.Load();
         }
 
+        public void CreateNewOtb()
+        {
+            int clientVersion = 1330;
+            uint majorVersion = 3;
+            uint minorVersion = 64;
+            uint buildNumber = 62;
+            otbData = OtbData.Create(clientVersion, majorVersion, minorVersion, buildNumber);
+        }
+
         public void LoadOtb(string path)
         {
-            otbData = OtbData.Load(path, this, ignoreAttributes: false);
+            otbData = OtbData.Load(path, this);
         }
 
         public Appearance GetOrCreateObjectByClientId(uint clientId)
@@ -345,11 +354,5 @@ namespace Backend.Tibia11
         public IEnumerable<Appearance> Objects => appearances.AppearanceData.Objects.Iterator;
 
         public uint LastItemTypeServerId => otbData?.LastServerId ?? 0;
-
-        IEnumerable<Appearance> Appearances
-        {
-            get => appearances.AppearanceData.Objects.Iterator;
-        }
-
     }
 }

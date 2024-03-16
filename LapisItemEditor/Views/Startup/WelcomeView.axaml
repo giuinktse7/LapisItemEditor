@@ -57,7 +57,7 @@
 
       <WrapPanel IsVisible="{Binding HasGameDataConfig}" Orientation="Vertical" Margin="32,32,32,0">
         <TextBlock Text="Select items.otb path" FontSize="16"/>
-        <Button Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">New items.otb</Button>
+        <Button Command="{Binding UseNewItemsOtbCommand}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">New items.otb</Button>
         <Button Command="{Binding ChooseItemsOtbFile}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">Open file...</Button>
         <TextBlock Text="Recent" FontWeight="Bold" FontSize="14"/>
         <recentItems:RecentItemListView DataContext="{Binding RecentOtbFiles}"/>

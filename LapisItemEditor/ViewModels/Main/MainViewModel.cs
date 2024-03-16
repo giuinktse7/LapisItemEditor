@@ -17,6 +17,8 @@ using ReactiveUI;
 using System.Text.Json;
 
 using static LapisItemEditor.ViewModels.ItemListViewModel;
+using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 
 namespace LapisItemEditor.ViewModels.Main
 {
@@ -176,13 +178,20 @@ namespace LapisItemEditor.ViewModels.Main
             }
         }
 
-        public void Load(GameDataConfig config, string itemsOtbPath)
+        public void Load(GameDataConfig config, string? itemsOtbPath)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             Backend.Backend.GameData = config.CreateGameData();
-            Backend.Backend.GameData?.LoadOtb(itemsOtbPath);
+            if (itemsOtbPath != null)
+            {
+                Backend.Backend.GameData?.LoadOtb(itemsOtbPath);
+            }
+            else
+            {
+                Backend.Backend.GameData?.CreateNewOtb();
+            }
 
             Items.Items.AddRange(CreateItems());
 

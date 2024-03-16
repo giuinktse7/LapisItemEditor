@@ -17,6 +17,7 @@ namespace Backend
         uint LastItemTypeClientId { get; }
         uint LastItemTypeServerId { get; }
 
+        void CreateNewOtb();
         void LoadOtb(string path);
         void WriteOtb(string path);
 

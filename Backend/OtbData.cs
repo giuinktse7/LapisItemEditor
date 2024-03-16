@@ -114,7 +114,19 @@ namespace Backend
             version.BuildNumber = buildNumber;
         }
 
-        public static OtbData Load(string path, GameData gameData, bool ignoreAttributes = false)
+        public static OtbData Create(int clientVersion, uint majorVersion, uint minorVersion, uint buildNumber)
+        {
+            var otbData = new OtbData(majorVersion, minorVersion, buildNumber)
+            {
+                ClientVersion = clientVersion,
+                LastClientId = 100,
+                LastServerId = 100
+            };
+
+            return otbData;
+        }
+
+        public static OtbData Load(string path, GameData gameData)
         {
             if (!File.Exists(path))
             {
@@ -160,6 +172,7 @@ namespace Backend
             uint majorVersion = reader.NextU32(); // major, file version
             uint minorVersion = reader.NextU32(); // minor, client version
             uint buildNumber = reader.NextU32();  // build number, revision
+            Console.WriteLine($"BuildNumber: {buildNumber}");
 
             byte[] otbDescriptionBuffer = RemoveTrailingZeros(reader.NextBytes(128));
             string otbDescription = Encoding.Default.GetString(otbDescriptionBuffer);
@@ -174,7 +187,7 @@ namespace Backend
                 otbData.ClientVersion = clientVersion;
             }
 
-            otbData.ReadNodes(reader, gameData, ignoreAttributes);
+            otbData.ReadNodes(reader, gameData);
             return otbData;
         }
 
@@ -336,7 +349,7 @@ namespace Backend
             return otbItem;
         }
 
-        private void ReadNodes(OtbReader reader, GameData gameData, bool ignoreAttributes)
+        private void ReadNodes(OtbReader reader, GameData gameData)
         {
             HashSet<uint> serverIds = new HashSet<uint>();
             uint maxClientId = 0;
@@ -370,8 +383,8 @@ namespace Backend
                 appearance.otbItem = otbItem;
             }
 
-            this.LastClientId = maxClientId;
-            this.LastServerId = maxServerId;
+            LastClientId = maxClientId;
+            LastServerId = maxServerId;
         }
 
         public void CreateMissingItems(GameData gameData)
@@ -430,7 +443,6 @@ namespace Backend
         {
             Write(path, version.MajorVersion, version.MinorVersion, version.BuildNumber, gameData);
         }
-
 
         public void Write(string path, uint majorVersion, uint minorVersion, uint buildNumber, GameData gameData)
         {

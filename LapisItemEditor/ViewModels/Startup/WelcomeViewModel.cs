@@ -210,6 +210,11 @@ namespace LapisItemEditor.ViewModels
                 }
             });
 
+            UseNewItemsOtbCommand = ReactiveCommand.Create(() =>
+            {
+                UseNewItemsOtb = true;
+            });
+
             OpenInFileBrowserCommand = ReactiveCommand.Create<string, Unit>((directory) =>
             {
                 if (Directory.Exists(directory))

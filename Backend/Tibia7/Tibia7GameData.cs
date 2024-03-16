@@ -42,9 +42,18 @@ namespace Backend.Tibia7
             datData = DatIO.Load(datPath, version, features, appearanceData);
         }
 
+        public void CreateNewOtb()
+        {
+            int clientVersion = 760; // TODO What should the default be?
+            uint majorVersion = 1; // TODO What should the default be?
+            uint minorVersion = 1; // 1 TODO What should the default be?
+            uint buildNumber = 1; // 1 TODO What should the default be?
+            otbData = OtbData.Create(clientVersion, majorVersion, minorVersion, buildNumber);
+        }
+
         public void LoadOtb(string path)
         {
-            this.otbData = OtbData.Load(path, this);
+            otbData = OtbData.Load(path, this);
         }
 
         public Appearance CreateObject(uint clientId)
