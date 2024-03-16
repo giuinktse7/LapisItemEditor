@@ -2,11 +2,14 @@
 
 This is an item editor for OTB files written in C# using Avalonia. The editor supports the version 11+ file format (appearances.dat & LZMA-compressed sprites).
 
-Currently, the **Main functionality** of this application is to create `items.otb` files.
+Currently, the **Main functionality** of this application is to:
+
+-   Create `items.otb` files.
+-   Modify the `appearances.dat` file.
 
 ---
 
-There is limited support for changing the default attributes of items, but this functionality is only partially implented and likely buggy.
+There is limited support for changing the default attributes of items, but this functionality is only **partially implented** and **contains bugs**.
 
 If you would like to try to improve/implement changing of item attributes, good places to start are
 
@@ -48,6 +51,11 @@ Also, parts of this repository are inspired by code in the above repositories.
 ```
 
 6. Click "Save items.otb"
+7. (optional) Click "Save client data" to save modifications to the appearances (`appearances.dat`).
+
+    **Note**: While `items.otb` stores some item-related data, many of the options of this tool (like `Take`, `Lying Object`, `Animate Always`, etc.) are only stored in `appearances.dat`.
+
+    Unless you only use "Create missing items" and bump version data, you probably also want to use `Save client data`. Since this writes a new `appearances.dat`, you must of course use this new file in your client to see those changes (as opposed to the `items.otb` file which is a server-side file).
 
 ## Configuration
 
