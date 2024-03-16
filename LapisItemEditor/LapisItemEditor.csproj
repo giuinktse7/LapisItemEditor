@@ -1,22 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <TrimMode>copyused</TrimMode>
     <RootNamespace>LapisItemEditor</RootNamespace>
     <StartupObject>LapisItemEditor.Program</StartupObject>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.8" />
-    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.8" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.8" />
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.8" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.8" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.8" />
+    <PackageReference Include="Avalonia" Version="11.0.9" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.9" />
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.9" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.9" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.9" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.9" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.9" />
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.6" />
   </ItemGroup>
     <ItemGroup>
     <!--This helps with theme dll-s trimming.

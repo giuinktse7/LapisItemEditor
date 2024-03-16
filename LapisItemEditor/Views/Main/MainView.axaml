@@ -7,7 +7,7 @@
              xmlns:controls="using:LapisItemEditor.Controls"
              xmlns:local="using:LapisItemEditor.ViewModels.Main"
              x:Class="LapisItemEditor.Views.MainView"
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
+             mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="700">
 
 <UserControl.Styles>
   <Style Selector="controls|NumberInput">
@@ -19,11 +19,12 @@
     <local:ClientVersionConverter x:Key="ClientVersionConverter" />
 </UserControl.Resources>
 
-<Grid ColumnDefinitions="300,*" RowDefinitions="Auto,Auto,*,Auto" Margin="8">
+<Grid ColumnDefinitions="300,*" RowDefinitions="Auto,Auto,*" Margin="8">
   <!-- Row 0 -->
   <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="12" Spacing="12">
     <Button Command="{Binding CreateMissingItems}">Create missing items</Button>
     <Button Command="{Binding WriteItemsOtb}">Save items.otb</Button>
+    <Button Command="{Binding WriteClientData}">Save client data</Button>
     <Button Command="{Binding ImportItemNames}">Import item names from file</Button>
     <Button Command="{Binding ExportItemsXml}">Export items.xml</Button>
     <Button Command="{Binding SyncOtbWithTibia}">Update OTB entries to match Tibia</Button>
@@ -55,7 +56,7 @@
 
   <!-- Row 2 -->
   <views:ItemListView Grid.Row="2" Grid.Column="0" DataContext="{Binding Items}"/>
-  <itemProperties:ItemPropertiesView Grid.Row="2" Grid.Column="1" DataContext="{Binding ItemProperties}"/>
+	<itemProperties:ItemPropertiesView ClipToBounds="True" Grid.Row="2" Grid.Column="1" DataContext="{Binding ItemProperties}"/>
 </Grid>
 
 </UserControl>
