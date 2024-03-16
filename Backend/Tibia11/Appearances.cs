@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Google.Protobuf;
 
 namespace Backend.Tibia11
 {
@@ -29,6 +30,9 @@ namespace Backend.Tibia11
 
 
         public TextureAtlasStore TextureAtlases { get; private set; }
+
+        Proto.Appearances.Appearances appearances;
+        string appearancesFileName;
 
         public AppearanceData AppearanceData { get; } = new AppearanceData();
 
@@ -63,6 +67,7 @@ namespace Backend.Tibia11
                     switch (entry.Type)
                     {
                         case "appearances":
+                            appearancesFileName = entry.File;
                             LoadAppearances(entry.File);
                             break;
                         case "sprite":
@@ -94,8 +99,18 @@ namespace Backend.Tibia11
                 entry.Lastspriteid,
                 (SpriteType)entry.SpriteType,
                 entry.File);
-
         }
+
+        public void WriteToDisk(string path)
+        {
+            var filePath = Path.Combine(path, appearancesFileName);
+
+            using (var output = File.Create(filePath))
+            {
+                appearances.WriteTo(output);
+            }
+        }
+
 
         private void LoadAppearances(string filename)
         {
@@ -103,7 +118,8 @@ namespace Backend.Tibia11
 
             using var input = File.OpenRead(appearancesPath);
 
-            Proto.Appearances.Appearances appearances = Proto.Appearances.Appearances.Parser.ParseFrom(input);
+            appearances = Proto.Appearances.Appearances.Parser.ParseFrom(input);
+
 
             AppearanceData.Objects.SetItemCount((uint)appearances.Object.Count);
 

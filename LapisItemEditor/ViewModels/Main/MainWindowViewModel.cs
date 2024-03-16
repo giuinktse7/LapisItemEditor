@@ -56,7 +56,8 @@ namespace LapisItemEditor.ViewModels
                 {
                     if (finished)
                     {
-                        if (welcomeViewModel.GameDataConfig == null || welcomeViewModel.SelectedOtbPath == null)
+                        var hasOtb = welcomeViewModel.SelectedOtbPath != null || welcomeViewModel.UseNewItemsOtb;
+                        if (welcomeViewModel.GameDataConfig == null || !hasOtb)
                         {
                             throw new ApplicationException("Should be impossible.");
                         }

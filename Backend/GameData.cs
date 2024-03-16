@@ -21,6 +21,8 @@ namespace Backend
         void LoadOtb(string path);
         void WriteOtb(string path);
 
+        void WriteClientData(string path);
+
         OtbData? OtbData { get; }
 
         void CreateMissingItems();

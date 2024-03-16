@@ -199,6 +199,12 @@ namespace Backend.Tibia11
             otbData.Write(path, this);
         }
 
+        public void WriteClientData(string path)
+        {
+            appearances.WriteToDisk(path);
+        }
+
+
         public void CreateMissingItems()
         {
             if (otbData == null)

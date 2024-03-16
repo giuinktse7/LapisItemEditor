@@ -132,7 +132,7 @@ namespace LapisItemEditor.ViewModels
 
         private async Task<string?> ShowSelectFolderWindow(string title)
         {
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var dialog = new OpenFolderDialog() { Title = title };
                 var result = await dialog.ShowAsync(desktop.MainWindow);
@@ -144,7 +144,7 @@ namespace LapisItemEditor.ViewModels
 
         private async Task<string[]?> ShowSelectFileWindow(string title)
         {
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var dialog = new OpenFileDialog() { AllowMultiple = false, Title = title };
                 var result = await dialog.ShowAsync(desktop.MainWindow);
@@ -269,6 +269,7 @@ namespace LapisItemEditor.ViewModels
 
         public ICommand ChooseClientFolder { get; }
         public ICommand ChooseItemsOtbFile { get; }
+        public ICommand UseNewItemsOtbCommand { get; }
         public ReactiveCommand<string, Unit> OpenInFileBrowserCommand { get; }
 
         private readonly ObservableAsPropertyHelper<bool> _hasOtb;

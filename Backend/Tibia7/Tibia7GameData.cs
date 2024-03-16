@@ -384,6 +384,11 @@ namespace Backend.Tibia7
             sprData.Dispose();
         }
 
+        public void WriteClientData(string path)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Appearance> Objects => throw new NotImplementedException();
     }
 }

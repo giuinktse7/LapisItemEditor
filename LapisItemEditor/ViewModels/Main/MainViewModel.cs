@@ -98,9 +98,36 @@ namespace LapisItemEditor.ViewModels.Main
                 }
             });
 
+            WriteClientData = ReactiveCommand.Create(async () =>
+            {
+                if (Backend.Backend.GameData != null)
+                {
+                    if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    {
+                        var window = desktop.MainWindow;
+                        if (window != null)
+                        {
+                            var result = await window.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+                            {
+                                Title = "Select client data folder",
+                                AllowMultiple = false,
+                            });
+
+                            var selectedFolder = result?[0];
+
+                            if (selectedFolder != null)
+                            {
+                                Backend.Backend.GameData.WriteClientData(selectedFolder.Path.AbsolutePath);
+                                mainModel.InfoMessage = $"Wrote client data to {selectedFolder.Path.AbsolutePath}.";
+                            }
+                        }
+                    }
+                }
+            });
+
             ImportItemNames = ReactiveCommand.Create(async () =>
             {
-                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     var dialog = new OpenFileDialog() { AllowMultiple = false, Title = "Select item names file" };
                     var result = await dialog.ShowAsync(desktop.MainWindow);
@@ -320,6 +347,7 @@ namespace LapisItemEditor.ViewModels.Main
 
         public ICommand CreateMissingItems { get; }
         public ICommand WriteItemsOtb { get; }
+        public ICommand WriteClientData { get; }
         public ICommand ImportItemNames { get; }
         public ICommand ExportItemsXml { get; }
         public ICommand SyncOtbWithTibia { get; }
