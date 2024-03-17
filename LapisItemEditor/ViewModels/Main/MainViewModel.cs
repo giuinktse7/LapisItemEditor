@@ -197,7 +197,8 @@ namespace LapisItemEditor.ViewModels.Main
                         await File.WriteAllTextAsync(path, jsonString);
                         Trace.WriteLine(jsonString);
                     }
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
                     Trace.WriteLine(e);
@@ -288,7 +289,6 @@ namespace LapisItemEditor.ViewModels.Main
 
             stopwatch.Stop();
             Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loaded assets in {stopwatch.ElapsedMilliseconds} ms.");
-            Dispatcher.UIThread.InvokeAsync(() => FinishedLoading = true);
         }
 
 
@@ -391,8 +391,6 @@ namespace LapisItemEditor.ViewModels.Main
         private uint otbMajorVersion = 0;
         public uint OtbMajorVersion { get => otbMajorVersion; set => this.RaiseAndSetIfChanged(ref otbMajorVersion, value); }
 
-        private bool finishedLoading = false;
-        public bool FinishedLoading { get => finishedLoading; set => this.RaiseAndSetIfChanged(ref finishedLoading, value); }
 
 
         private ClientVersion? inputClientVersion;

@@ -29,6 +29,8 @@ namespace LapisItemEditor.ViewModels
 
                 menuViewModel.CloseGameData = ReactiveCommand.Create(() =>
                 {
+                    Progress = 0;
+                    InfoMessage = "Ready.";
                     Backend.Backend.Reset();
 
                     CreateWelcomeView();
@@ -65,18 +67,10 @@ namespace LapisItemEditor.ViewModels
                         Task.Run(() =>
                         {
                             mainViewModel.Load(welcomeViewModel.GameDataConfig, welcomeViewModel.SelectedOtbPath);
+                            Dispatcher.UIThread.InvokeAsync(() => Router.Navigate.Execute(mainViewModel));
                         });
                     }
                 });
-
-            mainViewModel.WhenAnyValue(x => x.FinishedLoading)
-            .Subscribe(finished =>
-            {
-                if (finished)
-                {
-                    Router.Navigate.Execute(mainViewModel);
-                }
-            });
 
             this.WhenAnyValue(x => x.Progress)
             .Subscribe(progress =>
@@ -85,7 +79,8 @@ namespace LapisItemEditor.ViewModels
                 {
                     IsLoading = true;
                 }
-                else if (progress == 100)
+
+                if (progress == 100)
                 {
                     IsLoading = false;
                     progress = 0;
