@@ -17,12 +17,22 @@ namespace Backend
         uint LastItemTypeClientId { get; }
         uint LastItemTypeServerId { get; }
 
+        void Load(Progress<int>? reporter);
+
+        void CreateNewOtb();
         void LoadOtb(string path);
         void WriteOtb(string path);
 
+        void WriteClientData(string path);
+
         OtbData? OtbData { get; }
 
-        void CreateMissingItems();
+        
+        /// <summary>
+        /// Creates missing items in the game data.
+        /// </summary>
+        /// <returns>The number of items created.</returns>
+        uint CreateMissingItems();
 
         IEnumerable<Appearance> Objects { get; }
 

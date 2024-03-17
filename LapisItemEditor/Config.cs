@@ -18,6 +18,20 @@ namespace LapisItemEditor
         public int Version { get; set; }
     }
 
+    public class OtbDefaults {
+        [JsonPropertyName("clientVersion")]
+        public int ClientVersion { get; set; }
+
+        [JsonPropertyName("majorOtbVersion")]
+        public uint MajorOtbVersion { get; set; }
+
+        [JsonPropertyName("minorOtbVersion")]
+        public uint MinorOtbVersion { get; set; }
+
+        [JsonPropertyName("buildNumber")]
+        public uint BuildNumber { get; set; }
+    }
+
     public class Config
     {
         public static Config instance = new Config();
@@ -27,6 +41,11 @@ namespace LapisItemEditor
 
         [JsonPropertyName("majorOtbVersions")]
         public List<uint> MajorOtbVersions { get; set; } = new List<uint>();
+
+
+        [JsonPropertyName("defaults")]
+        public OtbDefaults Defaults { get; set; } = new OtbDefaults();
+
 
         public static void LoadFromFile(string path)
         {

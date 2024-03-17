@@ -15,8 +15,12 @@ using DynamicData;
 using LapisItemEditor.ViewModels.ItemProperties;
 using ReactiveUI;
 using System.Text.Json;
+using Avalonia.Threading;
+
 
 using static LapisItemEditor.ViewModels.ItemListViewModel;
+using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 
 namespace LapisItemEditor.ViewModels.Main
 {
@@ -51,11 +55,13 @@ namespace LapisItemEditor.ViewModels.Main
 
                 int oldLastServerId = (int)Backend.Backend.GameData.LastItemTypeServerId;
 
-                Backend.Backend.GameData.CreateMissingItems();
+                mainModel.InfoMessage = "Creating missing items...";
+                uint createdItems = Backend.Backend.GameData.CreateMissingItems();
 
                 int newLastServerId = (int)Backend.Backend.GameData.LastItemTypeServerId;
 
                 AddItems(oldLastServerId + 1, newLastServerId + 1);
+                mainModel.InfoMessage = $"Created {createdItems} missing items.";
             });
 
             WriteItemsOtb = ReactiveCommand.Create(async () =>
@@ -96,9 +102,36 @@ namespace LapisItemEditor.ViewModels.Main
                 }
             });
 
+            WriteClientData = ReactiveCommand.Create(async () =>
+            {
+                if (Backend.Backend.GameData != null)
+                {
+                    if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    {
+                        var window = desktop.MainWindow;
+                        if (window != null)
+                        {
+                            var result = await window.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+                            {
+                                Title = "Select client data folder",
+                                AllowMultiple = false,
+                            });
+
+                            var selectedFolder = result?[0];
+
+                            if (selectedFolder != null)
+                            {
+                                Backend.Backend.GameData.WriteClientData(selectedFolder.Path.AbsolutePath);
+                                mainModel.InfoMessage = $"Wrote client data to {selectedFolder.Path.AbsolutePath}.";
+                            }
+                        }
+                    }
+                }
+            });
+
             ImportItemNames = ReactiveCommand.Create(async () =>
             {
-                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     var dialog = new OpenFileDialog() { AllowMultiple = false, Title = "Select item names file" };
                     var result = await dialog.ShowAsync(desktop.MainWindow);
@@ -137,6 +170,8 @@ namespace LapisItemEditor.ViewModels.Main
 
             SyncOtbWithTibia = ReactiveCommand.Create(async () =>
             {
+                int changedItems = 0;
+                int totalChanges = 0;
                 var changes = new List<Backend.Appearance.ChangeEntry>();
                 var sb = new StringBuilder("");
                 foreach (var item in Items.Items.Items)
@@ -146,19 +181,30 @@ namespace LapisItemEditor.ViewModels.Main
                     if (otbChanges != null)
                     {
                         changes.Add(otbChanges);
+                        ++changedItems;
+                        totalChanges += otbChanges.changes.Count;
                     }
                 }
 
                 string jsonString = JsonSerializer.Serialize(changes);
 
-
-                var path = Path.GetDirectoryName("./logs/sync-otb-with-tibia.log.json");
-                if (path != null)
+                try
                 {
-                    Directory.CreateDirectory(path);
-                    await File.WriteAllTextAsync(path, jsonString);
-                    Trace.WriteLine(jsonString);
+                    var path = Path.GetDirectoryName("./logs/sync-otb-with-tibia.log.json");
+                    if (path != null)
+                    {
+                        Directory.CreateDirectory(path);
+                        await File.WriteAllTextAsync(path, jsonString);
+                        Trace.WriteLine(jsonString);
+                    }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Trace.WriteLine(e);
+                }
+
+                mainModel.InfoMessage = $"Synced {changedItems} items in items.otb with appearances.dat. Total changes: {totalChanges}.";
             });
         }
 
@@ -176,13 +222,34 @@ namespace LapisItemEditor.ViewModels.Main
             }
         }
 
-        public void Load(GameDataConfig config, string itemsOtbPath)
+
+        public void Load(GameDataConfig config, string? itemsOtbPath)
         {
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loading graphics data...");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Backend.Backend.GameData = config.CreateGameData();
-            Backend.Backend.GameData?.LoadOtb(itemsOtbPath);
+            var progress = new Progress<int>(value =>
+             {
+                 mainModel.Progress = value;
+             });
+
+
+            Backend.Backend.GameData = config.CreateGameData(progress);
+
+
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loading items.otb...");
+
+            if (itemsOtbPath != null)
+            {
+                Backend.Backend.GameData?.LoadOtb(itemsOtbPath);
+            }
+            else
+            {
+                Backend.Backend.GameData?.CreateNewOtb();
+            }
+
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Creating items...");
 
             Items.Items.AddRange(CreateItems());
 
@@ -221,18 +288,20 @@ namespace LapisItemEditor.ViewModels.Main
             InputClientVersion = defaultClientVersion;
 
             stopwatch.Stop();
-            mainModel.InfoMessage = $"Loaded assets in {stopwatch.ElapsedMilliseconds} ms.";
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loaded assets in {stopwatch.ElapsedMilliseconds} ms.");
         }
+
+
 
         private void AddItems(int fromServerId, int toServerId)
         {
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            IEnumerable<ItemModel> listItems = Enumerable
+            IEnumerable<ItemListViewItemModel> listItems = Enumerable
                 .Range(fromServerId, toServerId - fromServerId)
                 .Select(serverId => CreateItemModel((uint)serverId))
-                .OfType<ItemModel>();
+                .OfType<ItemListViewItemModel>();
 
             Items.Items.AddRange(listItems);
             stopwatch.Stop();
@@ -240,15 +309,15 @@ namespace LapisItemEditor.ViewModels.Main
             Trace.WriteLine($"AddItems finished in {stopwatch.ElapsedMilliseconds} ms.");
         }
 
-        private IEnumerable<ItemModel> CreateItems()
+        private IEnumerable<ItemListViewItemModel> CreateItems()
         {
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            IEnumerable<ItemModel> listItems = Enumerable
+            IEnumerable<ItemListViewItemModel> listItems = Enumerable
                 .Range(100, (int)Backend.Backend.LastItemTypeServerId)
                 .Select(serverId => CreateItemModel((uint)serverId))
-                .OfType<ItemModel>();
+                .OfType<ItemListViewItemModel>();
             stopwatch.Stop();
 
             Trace.WriteLine($"Created ItemType list entries in {stopwatch.ElapsedMilliseconds} ms.");
@@ -256,25 +325,30 @@ namespace LapisItemEditor.ViewModels.Main
             return listItems;
         }
 
-        private static async Task<string?> ShowSaveItemsOtbDialog()
+        private async Task<string?> ShowSaveItemsOtbDialog()
         {
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var dialog = new SaveFileDialog()
+                var window = desktop.MainWindow;
+                if (window != null)
                 {
-                    InitialFileName = "items",
-                    DefaultExtension = ".otb",
-                };
-                dialog.Filters.Add(new FileDialogFilter() { Name = "Otb files", Extensions = { "otb" } });
-
-                var result = await dialog.ShowAsync(desktop.MainWindow);
-                return result;
+                    var result = await window.StorageProvider.SaveFilePickerAsync(new Avalonia.Platform.Storage.FilePickerSaveOptions()
+                    {
+                        Title = "Save items.otb",
+                        DefaultExtension = "otb",
+                        SuggestedFileName = "items",
+                    });
+                    if (result != null)
+                    {
+                        return result.Path.AbsolutePath;
+                    }
+                }
             }
 
             return null;
         }
 
-        private static ItemModel? CreateItemModel(uint serverId)
+        private static ItemListViewItemModel? CreateItemModel(uint serverId)
         {
             var appearance = Backend.Backend.GetItemTypeByServerId(serverId);
             if (appearance != null && appearance.HasSprites)
@@ -291,7 +365,7 @@ namespace LapisItemEditor.ViewModels.Main
                 }
 
 
-                return new ItemModel()
+                return new ItemListViewItemModel()
                 {
                     Appearance = appearance,
                     ServerId = serverId,
@@ -306,6 +380,7 @@ namespace LapisItemEditor.ViewModels.Main
 
         public ICommand CreateMissingItems { get; }
         public ICommand WriteItemsOtb { get; }
+        public ICommand WriteClientData { get; }
         public ICommand ImportItemNames { get; }
         public ICommand ExportItemsXml { get; }
         public ICommand SyncOtbWithTibia { get; }
@@ -315,6 +390,7 @@ namespace LapisItemEditor.ViewModels.Main
 
         private uint otbMajorVersion = 0;
         public uint OtbMajorVersion { get => otbMajorVersion; set => this.RaiseAndSetIfChanged(ref otbMajorVersion, value); }
+
 
 
         private ClientVersion? inputClientVersion;

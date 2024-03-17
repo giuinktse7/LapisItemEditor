@@ -230,18 +230,9 @@ namespace LapisItemEditor.Controls
             }
         }
 
-        /// <summary>
-        /// Called to update the validation state for properties for which data validation is
-        /// enabled.
-        /// </summary>
-        /// <param name="property">The property.</param>
-        /// <param name="value">The new binding value for the property.</param>
-        protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+        protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
         {
-            if (property == TextProperty || property == ValueProperty)
-            {
-                DataValidationErrors.SetError(this, value.Error);
-            }
+            base.UpdateDataValidation(property, state, error);
         }
 
         /// <summary>
@@ -251,7 +242,7 @@ namespace LapisItemEditor.Controls
         /// <param name="newValue">The new value.</param>
         protected virtual void OnMaximumChanged(uint oldValue, uint newValue)
         {
-            Value = (uint)MathUtilities.Clamp(Value, Minimum, Maximum);
+            Value = (uint)MathUtilities.Clamp((float)Value, Minimum, Maximum);
         }
 
         /// <summary>
@@ -261,7 +252,7 @@ namespace LapisItemEditor.Controls
         /// <param name="newValue">The new value.</param>
         protected virtual void OnMinimumChanged(uint oldValue, uint newValue)
         {
-            Value = (uint)MathUtilities.Clamp(Value, Minimum, Maximum);
+            Value = (uint)MathUtilities.Clamp((float)Value, Minimum, Maximum);
         }
 
         /// <summary>
@@ -352,7 +343,7 @@ namespace LapisItemEditor.Controls
 
             result = ConvertTextToValueCore(currentValueText, text);
 
-            return (uint)MathUtilities.Clamp(result, Minimum, Maximum);
+            return (uint)MathUtilities.Clamp((float)result, Minimum, Maximum);
         }
 
         /// <summary>
@@ -437,7 +428,7 @@ namespace LapisItemEditor.Controls
             }
         }
 
-        private static uint OnCoerceMaximum(IAvaloniaObject instance, uint value)
+        private static uint OnCoerceMaximum(AvaloniaObject instance, uint value)
         {
             if (instance is NumberInput upDown)
             {
@@ -447,7 +438,7 @@ namespace LapisItemEditor.Controls
             return value;
         }
 
-        private static uint OnCoerceMinimum(IAvaloniaObject instance, uint value)
+        private static uint OnCoerceMinimum(AvaloniaObject instance, uint value)
         {
             if (instance is NumberInput upDown)
             {

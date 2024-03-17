@@ -10,15 +10,7 @@ namespace LapisItemEditor.Views.ItemProperties
         public ItemPropertiesView()
         {
             InitializeComponent();
-
-            this.WhenActivated(disposables =>
-            {
-            });
         }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
     }
 }

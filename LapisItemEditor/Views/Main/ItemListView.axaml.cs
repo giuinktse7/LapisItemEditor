@@ -3,11 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Avalonia.Threading;
 using LapisItemEditor.ViewModels;
-using static LapisItemEditor.ViewModels.ItemListViewModel;
 
 namespace LapisItemEditor.Views
 {
@@ -42,7 +40,7 @@ namespace LapisItemEditor.Views
         public ItemListView()
         {
             InitializeComponent();
-
+            
             scrollView = this.FindControl<ScrollViewer>("scroller");
             debouncedWrapper = Debounce(search, 300);
         }
@@ -72,20 +70,12 @@ namespace LapisItemEditor.Views
             }
         }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-
-            var a = SearchBox;
-
-        }
-
         public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
         {
-            var item = (ItemModel?)e.DataContext;
+            var item = (ItemListViewItemModel?)e.DataContext;
             if (item == null)
             {
-                return;
+               return;
             }
 
             e.TemplateKey = "defaultKey";

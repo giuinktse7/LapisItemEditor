@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="using:LapisItemEditor.Views.RecentItems"
              xmlns:vm="using:LapisItemEditor.ViewModels.RecentItems"
-             Name="RecentItemListView"
-             x:Class="LapisItemEditor.Views.RecentItems.RecentItemListView">
+             Name="Root"
+             x:Class="LapisItemEditor.Views.RecentItems.RecentItemListView"
+             x:DataType="vm:RecentItemListViewModel">
     <UserControl.Styles>
         <Style Selector="Button:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="Transparent" />
@@ -27,7 +28,7 @@
     <RecyclePool x:Key="RecyclePool" />
     <DataTemplate x:Key="file">
             <Button
-                Command="{Binding #RecentItemListView.DataContext.RecentItemSelected}"
+                Command="{Binding #Root.DataContext.RecentItemSelected}"
                 CommandParameter="{Binding}"
                 Cursor="Hand"
                 Foreground="#2D9CDB"
@@ -40,7 +41,7 @@
         </DataTemplate>
         <DataTemplate x:Key="folder">
             <Button
-                Command="{Binding #RecentItemListView.DataContext.RecentItemSelected}"
+                Command="{Binding #Root.DataContext.RecentItemSelected}"
                 CommandParameter="{Binding}"
                 Cursor="Hand"
                 Foreground="#2D9CDB"
@@ -71,5 +72,5 @@
     </RecyclingElementFactory>
 </UserControl.Resources>
 
-<ItemsRepeater Items="{Binding RecentItems}" ItemTemplate="{StaticResource elementFactory}"/>
+<ItemsRepeater ItemsSource="{Binding RecentItems}" ItemTemplate="{StaticResource elementFactory}"/>
 </UserControl>

@@ -112,16 +112,29 @@ namespace Backend.Tibia11
 
         public Tibia11GameData(VersionData version, string assetDirectory, ClientFeatures features = ClientFeatures.None)
         {
-            this.Version = version;
-            this.AssetDirectory = assetDirectory;
+            Version = version;
+            AssetDirectory = assetDirectory;
 
             appearances = new Appearances(assetDirectory);
-            appearances.Load();
+        }
+
+        public void Load(Progress<int>? reporter=null)
+        {
+            appearances.Load(reporter);
+        }
+
+        public void CreateNewOtb()
+        {
+            int clientVersion = 1330;
+            uint majorVersion = 3;
+            uint minorVersion = 64;
+            uint buildNumber = 62;
+            otbData = OtbData.Create(clientVersion, majorVersion, minorVersion, buildNumber);
         }
 
         public void LoadOtb(string path)
         {
-            otbData = OtbData.Load(path, this, ignoreAttributes: false);
+            otbData = OtbData.Load(path, this);
         }
 
         public Appearance GetOrCreateObjectByClientId(uint clientId)
@@ -190,14 +203,20 @@ namespace Backend.Tibia11
             otbData.Write(path, this);
         }
 
-        public void CreateMissingItems()
+        public void WriteClientData(string path)
+        {
+            appearances.WriteToDisk(path);
+        }
+
+
+        public uint CreateMissingItems()
         {
             if (otbData == null)
             {
                 throw new NullReferenceException("There is no loaded/created OTB.");
             }
 
-            otbData.CreateMissingItems(this);
+            return otbData.CreateMissingItems(this);
         }
 
 
@@ -345,11 +364,5 @@ namespace Backend.Tibia11
         public IEnumerable<Appearance> Objects => appearances.AppearanceData.Objects.Iterator;
 
         public uint LastItemTypeServerId => otbData?.LastServerId ?? 0;
-
-        IEnumerable<Appearance> Appearances
-        {
-            get => appearances.AppearanceData.Objects.Iterator;
-        }
-
     }
 }

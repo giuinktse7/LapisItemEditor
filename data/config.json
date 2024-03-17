@@ -22,5 +22,11 @@
         { "name": "13.20", "version": 1320 },
         { "name": "13.30", "version": 1330 }
     ],
-    "majorOtbVersions": [1, 2, 3]
+    "majorOtbVersions": [1, 2, 3],
+    "defaults": {
+        "clientVersion": 1330,
+        "majorOtbVersion": 3,
+        "minorOtbVersion": 64,
+        "buildNumber": 62
+    }
 }

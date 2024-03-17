@@ -9,11 +9,11 @@ using ReactiveUI;
 
 namespace LapisItemEditor.Views
 {
-    public class MainWindow : ReactiveWindow<MainWindowViewModel>
+    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public void WindowPressed(object sender, PointerPressedEventArgs args)
         {
-            FocusManager.Instance.Focus(null);
+            // FocusManager.Instance.Focus(null);
         }
 
         public MenuItem menuItemEdit => this.FindControl<MenuItem>("MenuItemEdit");
@@ -34,7 +34,9 @@ namespace LapisItemEditor.Views
             string assetDirectory = @"D:/Programs/TibiaLatest/packages/TibiaExternal/assets";
 
             var version = new Tibia11VersionData(Backend.ClientVersion.V12_71);
-            return new Tibia11GameData(version, assetDirectory);
+            var gameData = new Tibia11GameData(version, assetDirectory);
+            gameData.Load();
+            return gameData;
         }
 
         public MainWindow()
@@ -45,14 +47,5 @@ namespace LapisItemEditor.Views
 
             Config.LoadFromFile("./data/config.json");
         }
-
-
-        private void InitializeComponent()
-        {
-            this.WhenActivated(disposables => { });
-            AvaloniaXamlLoader.Load(this);
-        }
-
-
     }
 }

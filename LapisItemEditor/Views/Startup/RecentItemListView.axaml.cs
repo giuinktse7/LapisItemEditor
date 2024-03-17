@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using LapisItemEditor.ViewModels.RecentItems;
 
@@ -10,11 +9,6 @@ namespace LapisItemEditor.Views.RecentItems
         public RecentItemListView()
         {
             InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
         }
 
         public void OnSelectTemplateKey(object sender, SelectTemplateEventArgs e)
@@ -37,7 +31,6 @@ namespace LapisItemEditor.Views.RecentItems
             {
                 e.TemplateKey = "defaultKey";
             }
-
         }
     }
 }

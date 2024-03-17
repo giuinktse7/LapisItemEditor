@@ -5,7 +5,6 @@
              xmlns:vm="using:LapisItemEditor.ViewModels"
              xmlns:recentItems="using:LapisItemEditor.Views.RecentItems"
              xmlns:views="clr-namespace:LapisItemEditor.Views"
-             Name="WelcomeView"
              x:Class="LapisItemEditor.Views.WelcomeView"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400">
   <UserControl.Styles>
@@ -29,10 +28,9 @@
 
   <DockPanel>
     <WrapPanel Orientation="Vertical" DockPanel.Dock="Top">
-
       <WrapPanel Orientation="Vertical" Margin="32,16,32,0">
         <WrapPanel IsVisible="{Binding !HasGameDataConfig}" Orientation="Vertical">
-          <TextBlock Text="Select assets path" FontSize="16"/>
+          <TextBlock Text="Select assets path" FontSize="16" />
           <TextBlock Margin="0 4 0 14" FontSize="12" Foreground="#BDBDBD" Text="For Tibia 11+, select the folder &lt;path to your Tibia installation&gt;/packages/Tibia/assets"/>
           <Button Padding="0" Margin="0" BorderThickness="0" Command="{Binding ChooseClientFolder}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">Open folder...</Button>
           <TextBlock IsVisible="{Binding HasBadAssetPath}" Margin="0 2 0 0" Text="{Binding BadAssetPath, StringFormat='Could not locate Tibia assets in {0}.'}" FontSize="12" Foreground="#cf6679"/>
@@ -58,7 +56,7 @@
 
       <WrapPanel IsVisible="{Binding HasGameDataConfig}" Orientation="Vertical" Margin="32,32,32,0">
         <TextBlock Text="Select items.otb path" FontSize="16"/>
-        <Button Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">New items.otb</Button>
+        <Button Command="{Binding UseNewItemsOtbCommand}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">New items.otb</Button>
         <Button Command="{Binding ChooseItemsOtbFile}" Cursor="Hand" Foreground="#2D9CDB" Background="Transparent">Open file...</Button>
         <TextBlock Text="Recent" FontWeight="Bold" FontSize="14"/>
         <recentItems:RecentItemListView DataContext="{Binding RecentOtbFiles}"/>

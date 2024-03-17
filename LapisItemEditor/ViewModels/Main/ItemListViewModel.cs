@@ -17,12 +17,12 @@ namespace LapisItemEditor.ViewModels
 
     public sealed class ItemListViewModel : ViewModelBase
     {
-        private SourceList<ItemModel> _items;
-        private ReadOnlyObservableCollection<ItemModel> _observableItems;
+        private SourceList<ItemListViewItemModel> _items;
+        private ReadOnlyObservableCollection<ItemListViewItemModel> _observableItems;
 
         private bool searchForServerId;
         private string searchQuery;
-        public ReactiveCommand<ItemModel, ItemModel> ItemTypeSelected { get; }
+        public ReactiveCommand<ItemListViewItemModel, ItemListViewItemModel> ItemTypeSelected { get; }
 
         public ICommand Search { get; }
 
@@ -30,20 +30,20 @@ namespace LapisItemEditor.ViewModels
         public bool SearchForServerId { get => searchForServerId; set => this.RaiseAndSetIfChanged(ref searchForServerId, value); }
 
 
-        public class ItemModelComparer<T> : IEqualityComparer<ItemModel>
+        public class ItemModelComparer<T> : IEqualityComparer<ItemListViewItemModel>
         {
-            Func<ItemModel, T> f;
-            public ItemModelComparer(Func<ItemModel, T> f)
+            Func<ItemListViewItemModel, T> f;
+            public ItemModelComparer(Func<ItemListViewItemModel, T> f)
             {
                 this.f = f;
             }
 
-            public bool Equals(ItemModel? x, ItemModel? y)
+            public bool Equals(ItemListViewItemModel? x, ItemListViewItemModel? y)
             {
                 return f(x).Equals(f(y));
             }
 
-            public int GetHashCode([DisallowNull] ItemModel obj)
+            public int GetHashCode([DisallowNull] ItemListViewItemModel obj)
             {
                 return (int)obj.ClientId;
             }
@@ -51,8 +51,8 @@ namespace LapisItemEditor.ViewModels
 
         public int getIndex(uint id, bool clientId = true)
         {
-            var item = new ItemModel();
-            Func<ItemModel, uint> f;
+            var item = new ItemListViewItemModel();
+            Func<ItemListViewItemModel, uint> f;
             if (clientId)
             {
                 f = (a) => a.ClientId;
@@ -70,8 +70,8 @@ namespace LapisItemEditor.ViewModels
 
         public ItemListViewModel()
         {
-            ItemTypeSelected = ReactiveCommand.Create<ItemModel, ItemModel>(itemModel => { return itemModel; });
-            Items = new SourceList<ItemModel>();
+            ItemTypeSelected = ReactiveCommand.Create<ItemListViewItemModel, ItemListViewItemModel>(itemModel => { return itemModel; });
+            Items = new SourceList<ItemListViewItemModel>();
 
             var searchFilter = this.WhenValueChanged(x => x.SearchQuery)
             .Select(SearchNamePredicate);
@@ -88,7 +88,7 @@ namespace LapisItemEditor.ViewModels
                 .DisposeMany().Subscribe();
         }
 
-        private Func<ItemModel, bool> SearchNamePredicate(string query)
+        private Func<ItemListViewItemModel, bool> SearchNamePredicate(string query)
         {
             bool isInt = int.TryParse(query, out var result);
             if (isInt || query == null || query.Length < 3)
@@ -99,28 +99,30 @@ namespace LapisItemEditor.ViewModels
             return model => FuzzySharp.Fuzz.Ratio(query, model.Name) >= 0.8;
         }
 
-        private IComparer<ItemModel> SortComparer(string query)
+        private IComparer<ItemListViewItemModel> SortComparer(string query)
         {
             bool isInt = int.TryParse(query, out var result);
             if (isInt || query == null || query.Length < 3)
             {
-                return SortExpressionComparer<ItemModel>.Ascending(x => x.ServerId);
+                return SortExpressionComparer<ItemListViewItemModel>.Ascending(x => x.ServerId);
             }
             else
             {
-                return SortExpressionComparer<ItemModel>.Descending(model => FuzzySharp.Fuzz.Ratio(query, model.Name));
+                return SortExpressionComparer<ItemListViewItemModel>.Descending(model => FuzzySharp.Fuzz.Ratio(query, model.Name));
             }
         }
 
-        public SourceList<ItemModel> Items
+        public SourceList<ItemListViewItemModel> Items
         {
             get => _items;
             set => this.RaiseAndSetIfChanged(ref _items, value);
         }
 
-        public ReadOnlyObservableCollection<ItemModel> ObservableItems => _observableItems;
+        public ReadOnlyObservableCollection<ItemListViewItemModel> ObservableItems => _observableItems;
 
-        public class ItemModel : ViewModelBase
+    }
+
+        public class ItemListViewItemModel : ViewModelBase
         {
             private double _height = double.NaN;
             private Avalonia.Media.Imaging.Bitmap? spriteImage = null;
@@ -157,6 +159,4 @@ namespace LapisItemEditor.ViewModels
                 set => this.RaiseAndSetIfChanged(ref _height, value);
             }
         }
-    }
-
 }

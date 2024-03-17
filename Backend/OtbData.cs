@@ -114,7 +114,19 @@ namespace Backend
             version.BuildNumber = buildNumber;
         }
 
-        public static OtbData Load(string path, GameData gameData, bool ignoreAttributes = false)
+        public static OtbData Create(int clientVersion, uint majorVersion, uint minorVersion, uint buildNumber)
+        {
+            var otbData = new OtbData(majorVersion, minorVersion, buildNumber)
+            {
+                ClientVersion = clientVersion,
+                LastClientId = 100,
+                LastServerId = 100
+            };
+
+            return otbData;
+        }
+
+        public static OtbData Load(string path, GameData gameData)
         {
             if (!File.Exists(path))
             {
@@ -174,7 +186,7 @@ namespace Backend
                 otbData.ClientVersion = clientVersion;
             }
 
-            otbData.ReadNodes(reader, gameData, ignoreAttributes);
+            otbData.ReadNodes(reader, gameData);
             return otbData;
         }
 
@@ -336,7 +348,7 @@ namespace Backend
             return otbItem;
         }
 
-        private void ReadNodes(OtbReader reader, GameData gameData, bool ignoreAttributes)
+        private void ReadNodes(OtbReader reader, GameData gameData)
         {
             HashSet<uint> serverIds = new HashSet<uint>();
             uint maxClientId = 0;
@@ -370,11 +382,11 @@ namespace Backend
                 appearance.otbItem = otbItem;
             }
 
-            this.LastClientId = maxClientId;
-            this.LastServerId = maxServerId;
+            LastClientId = maxClientId;
+            LastServerId = maxServerId;
         }
 
-        public void CreateMissingItems(GameData gameData)
+        public uint CreateMissingItems(GameData gameData)
         {
             // Just for logging
             uint prevLastServerId = LastServerId;
@@ -424,13 +436,14 @@ namespace Backend
             {
                 Trace.WriteLine($"There were no missing items.");
             }
+
+            return createdCount;
         }
 
         public void Write(string path, GameData gameData)
         {
             Write(path, version.MajorVersion, version.MinorVersion, version.BuildNumber, gameData);
         }
-
 
         public void Write(string path, uint majorVersion, uint minorVersion, uint buildNumber, GameData gameData)
         {
