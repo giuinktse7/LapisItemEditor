@@ -902,7 +902,6 @@ namespace LapisItemEditor.ViewModels.ItemProperties
 
             this.WhenAnyValue(x => x.HasMarketProfession).Subscribe(value =>
             {
-                Console.WriteLine(value);
                 if (flags == null) { return; }
 
                 if (!value && flags.Market?.RestrictToVocation != null)
@@ -984,21 +983,6 @@ namespace LapisItemEditor.ViewModels.ItemProperties
 
                 flags.Market.ShowAsObjectId = value;
             });
-
-            // this.WhenAnyValue(x => x.MarketProfessionSelection.SelectedItems).Subscribe(value =>
-            // {
-            //     Console.WriteLine("MarketProfessionSelection.SelectedItems");
-            //     if (flags == null || flags.Market == null) { return; }
-
-            //     flags.Market.RestrictToVocation.Clear();
-
-            //     foreach (var profession in value)
-            //     {
-            //         flags.Market.RestrictToVocation.Add(profession);
-            //     }
-            // });
-
-
 
             _isWritable = this.WhenAnyValue(x => x.WritableType)
                         .Select(x => x != WritableType.NotWritable)

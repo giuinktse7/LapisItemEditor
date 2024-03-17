@@ -112,11 +112,15 @@ namespace Backend.Tibia11
 
         public Tibia11GameData(VersionData version, string assetDirectory, ClientFeatures features = ClientFeatures.None)
         {
-            this.Version = version;
-            this.AssetDirectory = assetDirectory;
+            Version = version;
+            AssetDirectory = assetDirectory;
 
             appearances = new Appearances(assetDirectory);
-            appearances.Load();
+        }
+
+        public void Load(Progress<int>? reporter=null)
+        {
+            appearances.Load(reporter);
         }
 
         public void CreateNewOtb()
@@ -205,14 +209,14 @@ namespace Backend.Tibia11
         }
 
 
-        public void CreateMissingItems()
+        public uint CreateMissingItems()
         {
             if (otbData == null)
             {
                 throw new NullReferenceException("There is no loaded/created OTB.");
             }
 
-            otbData.CreateMissingItems(this);
+            return otbData.CreateMissingItems(this);
         }
 
 

@@ -1,4 +1,5 @@
 using Backend;
+using System;
 
 namespace LapisItemEditor
 {
@@ -10,7 +11,7 @@ namespace LapisItemEditor
             this.Features = features;
         }
 
-        public abstract GameData CreateGameData();
+        public abstract GameData CreateGameData(Progress<int>? reporter = null);
 
         public VersionData Version { get; }
         public ClientFeatures Features { get; }
@@ -24,13 +25,15 @@ namespace LapisItemEditor
         public Tibia7GameDataConfig(Backend.Tibia7.Tibia7VersionData version, string datPath, string sprPath, ClientFeatures features = ClientFeatures.None)
             : base(version, features)
         {
-            this.TibiaDatPath = datPath;
-            this.TibiaSprPath = sprPath;
+            TibiaDatPath = datPath;
+            TibiaSprPath = sprPath;
         }
 
-        public override GameData CreateGameData()
+        public override GameData CreateGameData(Progress<int>? reporter = null)
         {
-            return new Backend.Tibia7.Tibia7GameData((Backend.Tibia7.Tibia7VersionData)Version, TibiaDatPath, TibiaSprPath, Features);
+            var gameData = new Backend.Tibia7.Tibia7GameData((Backend.Tibia7.Tibia7VersionData)Version, TibiaDatPath, TibiaSprPath, Features);
+            gameData.Load(reporter);
+            return gameData;
         }
     }
 
@@ -41,12 +44,14 @@ namespace LapisItemEditor
         public Tibia11GameDataConfig(Backend.Tibia11.Tibia11VersionData version, string assetDirectory, ClientFeatures features = ClientFeatures.None)
             : base(version, features)
         {
-            this.AssetDirectory = assetDirectory;
+            AssetDirectory = assetDirectory;
         }
 
-        public override GameData CreateGameData()
+        public override GameData CreateGameData(Progress<int>? reporter = null)
         {
-            return new Backend.Tibia11.Tibia11GameData((Backend.Tibia11.Tibia11VersionData)Version, AssetDirectory, Features);
+            var gameData = new Backend.Tibia11.Tibia11GameData((Backend.Tibia11.Tibia11VersionData)Version, AssetDirectory, Features);
+            gameData.Load(reporter);
+            return gameData;
         }
     }
 }

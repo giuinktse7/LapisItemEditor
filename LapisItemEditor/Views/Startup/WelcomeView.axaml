@@ -28,7 +28,6 @@
 
   <DockPanel>
     <WrapPanel Orientation="Vertical" DockPanel.Dock="Top">
-
       <WrapPanel Orientation="Vertical" Margin="32,16,32,0">
         <WrapPanel IsVisible="{Binding !HasGameDataConfig}" Orientation="Vertical">
           <TextBlock Text="Select assets path" FontSize="16" />

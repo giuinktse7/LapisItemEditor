@@ -17,14 +17,27 @@ namespace Backend.Tibia7
         private DatIO datData;
         private OtbData? otbData;
 
+        private string datPath;
+        private string sprPath;
+        private ClientFeatures features;
+
+
         public VersionData Version { get; private set; }
         public OtbData? OtbData { get => otbData; private set { otbData = value; } }
 
-
+        public void Load(Progress<int>? reporter = null)
+        {
+            sprData = SprData.Load(sprPath, (Tibia7VersionData)Version, features);
+            datData = DatIO.Load(datPath, (Tibia7VersionData)Version, features, appearanceData);
+        }
 
         public Tibia7GameData(Tibia7VersionData version, string datPath, string sprPath, ClientFeatures features = ClientFeatures.None)
         {
-            this.Version = version;
+            Version = version;
+            this.datPath = datPath;
+            this.sprPath = sprPath;
+            this.features = features;
+
             if (features == ClientFeatures.None || features == ClientFeatures.Transparency)
             {
                 features |= version.Format >= DatFormat.Format_755 ? ClientFeatures.PatternZ : features;
@@ -37,9 +50,6 @@ namespace Backend.Tibia7
             {
                 CreateBlankRgbSprite();
             }
-
-            sprData = SprData.Load(sprPath, version, features);
-            datData = DatIO.Load(datPath, version, features, appearanceData);
         }
 
         public void CreateNewOtb()
@@ -119,12 +129,15 @@ namespace Backend.Tibia7
             otbData.Write(path, this);
         }
 
-        public void CreateMissingItems()
+        public uint CreateMissingItems()
         {
+            throw new NotImplementedException();
             if (otbData == null)
             {
                 throw new NullReferenceException("There is no loaded/created OTB.");
             }
+
+            return 0;
 
             // otbData.CreateMissingItems(itemData.GetItemTypes);
         }

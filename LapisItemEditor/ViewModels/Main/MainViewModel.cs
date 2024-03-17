@@ -15,6 +15,8 @@ using DynamicData;
 using LapisItemEditor.ViewModels.ItemProperties;
 using ReactiveUI;
 using System.Text.Json;
+using Avalonia.Threading;
+
 
 using static LapisItemEditor.ViewModels.ItemListViewModel;
 using Avalonia.Platform;
@@ -53,11 +55,13 @@ namespace LapisItemEditor.ViewModels.Main
 
                 int oldLastServerId = (int)Backend.Backend.GameData.LastItemTypeServerId;
 
-                Backend.Backend.GameData.CreateMissingItems();
+                mainModel.InfoMessage = "Creating missing items...";
+                uint createdItems = Backend.Backend.GameData.CreateMissingItems();
 
                 int newLastServerId = (int)Backend.Backend.GameData.LastItemTypeServerId;
 
                 AddItems(oldLastServerId + 1, newLastServerId + 1);
+                mainModel.InfoMessage = $"Created {createdItems} missing items.";
             });
 
             WriteItemsOtb = ReactiveCommand.Create(async () =>
@@ -166,6 +170,8 @@ namespace LapisItemEditor.ViewModels.Main
 
             SyncOtbWithTibia = ReactiveCommand.Create(async () =>
             {
+                int changedItems = 0;
+                int totalChanges = 0;
                 var changes = new List<Backend.Appearance.ChangeEntry>();
                 var sb = new StringBuilder("");
                 foreach (var item in Items.Items.Items)
@@ -175,19 +181,29 @@ namespace LapisItemEditor.ViewModels.Main
                     if (otbChanges != null)
                     {
                         changes.Add(otbChanges);
+                        ++changedItems;
+                        totalChanges += otbChanges.changes.Count;
                     }
                 }
 
                 string jsonString = JsonSerializer.Serialize(changes);
 
-
-                var path = Path.GetDirectoryName("./logs/sync-otb-with-tibia.log.json");
-                if (path != null)
+                try
                 {
-                    Directory.CreateDirectory(path);
-                    await File.WriteAllTextAsync(path, jsonString);
-                    Trace.WriteLine(jsonString);
+                    var path = Path.GetDirectoryName("./logs/sync-otb-with-tibia.log.json");
+                    if (path != null)
+                    {
+                        Directory.CreateDirectory(path);
+                        await File.WriteAllTextAsync(path, jsonString);
+                        Trace.WriteLine(jsonString);
+                    }
+                } catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Trace.WriteLine(e);
                 }
+
+                mainModel.InfoMessage = $"Synced {changedItems} items in items.otb with appearances.dat. Total changes: {totalChanges}.";
             });
         }
 
@@ -205,12 +221,24 @@ namespace LapisItemEditor.ViewModels.Main
             }
         }
 
+
         public void Load(GameDataConfig config, string? itemsOtbPath)
         {
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loading graphics data...");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Backend.Backend.GameData = config.CreateGameData();
+            var progress = new Progress<int>(value =>
+             {
+                 mainModel.Progress = value;
+             });
+
+
+            Backend.Backend.GameData = config.CreateGameData(progress);
+
+
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loading items.otb...");
+
             if (itemsOtbPath != null)
             {
                 Backend.Backend.GameData?.LoadOtb(itemsOtbPath);
@@ -219,6 +247,8 @@ namespace LapisItemEditor.ViewModels.Main
             {
                 Backend.Backend.GameData?.CreateNewOtb();
             }
+
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Creating items...");
 
             Items.Items.AddRange(CreateItems());
 
@@ -257,8 +287,11 @@ namespace LapisItemEditor.ViewModels.Main
             InputClientVersion = defaultClientVersion;
 
             stopwatch.Stop();
-            mainModel.InfoMessage = $"Loaded assets in {stopwatch.ElapsedMilliseconds} ms.";
+            Dispatcher.UIThread.InvokeAsync(() => mainModel.InfoMessage = $"Loaded assets in {stopwatch.ElapsedMilliseconds} ms.");
+            Dispatcher.UIThread.InvokeAsync(() => FinishedLoading = true);
         }
+
+
 
         private void AddItems(int fromServerId, int toServerId)
         {
@@ -357,6 +390,9 @@ namespace LapisItemEditor.ViewModels.Main
 
         private uint otbMajorVersion = 0;
         public uint OtbMajorVersion { get => otbMajorVersion; set => this.RaiseAndSetIfChanged(ref otbMajorVersion, value); }
+
+        private bool finishedLoading = false;
+        public bool FinishedLoading { get => finishedLoading; set => this.RaiseAndSetIfChanged(ref finishedLoading, value); }
 
 
         private ClientVersion? inputClientVersion;

@@ -1,10 +1,9 @@
 using System;
-using System.Diagnostics;
-using System.Windows.Input;
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using LapisItemEditor.ViewModels.Main;
 using ReactiveUI;
+using Avalonia.Threading;
+using System.Threading.Tasks;
 
 namespace LapisItemEditor.ViewModels
 {
@@ -62,15 +61,49 @@ namespace LapisItemEditor.ViewModels
                             throw new ApplicationException("Should be impossible.");
                         }
 
-                        Router.Navigate.Execute(mainViewModel);
-                        mainViewModel.Load(welcomeViewModel.GameDataConfig, welcomeViewModel.SelectedOtbPath);
+                        Dispatcher.UIThread.InvokeAsync(() => InfoMessage = "Loading game data...");
+                        Task.Run(() =>
+                        {
+                            mainViewModel.Load(welcomeViewModel.GameDataConfig, welcomeViewModel.SelectedOtbPath);
+                        });
                     }
                 });
-        }
 
+            mainViewModel.WhenAnyValue(x => x.FinishedLoading)
+            .Subscribe(finished =>
+            {
+                if (finished)
+                {
+                    Router.Navigate.Execute(mainViewModel);
+                }
+            });
+
+            this.WhenAnyValue(x => x.Progress)
+            .Subscribe(progress =>
+            {
+                if (_previousProgress == 0 && progress > 0)
+                {
+                    IsLoading = true;
+                }
+                else if (progress == 100)
+                {
+                    IsLoading = false;
+                    progress = 0;
+                }
+                _previousProgress = progress;
+            });
+        }
 
 
         private string infoMessage = "Ready.";
         public string InfoMessage { get => infoMessage; set => this.RaiseAndSetIfChanged(ref infoMessage, value); }
+
+        private int _progress = 0;
+        public int Progress { get => _progress; set => this.RaiseAndSetIfChanged(ref _progress, value); }
+
+        private bool _isLoading = false;
+        public bool IsLoading { get => _isLoading; private set => this.RaiseAndSetIfChanged(ref _isLoading, value); }
+
+        private int _previousProgress = 0;
     }
 }

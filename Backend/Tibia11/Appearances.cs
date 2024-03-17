@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -48,12 +49,14 @@ namespace Backend.Tibia11
             this.AssetDirectory = assetDirectory;
         }
 
-        public void Load()
+        public void Load(System.Progress<int>? reporter)
         {
             string catalogPath = Path.Combine(AssetDirectory, "catalog-content.json");
 
             string jsonString = File.ReadAllText(catalogPath);
             var catalogEntries = JsonSerializer.Deserialize<List<CatalogEntry>>(jsonString);
+
+            int total = catalogEntries!.Count;
 
             if (catalogEntries != null)
             {
@@ -61,7 +64,9 @@ namespace Backend.Tibia11
 
                 // -1 because we always have at least one non-sprite entry type (type "appearances")
                 TextureAtlases = new TextureAtlasStore((uint)catalogEntries.Count - 1);
+                int progress = 0;
 
+                int current = 0;
                 foreach (var entry in catalogEntries)
                 {
                     switch (entry.Type)
@@ -79,10 +84,20 @@ namespace Backend.Tibia11
                         default:
                             break;
                     }
+                    current += 1;
+
+                    int prevProgress = progress;
+                    progress = (int)((float)current / total * 100);
+
+                    if (progress != prevProgress)
+                    {
+                        (reporter as IProgress<int>)?.Report(progress);
+                    }
                 }
 
                 // Must be here! Having it sorted makes it possible to use binary search for texture atlas retrieval by sprite ID.
                 TextureAtlases.Sort();
+                (reporter as IProgress<int>)?.Report(100);
             }
         }
 

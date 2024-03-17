@@ -34,7 +34,9 @@ namespace LapisItemEditor.Views
             string assetDirectory = @"D:/Programs/TibiaLatest/packages/TibiaExternal/assets";
 
             var version = new Tibia11VersionData(Backend.ClientVersion.V12_71);
-            return new Tibia11GameData(version, assetDirectory);
+            var gameData = new Tibia11GameData(version, assetDirectory);
+            gameData.Load();
+            return gameData;
         }
 
         public MainWindow()

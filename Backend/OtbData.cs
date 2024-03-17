@@ -172,7 +172,6 @@ namespace Backend
             uint majorVersion = reader.NextU32(); // major, file version
             uint minorVersion = reader.NextU32(); // minor, client version
             uint buildNumber = reader.NextU32();  // build number, revision
-            Console.WriteLine($"BuildNumber: {buildNumber}");
 
             byte[] otbDescriptionBuffer = RemoveTrailingZeros(reader.NextBytes(128));
             string otbDescription = Encoding.Default.GetString(otbDescriptionBuffer);
@@ -387,7 +386,7 @@ namespace Backend
             LastServerId = maxServerId;
         }
 
-        public void CreateMissingItems(GameData gameData)
+        public uint CreateMissingItems(GameData gameData)
         {
             // Just for logging
             uint prevLastServerId = LastServerId;
@@ -437,6 +436,8 @@ namespace Backend
             {
                 Trace.WriteLine($"There were no missing items.");
             }
+
+            return createdCount;
         }
 
         public void Write(string path, GameData gameData)

@@ -49,9 +49,13 @@
             BorderBrush="{DynamicResource SystemControlHighlightBaseMediumLowBrush}"
             Margin="0"
             Padding="16">
-              <StackPanel Orientation="Horizontal" Margin="0">
-                <PathIcon Width="10" Height="10" Margin="0, 0, 4, 0" Data="{StaticResource caret_right_regular}" Foreground="#546E7A" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding InfoMessage}" FontSize="13"/>
+              <StackPanel Orientation="Vertical" Margin="0">
+                <ProgressBar IsVisible="{Binding IsLoading}" Maximum="100" Value="{Binding Progress}" Foreground="#209cee" ShowProgressText="True">
+                </ProgressBar>
+                <StackPanel Orientation="Horizontal" Margin="0">
+                  <PathIcon Width="10" Height="10" Margin="0, 0, 4, 0" Data="{StaticResource caret_right_regular}" Foreground="#546E7A" VerticalAlignment="Center"/>
+                  <TextBlock Text="{Binding InfoMessage}" FontSize="13"/>
+                </StackPanel>
               </StackPanel>
         </Border>
     </Grid>
