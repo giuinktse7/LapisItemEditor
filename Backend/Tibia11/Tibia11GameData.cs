@@ -272,48 +272,52 @@ namespace Backend.Tibia11
 
         public void ComputeSpriteHash(Appearance appearance)
         {
-            if (appearance.SpriteHash != null)
-            {
-                return;
-            }
-
-            MD5 md5 = MD5.Create();
-            MemoryStream stream = new MemoryStream();
-
-            // All sprites are 32x32 in the Tibia7 version of ComputeSpriteHash. We have to crop larger sprites into
-            // 32x32 pieces and write each piece separately in order to maintain compatibility.
-            ushort PixelsDataSize = 4096; // 32 * 32 * 4
-            byte[] rgbaData = new byte[PixelsDataSize];
-
-            var fg = appearance.Data.FrameGroup[0];
-            var spriteInfo = fg.SpriteInfo;
-
-            uint patternWidth = spriteInfo.PatternWidth;
-            uint patternHeight = spriteInfo.PatternHeight;
-            uint patternDepth = spriteInfo.PatternDepth;
-            uint layers = spriteInfo.Layers;
-
-            uint spritesPerLayer = patternWidth * patternHeight * patternDepth;
-
-            for (uint layer = 1; layer <= layers; ++layer)
-            {
-                // First sprite in every layer
-                int index = (int)((layer - 1) * spritesPerLayer);
-                uint spriteId = appearance.Data.FrameGroup[0].SpriteInfo.SpriteId[index];
-
-                var bitmap = appearances.TextureAtlases.GetSpriteBitmap(spriteId);
-                if (bitmap != null)
+            try {
+                if (appearance.SpriteHash != null)
                 {
-                    bitmap.GetSpriteHashData(stream);
+                    return;
                 }
-                else
+    
+                MD5 md5 = MD5.Create();
+                MemoryStream stream = new MemoryStream();
+    
+                // All sprites are 32x32 in the Tibia7 version of ComputeSpriteHash. We have to crop larger sprites into
+                // 32x32 pieces and write each piece separately in order to maintain compatibility.
+                ushort PixelsDataSize = 4096; // 32 * 32 * 4
+                byte[] rgbaData = new byte[PixelsDataSize];
+    
+                var fg = appearance.Data.FrameGroup[0];
+                var spriteInfo = fg.SpriteInfo;
+    
+                uint patternWidth = spriteInfo.PatternWidth;
+                uint patternHeight = spriteInfo.PatternHeight;
+                uint patternDepth = spriteInfo.PatternDepth;
+                uint layers = spriteInfo.Layers;
+    
+                uint spritesPerLayer = patternWidth * patternHeight * patternDepth;
+    
+                for (uint layer = 1; layer <= layers; ++layer)
                 {
-                    stream.Write(Util.ImageExtensions.BlankARGBSprite, 0, Util.ImageExtensions.BlankARGBSprite.Length);
+                    // First sprite in every layer
+                    int index = (int)((layer - 1) * spritesPerLayer);
+                    uint spriteId = appearance.Data.FrameGroup[0].SpriteInfo.SpriteId[index];
+    
+                    var bitmap = appearances.TextureAtlases.GetSpriteBitmap(spriteId);
+                    if (bitmap != null)
+                    {
+                        bitmap.GetSpriteHashData(stream);
+                    }
+                    else
+                    {
+                        stream.Write(Util.ImageExtensions.BlankARGBSprite, 0, Util.ImageExtensions.BlankARGBSprite.Length);
+                    }
                 }
+    
+                stream.Position = 0;
+                appearance.SpriteHash = md5.ComputeHash(stream);
+            } catch {
+                appearance.SpriteHash = [];
             }
-
-            stream.Position = 0;
-            appearance.SpriteHash = md5.ComputeHash(stream);
         }
 
         public Appearance? GetItemTypeByServerId(uint serverId)
