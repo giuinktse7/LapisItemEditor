@@ -429,8 +429,8 @@ namespace Backend
 
             if (createdCount != 0)
             {
-                Trace.WriteLine($"Created {createdCount} new items, server IDs {prevLastServerId + 1} - {serverIdCursor - 1}");
-                LastServerId = serverIdCursor - 1;
+                Trace.WriteLine($"Created {createdCount} new items, server IDs {prevLastServerId + 1} - {serverIdCursor}");
+                LastServerId = serverIdCursor;
             }
             else
             {
